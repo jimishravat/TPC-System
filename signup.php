@@ -1,3 +1,10 @@
+<?php
+
+include("./database.php");
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,8 +26,12 @@
             <form action="./addUser.php" method="POSt" onsubmit="validate()">
                 <div class="user-details">
                     <div class="input-box">
-                        <span class="details">Full Name</span>
-                        <input type="text" placeholder="Enter your name" required>
+                        <span class="details">Regular or D2D</span>
+                        <select name="typeStudent" id="typeStudent">
+                            <option value="0">.</option>
+                            <option value="1">Regular</option>
+                            <option value="2">Diploma to Degree (D2D)</option>
+                        </select>
                     </div>
                     <div class="input-box">
                         <span class="details">ID Number</span>
@@ -37,13 +48,24 @@
                     <div class="input-box">
                         <span class="details">Password</span>
                         <input type="password" id="password" placeholder="Enter your password" required>
+                        <span class="extra"> Must be 8 character long </br> Must include atleast one digit </span>
 
                     </div>
                     <div class="input-box">
                         <span class="details">Department</span>
                         <select name="department" id="dept">
-                            <option> Enter your Department</option>
-                            <option value="1">Computer</option>
+                            <option value="0" selected>Select Your Department</option>
+                            <?php
+                            $dept = "SELECT * FROM department";
+                            $result = mysqli_query($conn, $dept);
+                            while ($row = $result->fetch_assoc()) {
+                            ?>
+                                <option value="<?php echo $row["dept_id"] ?>"><?php echo $row["dept_name"] ?></option>
+                            <?php
+
+                            }
+
+                            ?>
                         </select>
                     </div>
                     <!-- <div class="input-box">

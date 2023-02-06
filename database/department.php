@@ -38,6 +38,7 @@ if (isset($_POST["insert"])) {
 
 <body>
     <form action="./department.php" method="post">
+        DEPARTMENT 
         <input type="submit" value="ADD" name="insert">
     </form>
 </body>
