@@ -2,11 +2,15 @@
 
 include("../../database.php");
 
+
+
+
 // Student Create Query
 
-$sql = "CREATE TABLE IF NOT EXISTS student (
+$student = "CREATE TABLE IF NOT EXISTS student (
     id_number varchar(20) PRIMARY KEY,
-    user_id varchar(20),
+    user_id varchar(20) NOT NULL ,
+    password varchar(30) NOT NULL,
     first_name varchar(20),
     middle_name varchar(20),
     last_name varchar(20),
@@ -38,5 +42,5 @@ $sql = "CREATE TABLE IF NOT EXISTS student (
     hsc_marksheet varchar(20),
     d2d_marksheet varchar(20),
     resume varchar(20),
-    is_active int(10)
+    is_active int(10) DEFAULT(0)
 )";
