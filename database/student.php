@@ -9,7 +9,6 @@ include("../database.php");
 
 $student = "CREATE TABLE IF NOT EXISTS student (
     id_number varchar(20) PRIMARY KEY,
-    user_id varchar(20) NOT NULL ,
     password varchar(30) NOT NULL,
     first_name varchar(20),
     middle_name varchar(20),
@@ -17,9 +16,9 @@ $student = "CREATE TABLE IF NOT EXISTS student (
     gender varchar(10),
     mobile varchar(10),
     email varchar(30),
-    dept_id int(10) FOREIGN KEY REFERENCES department(dept_id),
+    dept_id int(10),
     father_first_name varchar(30),
-    father_last_name varchar(30),
+    father_last_name varchar(30), 
     father_occupation varchar(30),
     mother_first_name varchar(30),
     mother_last_names varchar(30),
@@ -45,5 +44,10 @@ $student = "CREATE TABLE IF NOT EXISTS student (
     d2d_marksheet varchar(20),
     resume varchar(20),
     photo varchar(20),
-    is_active int(10) DEFAULT(0)
+    is_active int(10) DEFAULT(0),
+
+    FOREIGN KEY (dept_id) REFERENCES department(dept_id)
 )";
+
+// create table query run 
+$conn->query($student);
