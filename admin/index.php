@@ -25,7 +25,7 @@
                         <div class="row">
                             <div class="col">
                                 <span class="h6 font-semibold text-muted text-sm d-block mb-2">Total Students</span>
-                                <span class="h3 font-bold mb-0">$750.90</span>
+                                <span class="h3 font-bold mb-0">100</span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
@@ -74,7 +74,7 @@
                         <div class="row">
                             <div class="col">
                                 <span class="h6 font-semibold text-muted text-sm d-block mb-2">Total Drives</span>
-                                <span class="h3 font-bold mb-0">1.400</span>
+                                <span class="h3 font-bold mb-0">14</span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-info text-white text-lg rounded-circle">
@@ -83,11 +83,12 @@
                             </div>
                         </div>
                         <div class="mt-2 mb-0 text-sm">
-                            <span class="badge badge-pill bg-soft-warning text-warning me-2">
+                            <span class="badge badge-pill bg-soft-success text-success me-2">
                                 <!-- <i class="bi bi-arrow-down me-1"></i>-5% -->
-                                <i class='bx bxs-error'></i>5
+                                <!-- <i class='bx bxs-error'></i>5 -->
+                                <i class='bx bx-share bx-flip-horizontal' ></i>5
                             </span>
-                            <span class="text-nowrap text-xs text-muted">Pending</span>
+                            <span class="text-nowrap text-xs text-muted">On-Going</span>
                         </div>
                     </div>
                 </div>
