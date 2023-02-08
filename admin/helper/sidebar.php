@@ -3,7 +3,7 @@
         <span class="shrink-btn">
             <i class='bx bx-chevron-left'></i>
         </span>
-        <img src="" class="logo" alt="Logo">
+        <img src="../../tpc/images/logo.png" class="logo" alt="Logo">
         <h3 class="hide">TPC</h3>
     </div>
     <!-- <div class="search">
@@ -98,10 +98,9 @@
         </a>
         <div class="admin-user tooltip-element" data-tooltip="1">
             <div class="admin-profile hide">
-                <img src="" alt="logo">
+                <img src="../../tpc/images/logo.png" alt="">
                 <div class="admin-info">
-                    <h3>Jimish</h3>
-                    <h5>Admin</h5>
+                    <h3>Admin</h3>
                 </div>
             </div>
             <a href="#" class="log-out">
