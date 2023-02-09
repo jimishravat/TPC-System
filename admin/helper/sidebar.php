@@ -6,15 +6,12 @@
         <img src="../../tpc/images/logo.png" class="logo" alt="Logo">
         <h3 class="hide">TPC</h3>
     </div>
-    <!-- <div class="search">
-        <i class='bx bx-search'></i>
-        <input type="text" class="hide" placeholder="Quick Search ...">
-    </div> -->
+    
     <div class="sidebar-links">
         <ul>
-            <div class="active-tab"></div>
+            <!-- <div class="active-tab"></div> -->
             <li class="tooltip-element" data-tooltip="0">
-                <a href="#" class="active" data-active="0">
+                <a href="../admin/index.php"  data-active="0">
                     <div class="icon">
                         <i class='bx bx-tachometer'></i>
                         <i class='bx bxs-tachometer'></i>
@@ -23,7 +20,7 @@
                 </a>
             </li>
             <li class="tooltip-element" data-tooltip="1">
-                <a href="#" data-active="1">
+                <a href="../admin/student.php" data-active="1">
                     <div class="icon">
                         <i class='bx bx-folder'></i>
                         <i class='bx bxs-folder'></i>
