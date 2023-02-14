@@ -38,7 +38,7 @@
                 </a>
             </li>
             <li class="tooltip-element" data-tooltip="3">
-                <a href="#" data-active="3">
+                <a href="../admin/company.php" data-active="3">
                     <div class="icon">
                         <i class='bx bx-bar-chart-square'></i>
                         <i class='bx bxs-bar-chart-square'></i>
