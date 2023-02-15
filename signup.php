@@ -21,9 +21,9 @@ include("./database.php");
 
     <!-- Signup -->
     <div class="container">
-        <div class="title">Registration</div>
+        <div class="title">Student Registration</div>
         <div class="content">
-            <form action="./addUser.php" method="POSt" onsubmit="validate()">
+            <form action="./addUser.php" method="POSt">
                 <div class="user-details">
                     <div class="input-box">
                         <span class="details">Regular or D2D</span>
@@ -96,7 +96,16 @@ include("./database.php");
                 <div class="button">
                     <input type="submit" name="register" value="Register">
                 </div>
-                <div class="signup-link">Already Registered <a href="./login.php">Login now</a></div>
+                <div class="row d-flex">
+                    <div class="col-sm-6">
+
+                        <div class="signup-link">Already Registered <a href="./login.php">Login now</a></div>
+                    </div>
+                    <div class="col-sm-6">
+
+                        <div class="signup-link">Company Registeration <a href="./login.php">I'm Company</a></div>
+                    </div>
+                </div>
             </form>
         </div>
     </div>

@@ -1,7 +1,6 @@
 <?php
 include("./database.php");
 
-
 // Taking the values from the form 
 if (isset($_POST["register"])) {
     // Values from the Register Form

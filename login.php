@@ -17,6 +17,14 @@
             <form action="./checkLogin.php" method="POST">
                 <div class="row">
                     <i class="fas fa-user"></i>
+                    <!-- <input type="text" name="username" placeholder="Username" required> -->
+                    <select name="typeOfUser" id="">
+                        <option value="1">Student</option>
+                        <option value="2">Company</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <i class="fa fa-envelope-o fa-fw"></i>
                     <input type="text" name="username" placeholder="Username" required>
                 </div>
                 <div class="row">
