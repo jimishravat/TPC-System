@@ -33,7 +33,7 @@ if (isset($_POST["register"])) {
             header("Location: showUserDetails.php?user_id=$id_number");
         } else {
             // else display the error 
-            echo "Error" . "<br>" ;
+            echo "Error" . "<br>";
         }
     } else {
         // if user found in the database then alert the user
