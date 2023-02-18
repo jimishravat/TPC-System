@@ -5,6 +5,7 @@ include("../database.php");
 // $id_number = $_GET["id"];
 
 
+// if edit button is clicked then enable the editing option of the values
 
 
 
@@ -49,43 +50,25 @@ include("../database.php");
                                                     <i class="bg-warning"></i> Pending
                                                 </span>
                                             </p>
-                                            <!-- <h6 class="f-w-600">Jimish Ravat</h6> -->
+                                            <h3 class="f-w-600">Jimish Ravat</h3>
                                             <p>19CP015</p>
-                                            <div class="row">
-
-                                                <div class="col-sm-5">
+                                            <!-- <p>Regular</p> -->
+                                            <!-- <p>Computer</p> -->
+                                            <div class="row ">
+                                                <div class="col-sm-4">
                                                     <p class="m-b-10 f-w-600">Regular</p>
                                                     <!-- <h6 class="f-w-400">f_name</h6> -->
                                                 </div>
-                                                <div class="col-sm-5">
+                                                <div class="col-sm-4">
                                                     <p class="m-b-10 f-w-600">Computer</p>
                                                     <!-- <h6 class="f-w-400">f_name</h6> -->
                                                 </div>
-                                                <div class="col-sm-2">
+                                                <div class="col-sm-4">
                                                     <a href="#" class="text-reset">
                                                         <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                                                     </a>
                                                 </div>
                                             </div>
-                                            <div class="row">
-
-                                                <div class="col-sm-6">
-                                                    <form action="./studentAction.php" method="post">
-                                                        <input type="hidden" name="approve" value="id">
-                                                        <button class="btn-primary btn-success text-dark fw-bolder   p-2 rounded" type="submit">Approve</button>
-                                                    </form>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <form action="./studentAction.php" method="post">
-                                                        <input type="hidden" name="remarks" value="id">
-                                                        <button class="btn-primary btn-warning text-dark fw-bolder   p-2 rounded" type="submit">Remarks</button>
-                                                    </form>
-                                                </div>
-
-                                            </div>
-
-
-
                                         </div>
                                     </div>
                                     <div class="col-sm-8">
@@ -94,92 +77,100 @@ include("../database.php");
                                             <div class="row m-b-20">
                                                 <div class="col-sm-6 ">
                                                     <p class="m-b-5 f-w-600">First Name</p>
-                                                    <!-- <input type="text" class="form-control" name="" id="" value="hi"> -->
-                                                    <h6 class="text-muted f-w-400">f_name</h6>
+                                                    <input type="text" class="m-b-5 form-control" name="" id="" value="f_name">
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <p class="m-b-5 f-w-600">Middle Name</p>
-                                                    <h6 class="text-muted f-w-400">m_name</h6>
+                                                    <input type="text" class="m-b-5 form-control" name="" id="" value="m_name">
                                                 </div>
                                             </div>
                                             <div class="row m-b-20">
                                                 <div class="col-sm-6">
                                                     <p class="m-b-5 f-w-600">Last Name</p>
-                                                    <h6 class="text-muted f-w-400">l_name</h6>
+                                                    <input type="text" class="m-b-5 form-control" name="" id="" value="l_name">
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <p class="m-b-5 f-w-600">Phone</p>
-                                                    <h6 class="text-muted f-w-400">98979989898</h6>
+                                                    <input type="number" class="m-b-5 form-control" name="" id="" value="7984528154">
                                                 </div>
                                             </div>
                                             <div class="row m-b-20">
                                                 <div class="col-sm-6">
                                                     <p class="m-b-5 f-w-600">Email</p>
-                                                    <h6 class="text-muted f-w-400">jimis@gmaiul.com</h6>
+                                                    <input type="email" class="m-b-5 form-control" name="" id="" value="badheka15@gmail.com">
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <p class="m-b-5 f-w-600">Gender</p>
                                                     <h6 class="text-muted f-w-400">Male</h6>
+
+                                                    <p>
+                                                        <input type="radio" class="form-check-input" id="Male" name="gender" value="male" checked>Male</input>
+                                                        <input type="radio" class="form-check-input" id="Female" name="gender" value="female">Female</input>
+                                                    </p>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <p class="m-b-5 f-w-600">Linkedin URL</p>
+                                                    <input type="text" class="m-b-5 form-control" name="" id="" value="www.linked.in.com">
                                                 </div>
                                             </div>
                                             <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Father's Information</h6>
                                             <div class="row m-b-20">
                                                 <div class="col-sm-4">
                                                     <p class="m-b-5 f-w-600">First Name</p>
-                                                    <h6 class="text-muted f-w-400">f_name</h6>
+                                                    <input type="text" class="m-b-5 form-control" name="" id="" value="f_name">
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <p class="m-b-5 f-w-600">Last Name</p>
-                                                    <h6 class="text-muted f-w-400">l_name</h6>
+                                                    <input type="text" class="m-b-5 form-control" name="" id="" value="l_name">
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <p class="m-b-5 f-w-600">Father's Occupation</p>
-                                                    <h6 class="text-muted f-w-400">f_occupation</h6>
+                                                    <input type="text" class="m-b-5 form-control" name="" id="" value="f_occu">
                                                 </div>
                                             </div>
                                             <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Mother's Information</h6>
                                             <div class="row m-b-20">
                                                 <div class="col-sm-4">
                                                     <p class="m-b-5 f-w-600">First Name</p>
-                                                    <h6 class="text-muted f-w-400">f_name</h6>
+                                                    <input type="text" class="m-b-5 form-control" name="" id="" value="f_name">
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <p class="m-b-5 f-w-600">Last Name</p>
-                                                    <h6 class="text-muted f-w-400">l_name</h6>
+                                                    <input type="text" class="m-b-5 form-control" name="" id="" value="l_name">
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <p class="m-b-5 f-w-600">Mother's Occupation</p>
-                                                    <h6 class="text-muted f-w-400">m_occupation</h6>
+                                                    <input type="text" class="m-b-5 form-control" name="" id="" value="m_occu">
                                                 </div>
                                             </div>
                                             <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">SSC Details </h6>
                                             <div class="row m-b-20">
                                                 <div class="col-sm-3">
                                                     <p class="m-b-5 f-w-600">Passing Year</p>
-                                                    <h6 class="text-muted f-w-400">2019</h6>
+                                                    <input type="text" class="m-b-5 form-control" name="" id="" value="2019">
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <p class="m-b-5 f-w-600">Percentile</p>
-                                                    <h6 class="text-muted f-w-400">99%</h6>
+                                                    <input type="text" class="m-b-5 form-control" name="" id="" value="99%">
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <p class="m-b-5 f-w-600">Percentage</p>
-                                                    <h6 class="text-muted f-w-400">99%</h6>
+                                                    <input type="text" class="m-b-5 form-control" name="" id="" value="99%">
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <p class="m-b-5 f-w-600">out of 600</p>
-                                                    <h6 class="text-muted f-w-400">569</h6>
+                                                    <input type="text" class="m-b-5 form-control" name="" id="" value="550">
                                                 </div>
                                             </div>
                                             <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">D2D Details </h6>
                                             <div class="row m-b-20">
                                                 <div class="col-sm-6">
                                                     <p class="m-b-5 f-w-600">Passing Year</p>
-                                                    <h6 class="text-muted f-w-400">2019</h6>
+                                                    <input type="text" class="m-b-5 form-control" name="" id="" value="2019">
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <p class="m-b-5 f-w-600">CGPA</p>
-                                                    <h6 class="text-muted f-w-400">9.63</h6>
+                                                    <input type="text" class="m-b-5 form-control" name="" id="" value="9.33">
                                                 </div>
 
                                             </div>
@@ -187,78 +178,85 @@ include("../database.php");
                                             <div class="row m-b-20">
                                                 <div class="col-sm-3">
                                                     <p class="m-b-5 f-w-600">Passing Year</p>
-                                                    <h6 class="text-muted f-w-400">2019</h6>
+                                                    <input type="text" class="m-b-5 form-control" name="" id="" value="2019">
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <p class="m-b-5 f-w-600">Percentile</p>
-                                                    <h6 class="text-muted f-w-400">99%</h6>
+                                                    <input type="text" class="m-b-5 form-control" name="" id="" value="93%">
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <p class="m-b-5 f-w-600">Percentage</p>
-                                                    <h6 class="text-muted f-w-400">99%</h6>
+                                                    <input type="text" class="m-b-5 form-control" name="" id="" value="93%">
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <p class="m-b-5 f-w-600">out of 600</p>
-                                                    <h6 class="text-muted f-w-400">569</h6>
+                                                    <input type="text" class="m-b-5 form-control" name="" id="" value="567">
                                                 </div>
                                             </div>
                                             <div class="row m-b-20">
                                                 <div class="col-sm-4">
                                                     <p class="m-b-5 f-w-600">Physics</p>
-                                                    <h6 class="text-muted f-w-400">98</h6>
+                                                    <input type="text" class="m-b-5 form-control" name="" id="" value="89">
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <p class="m-b-5 f-w-600">Chemistry</p>
-                                                    <h6 class="text-muted f-w-400">99</h6>
+                                                    <input type="text" class="m-b-5 form-control" name="" id="" value="78">
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <p class="m-b-5 f-w-600">Maths</p>
-                                                    <h6 class="text-muted f-w-400">99</h6>
+                                                    <input type="text" class="m-b-5 form-control" name="" id="" value="29">
                                                 </div>
 
                                             </div>
                                             <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Documents </h6>
                                             <div class="row m-b-20">
                                                 <div class="col-sm-4">
-                                                    <a href="#">
-                                                        <p class="m-b-5 f-w-600">Aadhar Card</p>
+                                                    <button class="text-center btn btn-success">Upload</button>
+                                                    <p class="m-b-5 f-w-600">Aadhar Card</p>
+                                                    <a href="../uploads/demo.pdf">
+                                                        <button class="text-center btn btn-warning">View</button>
                                                     </a>
 
                                                 </div>
                                                 <div class="col-sm-4">
-                                                    <a href="#">
-                                                        <p class="m-b-5 f-w-600">PAN Card</p>
+                                                    <button class="text-center btn btn-success">Upload</button>
+                                                    <p class="m-b-5 f-w-600">PAN Card</p>
+                                                    <a href="../uploads/demo.pdf">
+                                                        <button class="text-center btn btn-warning">View</button>
                                                     </a>
                                                 </div>
                                                 <div class="col-sm-4">
-                                                    <a href="#">
-                                                        <p class="m-b-5 f-w-600">Resume</p>
+                                                    <button class="text-center btn btn-success">Upload</button>
+                                                    <p class="m-b-5 f-w-600">Resume</p>
+                                                    <a href="../uploads/demo.pdf">
+                                                        <button class="text-center btn btn-warning">View</button>
                                                     </a>
                                                 </div>
 
                                             </div>
                                             <div class="row m-b-20">
                                                 <div class="col-sm-6">
-                                                    <a href="#">
-                                                        <p class="m-b-5 f-w-600">SSC Marksheet</p>
+                                                    <button class="text-center btn btn-success">Upload</button>
+                                                    <p class="m-b-5 f-w-600">SSC Marksheet</p>
+                                                    <a href="../uploads/demo.pdf">
+                                                        <button class="text-center btn btn-warning">View</button>
                                                     </a>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <a href="#">
-                                                        <p class="m-b-5 f-w-600">HSC Marksheet</p>
+                                                    <button class="text-center btn btn-success">Upload</button>
+                                                    <p class="m-b-5 f-w-600">HSC Marsheet/ D2D</p>
+                                                    <a href="../uploads/demo.pdf">
+                                                        <button class="text-center btn btn-warning">View</button>
                                                     </a>
                                                 </div>
 
 
                                             </div>
 
-                                            <!-- <ul class="social-link list-unstyled m-t-40 m-b-10">
-                                                <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="facebook" data-abc="true"><i class="mdi mdi-facebook feather icon-facebook facebook" aria-hidden="true"></i></a></li>
-                                                <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="twitter" data-abc="true"><i class="mdi mdi-twitter feather icon-twitter twitter" aria-hidden="true"></i></a></li>
-                                                <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="instagram" data-abc="true"><i class="mdi mdi-instagram feather icon-instagram instagram" aria-hidden="true"></i></a></li>
-                                            </ul> -->
                                         </div>
+
                                     </div>
+                                    <button class="text-center btn btn-primary">Update and Save</button>
                                 </div>
                             </div>
                         </div>

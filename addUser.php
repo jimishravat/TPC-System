@@ -2,7 +2,7 @@
 include("./database.php");
 
 // Taking the values from the form 
-if (isset($_POST["register"])) {
+if (isset($_POST["registerStudent"])) {
     // Values from the Register Form
     $is_d2d = $_POST["typeStudent"] == 1 ? 0 : 1;
     $id_number = $_POST["id"];
