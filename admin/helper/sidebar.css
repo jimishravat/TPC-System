@@ -19,7 +19,7 @@ body {
   font-family: "Poppins", sans-serif;
   overflow-x: hidden;
   background-color: #e4e2f5;
-  min-height: 100vh;
+  min-height: 100%;
   display: flex;
   position: relative;
 }
@@ -36,7 +36,7 @@ nav {
   position: sticky;
   top: 0;
   left: 0;
-  height: 100vh;
+  height: 100%;
   background-color: var(--main-color);
   width: 16rem;
   padding: 1.8rem 0.85rem;

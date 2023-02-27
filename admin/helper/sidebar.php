@@ -6,17 +6,27 @@
         <img src="../../tpc/images/logo.png" class="logo" alt="Logo">
         <h3 class="hide">TPC</h3>
     </div>
-    
+
     <div class="sidebar-links">
         <ul>
             <!-- <div class="active-tab"></div> -->
             <li class="tooltip-element" data-tooltip="0">
-                <a href="../admin/index.php"  data-active="0">
+                <a href="../admin/index.php" data-active="0">
                     <div class="icon">
                         <i class='bx bx-tachometer'></i>
                         <i class='bx bxs-tachometer'></i>
                     </div>
                     <span class="link hide">Dashboard</span>
+                </a>
+            </li>
+
+            <li class="tooltip-element" data-tooltip="2">
+                <a href="#" data-active="2">
+                    <div class="icon">
+                        <i class='bx bx-message-square-detail'></i>
+                        <i class='bx bxs-message-square-detail'></i>
+                    </div>
+                    <span class="link hide">Annoucements</span>
                 </a>
             </li>
             <li class="tooltip-element" data-tooltip="1">
@@ -28,13 +38,22 @@
                     <span class="link hide">Students</span>
                 </a>
             </li>
-            <li class="tooltip-element" data-tooltip="2">
-                <a href="#" data-active="2">
+            <li class="tooltip-element" data-tooltip="1">
+                <a href="../admin/student.php" data-active="1">
                     <div class="icon">
-                        <i class='bx bx-message-square-detail'></i>
-                        <i class='bx bxs-message-square-detail'></i>
+                        <i class='bx bx-folder'></i>
+                        <i class='bx bxs-folder'></i>
                     </div>
-                    <span class="link hide">Messages</span>
+                    <span class="link hide">TPF</span>
+                </a>
+            </li>
+            <li class="tooltip-element" data-tooltip="1">
+                <a href="../admin/student.php" data-active="1">
+                    <div class="icon">
+                        <i class='bx bx-folder'></i>
+                        <i class='bx bxs-folder'></i>
+                    </div>
+                    <span class="link hide">TPC</span>
                 </a>
             </li>
             <li class="tooltip-element" data-tooltip="3">
@@ -44,6 +63,15 @@
                         <i class='bx bxs-bar-chart-square'></i>
                     </div>
                     <span class="link hide">Company</span>
+                </a>
+            </li>
+            <li class="tooltip-element" data-tooltip="3">
+                <a href="../admin/company.php" data-active="3">
+                    <div class="icon">
+                        <i class='bx bx-bar-chart-square'></i>
+                        <i class='bx bxs-bar-chart-square'></i>
+                    </div>
+                    <span class="link hide">Results</span>
                 </a>
             </li>
             <div class="tooltip">

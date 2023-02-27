@@ -45,7 +45,10 @@ $student = "CREATE TABLE IF NOT EXISTS student (
     resume varchar(20),
     photo varchar(20),
     is_active int(10) DEFAULT(0),
-
+-- academic year
+-- college details
+-- isplaced
+-- photo 
     FOREIGN KEY (dept_id) REFERENCES department(dept_id)
 )";
 
