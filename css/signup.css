@@ -157,6 +157,11 @@ form .button input {
   font-size: 13px;
   color: #adacac;
 }
+.done{
+  font-size: 14px;
+  font-weight: bolder;
+  color: #08b30e;
+}
 /* form .button input:hover {
    transform: scale(0.99); 
   /* background: linear-gradient(-135deg, #71b7e6, #9b59b6); 

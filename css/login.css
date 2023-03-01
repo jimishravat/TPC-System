@@ -121,3 +121,7 @@ form .button input:hover {
 form .signup-link a:hover {
   text-decoration: underline;
 }
+
+.show {
+  display: none;
+}
