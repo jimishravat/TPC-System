@@ -20,7 +20,7 @@ if (isset($_POST["upload"])) {
     }
 }
 echo $statusmsg;
-
+var_dump(base64_encode(strrev(md5("123456"))));
 ?>
 
 <!DOCTYPE html>
