@@ -2,6 +2,7 @@
 
 include("./database.php");
 
+session_start();
 // TODO:
 // Initialize the session and do accordingly in the below conditions
 
@@ -31,8 +32,13 @@ if (isset($_POST["login"])) {
 
     // if the user is student then search in the student table for the credentials
     if ($typeOfUser == 1) {
-        $checkQuery = $conn->query("SELECT * FROM student WHERE s_email = '$username' AND s_password = '$password' ");
+        $checkQuery = $conn->query("SELECT * FROM student WHERE s_id = '$username' AND s_password = '$password' ");
         if ($checkQuery->num_rows == 1) {
+            echo "<script> window.location.href = './student/index.php'; </script>";
+
+            // $row = $checkQuery->fetch_assoc();
+            // var_dump($row["s_id"]);
+            // var_dump($row["s_email"]);
             // var_dump($checkQuery);
         }
     }

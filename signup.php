@@ -1,7 +1,7 @@
 <?php
 
 include("./database.php");
-
+session_start();
 $user = isset($_GET["user"]) ? isset($_GET["user"]) : 0;
 
 ?>
@@ -14,6 +14,7 @@ $user = isset($_GET["user"]) ? isset($_GET["user"]) : 0;
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
     <title>Home</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 </head>
 
@@ -28,8 +29,17 @@ $user = isset($_GET["user"]) ? isset($_GET["user"]) : 0;
         <?php if ($user == 0) { ?>
             <div class="title">Student Registration</div>
             <div class="content">
-                <form action="./addUser.php" method="POSt">
+                <form action="./addUser.php" method="POST">
+                    <?php if (isset($_SESSION["alreadyRegisteredId"])) {
+                    ?>
+                        <div class="row d-flex justify-content-center">
+                            <span id="alreadyRegisteredId"><?php echo $_SESSION["alreadyRegisteredId"]; ?> is already registered</span>
+                        </div>
+                    <?php
+                    } ?>
+
                     <div class="user-details">
+
                         <div class="input-box">
                             <span class="details">After 12th or D2D Student</span>
                             <select name="typeStudent" id="typeStudent">
@@ -86,9 +96,20 @@ $user = isset($_GET["user"]) ? isset($_GET["user"]) : 0;
                                 ?>
                             </select>
                         </div>
+                        <div class="input-box">
+                            <span class="details">Gender</span>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadio1" name="gender" class="custom-control-input">
+                                <label class="custom-control-label" for="customRadio1">Male</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadio2" name="gender" class="custom-control-input">
+                                <label class="custom-control-label" for="customRadio2">Female</label>
+                            </div>
+                        </div>
 
                     </div>
-                    <div class="gender-details">
+                    <!-- <div class="gender-details">
                         <input type="radio" name="gender" value="male" id="dot-1">
                         <input type="radio" name="gender" value="female" id="dot-2">
                         <input type="radio" name="gender" value="other" id="dot-3">
@@ -107,19 +128,19 @@ $user = isset($_GET["user"]) ? isset($_GET["user"]) : 0;
                                 <span class="gender">Prefer not to say</span>
                             </label>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="button">
                         <span id="finalmessage" class="extra"></span>
                         <input type="submit" name="registerStudent" id="registerStudent" value="Register">
                     </div>
-                    <div class="row d-flex">
+                    <div class="row d-flex flex-column">
                         <div class="col-sm-6">
 
-                            <div class="signup-link">Already Registered <a href="./login.php">Login now</a></div>
+                            <div class="signup-link">Already Registered? <a href="./login.php">Login now</a></div>
                         </div>
                         <div class="col-sm-6">
 
-                            <div class="signup-link">Company Registeration <a href="./signup.php?user=1">I'm Company</a></div>
+                            <div class="signup-link">Company Registration <a href="./signup.php?user=1">I'm Company</a></div>
                         </div>
                     </div>
                 </form>
