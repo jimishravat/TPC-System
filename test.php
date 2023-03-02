@@ -4,6 +4,12 @@ include("./database.php");
 
 $statusmsg = '';
 
+$id_number = $_GET["id"];
+
+$ac = '20' . $id_number[0] . $id_number[1];
+$ac = intval($ac);
+var_dump($ac);
+
 if (isset($_POST["upload"])) {
     $targetdir = "uploads/";
     $targetfile = $_FILES["pdf"]["name"];

@@ -1,3 +1,14 @@
+<?php
+
+session_start();
+
+if (isset($_SESSION["showUser"])) {
+    unset($_SESSION["showUser"]);
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

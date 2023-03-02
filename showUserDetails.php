@@ -2,7 +2,13 @@
 
 include("./database.php");
 
-$user_id = strtoupper($_GET["user_id"]);
+session_start();
+// Session
+if (!empty($_GET["user_id"]) && isset($_SESSION["showUser"])) {
+    $user_id = $_GET["user_id"];
+} else {
+    header("Location: index.php");
+}
 
 ?>
 <!DOCTYPE html>
@@ -25,10 +31,10 @@ $user_id = strtoupper($_GET["user_id"]);
         <div class="wrapper">
             <div class="title"><span>Succesfully Registered</span></div>
             <div class="details">
-                <p>User Name : <strong> <?php echo 'S' . $user_id ?> </strong>
+                <p>User Name : <strong> <?php echo $user_id ?> </strong>
                 </p>
-                <p> Your account is in <strong>IN-ACTIVE</strong> state. It will be active only if you fill in all the details in your profile including all supporting documents once you <a href="./login.php"> LOGIN </a> </p>
-                <p> Once you fill your details <strong>ADMIN</strong> will approve your profile </p>
+                <p> Your account is in <strong>IN-ACTIVE</strong> state. It will be active only after the TPC approves you. You can check the status in the profile section after you <a href="./login.php"> LOGIN </a> </p>
+                <p> Once you fill your details and all supporting documents then only you will be allowed to apply in any Placement Drive </p>
             </div>
         </div>
     </div>

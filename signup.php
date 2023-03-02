@@ -11,8 +11,10 @@ $user = isset($_GET["user"]) ? isset($_GET["user"]) : 0;
 <head>
     <?php require_once("./core/header.php")    ?>
     <link rel="stylesheet" href="./css/signup.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
     <title>Home</title>
+
 </head>
 
 <body>
@@ -69,8 +71,8 @@ $user = isset($_GET["user"]) ? isset($_GET["user"]) : 0;
                         </div>
                         <div class="input-box">
                             <span class="details">Department</span>
-                            <select name="department" id="dept">
-                                <option value="0" selected>Select Your Department</option>
+                            <select name="department" id="dept" required>
+                                <option value="0">Select Your Department</option>
                                 <?php
                                 $dept = "SELECT * FROM department";
                                 $result = mysqli_query($conn, $dept);
@@ -107,7 +109,8 @@ $user = isset($_GET["user"]) ? isset($_GET["user"]) : 0;
                         </div>
                     </div>
                     <div class="button">
-                        <input type="submit" name="registerStudent" value="Register">
+                        <span id="finalmessage" class="extra"></span>
+                        <input type="submit" name="registerStudent" id="registerStudent" value="Register">
                     </div>
                     <div class="row d-flex">
                         <div class="col-sm-6">
@@ -223,8 +226,30 @@ $user = isset($_GET["user"]) ? isset($_GET["user"]) : 0;
         var checkDept = 0;
         var checkGender = 0;
 
-        function validate_password() {
+        // var radios = document.querySelectorAll('input[type="radio"]:checked');
+        // var value = radios.length > 0 ? true : false;
+        // if (value) {
+        //     checkGender = 1;
+        // } else {
+        //     checkGender = 0;
+        // }
+        $(document).ready(function() {
+            $('input[type="radio"]').click(function() {
+                checkGender = 1;
+                finalCheck()
+            });
+            $('#dept').change(function() {
+                if ($(this).val() != "0") {
+                    checkDept = 1
+                } else {
+                    checkDept = 0
+                }
+                finalCheck()
+            })
+        });
 
+        function validate_password() {
+            var c1, c2, c3, c4 = 0
             var eightCharacter = document.getElementById('eightCharacter');
             var oneCapital = document.getElementById('oneCapital');
             var oneDigit = document.getElementById('oneDigit');
@@ -234,36 +259,49 @@ $user = isset($_GET["user"]) ? isset($_GET["user"]) : 0;
             if (pass.length > 8) {
                 eightCharacter.classList.remove("extra");
                 eightCharacter.classList.add("done");
+                c1 = 1
             }
             if (pass.length <= 8) {
                 eightCharacter.classList.remove("done");
                 eightCharacter.classList.add("extra");
+                c1 = 0
             }
             if (pass.match(/[A-Z]+/)) {
                 oneCapital.classList.remove("extra");
                 oneCapital.classList.add("done");
+                c2 = 1;
             }
             if (!pass.match(/[A-Z]+/)) {
                 oneCapital.classList.remove("done");
                 oneCapital.classList.add("extra");
+                c2 = 0
             }
             if (pass.match(/[0-9]+/)) {
                 oneDigit.classList.remove("extra");
                 oneDigit.classList.add("done");
+                c3 = 1;
             }
             if (!pass.match(/[0-9]+/)) {
                 oneDigit.classList.remove("done");
                 oneDigit.classList.add("extra");
+                c3 = 0
             }
             if (pass.match(/[-’/`~!#*$@_%+=.,^&(){}[\]|;:”<>?\\]+/)) {
                 oneSpecial.classList.remove("extra");
                 oneSpecial.classList.add("done");
+                c4 = 1
             }
             if (!pass.match(/[-’/`~!#*$@_%+=.,^&(){}[\]|;:”<>?\\]+/)) {
                 oneSpecial.classList.remove("done");
                 oneSpecial.classList.add("extra");
+                c4 = 0
             }
 
+            if ((c1 + c2 + c3 + c4) == 4) {
+                checkPassword = 1;
+            }
+
+            finalCheck()
 
         }
 
@@ -273,22 +311,31 @@ $user = isset($_GET["user"]) ? isset($_GET["user"]) : 0;
             if (pass != confirm_pass) {
                 document.getElementById('message').style.color = 'red';
                 document.getElementById('message').innerHTML = '☒ Use same password';
+                checkCPassword = 0;
 
             } else {
                 document.getElementById('message').style.color = 'green';
                 document.getElementById('message').innerHTML = '🗹 Password Matched';
-
+                checkCPassword = 1;
             }
+            finalCheck()
         }
 
         function check_id() {
             var id = document.getElementById('idnumber').value;
 
-            if (id.match(/[0-9]{2}[A-Za-z]{2}[0-9]{3}/)) {
+            if (id.match(/^[0-9]{2}[A-Za-z]{2}[0-9]{3}/)) {
                 document.getElementById('idmessage').style.color = 'green';
                 document.getElementById('idmessage').innerHTML = '🗹 Valid ID';
-
+                checkId = 1;
             }
+            if (!id.match(/^[0-9]{2}[A-Za-z]{2}[0-9]{3}/)) {
+                document.getElementById('idmessage').style.color = 'red';
+                document.getElementById('idmessage').innerHTML = '☒ InValid ID';
+                checkId = 0;
+            }
+
+            finalCheck()
         }
 
         function check_email() {
@@ -297,11 +344,14 @@ $user = isset($_GET["user"]) ? isset($_GET["user"]) : 0;
             if (email.match(/[0-9A-Za-z]+@bvmengineering.ac.in/)) {
                 document.getElementById('emailmessage').style.color = 'green';
                 document.getElementById('emailmessage').innerHTML = '🗹 Valid Email';
+                checkEmail = 1;
             }
             if (!email.match(/[0-9A-Za-z]+@bvmengineering.ac.in/)) {
                 document.getElementById('emailmessage').style.color = 'red';
                 document.getElementById('emailmessage').innerHTML = '☒ InValid Email';
+                checkEmail = 0;
             }
+            finalCheck()
         }
 
         function check_mobile() {
@@ -310,10 +360,39 @@ $user = isset($_GET["user"]) ? isset($_GET["user"]) : 0;
             if (mobile.match(/^[0-9]{10}$/)) {
                 document.getElementById('mobilemessage').style.color = 'green';
                 document.getElementById('mobilemessage').innerHTML = '🗹 Valid Mobile';
+                checkMobile = 1;
             }
             if (!mobile.match(/^[0-9]{10}$/gm)) {
                 document.getElementById('mobilemessage').style.color = 'red';
                 document.getElementById('mobilemessage').innerHTML = '☒ InValid Mobile';
+                checkMobile = 0;
+            }
+            finalCheck()
+        }
+
+        function finalCheck() {
+            // console.log("final:", finalSubmit)
+            // console.log("id:", checkId)
+            // console.log("email:", checkEmail)
+            // console.log("number:", checkMobile)
+            // console.log("pass:", checkPassword)
+            // console.log("cpass:", checkCPassword)
+            // console.log("dept:", checkDept)
+            // console.log("gender:", checkGender)
+
+            if ((checkId + checkEmail + checkMobile + checkPassword + checkCPassword + checkDept + checkGender) == 7) {
+                finalSubmit = 1;
+            }
+
+            if (finalSubmit == 1) {
+                document.getElementById('finalmessage').style.color = 'green';
+                document.getElementById('finalmessage').innerHTML = 'You are ready for Registration 🗹';
+                document.getElementById('registerStudent').disabled = false;
+            }
+            if (finalSubmit == 0) {
+                document.getElementById('finalmessage').style.color = 'red';
+                document.getElementById('finalmessage').innerHTML = 'Please fill all the details!';
+                document.getElementById('registerStudent').disabled = true;
             }
         }
     </script>
