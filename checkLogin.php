@@ -34,6 +34,8 @@ if (isset($_POST["login"])) {
     if ($typeOfUser == 1) {
         $checkQuery = $conn->query("SELECT * FROM student WHERE s_id = '$username' AND s_password = '$password' ");
         if ($checkQuery->num_rows == 1) {
+
+            $_SESSION["studentUserId"] = $username;
             echo "<script> window.location.href = './student/index.php'; </script>";
 
             // $row = $checkQuery->fetch_assoc();
