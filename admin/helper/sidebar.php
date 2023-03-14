@@ -1,3 +1,4 @@
+
 <nav>
     <div class="sidebar-top">
         <span class="shrink-btn">
@@ -9,7 +10,7 @@
 
     <div class="sidebar-links">
         <ul>
-            <!-- <div class="active-tab"></div> -->
+           
             <li class="tooltip-element" data-tooltip="0">
                 <a href="../admin/index.php" data-active="0">
                     <div class="icon">
@@ -21,7 +22,7 @@
             </li>
 
             <li class="tooltip-element" data-tooltip="2">
-                <a href="#" data-active="2">
+                <a href="../admin/announcements.php" data-active="2">
                     <div class="icon">
                         <i class='bx bx-message-square-detail'></i>
                         <i class='bx bxs-message-square-detail'></i>
@@ -29,6 +30,52 @@
                     <span class="link hide">Annoucements</span>
                 </a>
             </li>
+           
+        </ul>
+
+        <h4 class="hide">Placment Drive</h4>
+        <ul>
+            <li class="tooltip-element" data-tooltip="3">
+                <a href="../admin/results.php" data-active="3">
+                    <div class="icon">
+                        <i class='bx bx-bar-chart-square'></i>
+                        <i class='bx bxs-bar-chart-square'></i>
+                    </div>
+                    <span class="link hide">Results</span>
+                </a>
+            </li>
+            <li class="tooltip-element" data-tooltip="0">
+                <a href="../admin/drives.php" data-active="4">
+                    <div class="icon">
+                        <i class='bx bx-notepad'></i>
+                        <i class='bx bxs-notepad'></i>
+                    </div>
+                    <span class="link hide">Drives</span>
+                </a>
+            </li>
+            <li class="tooltip-element" data-tooltip="2">
+                <a href="../admin/announcements.php" data-active="2">
+                    <div class="icon">
+                        <i class='bx bx-message-square-detail'></i>
+                        <i class='bx bxs-message-square-detail'></i>
+                    </div>
+                    <span class="link hide">Requests</span>
+                </a>
+            </li>
+            <!-- <li class="tooltip-element" data-tooltip="1">
+                <a href="#" data-active="5">
+                    <div class="icon">
+                        <i class='bx bx-user'></i>
+                        <i class='bx bxs-user'></i>
+                    </div>
+                    <span class="link hide">Profile</span>
+                </a>
+            </li> -->
+            
+
+        </ul>
+        <h4 class="hide">Manage</h4>
+        <ul>
             <li class="tooltip-element" data-tooltip="1">
                 <a href="../admin/student.php" data-active="1">
                     <div class="icon">
@@ -39,7 +86,7 @@
                 </a>
             </li>
             <li class="tooltip-element" data-tooltip="1">
-                <a href="../admin/student.php" data-active="1">
+                <a href="../admin/tpf.php" data-active="1">
                     <div class="icon">
                         <i class='bx bx-folder'></i>
                         <i class='bx bxs-folder'></i>
@@ -48,7 +95,7 @@
                 </a>
             </li>
             <li class="tooltip-element" data-tooltip="1">
-                <a href="../admin/student.php" data-active="1">
+                <a href="../admin/tpc.php" data-active="1">
                     <div class="icon">
                         <i class='bx bx-folder'></i>
                         <i class='bx bxs-folder'></i>
@@ -65,42 +112,6 @@
                     <span class="link hide">Company</span>
                 </a>
             </li>
-            <li class="tooltip-element" data-tooltip="3">
-                <a href="../admin/company.php" data-active="3">
-                    <div class="icon">
-                        <i class='bx bx-bar-chart-square'></i>
-                        <i class='bx bxs-bar-chart-square'></i>
-                    </div>
-                    <span class="link hide">Results</span>
-                </a>
-            </li>
-            <div class="tooltip">
-                <span class="show">Dashboard</span>
-                <span>Students</span>
-                <span>Messages</span>
-                <span>Company</span>
-            </div>
-        </ul>
-        <h4 class="hide">Shortcuts</h4>
-        <ul>
-            <li class="tooltip-element" data-tooltip="0">
-                <a href="#" data-active="4">
-                    <div class="icon">
-                        <i class='bx bx-notepad'></i>
-                        <i class='bx bxs-notepad'></i>
-                    </div>
-                    <span class="link hide">Drives</span>
-                </a>
-            </li>
-            <li class="tooltip-element" data-tooltip="1">
-                <a href="#" data-active="5">
-                    <div class="icon">
-                        <i class='bx bx-user'></i>
-                        <i class='bx bxs-user'></i>
-                    </div>
-                    <span class="link hide">Profile</span>
-                </a>
-            </li>
             <li class="tooltip-element" data-tooltip="2">
                 <a href="#" data-active="6">
                     <div class="icon">
@@ -110,11 +121,8 @@
                     <span class="link hide">Settings</span>
                 </a>
             </li>
-            <div class="tooltip">
-                <span class="show">Drives</span>
-                <span>Help</span>
-                <span>Settings</span>
-            </div>
+
+
         </ul>
     </div>
     <div class="sidebar-footer">
@@ -125,16 +133,13 @@
             <div class="admin-profile hide">
                 <img src="../../tpc/images/logo.png" alt="">
                 <div class="admin-info">
-                    <h3>Admin</h3>
+                    <h3><?php echo $adminUser ?></h3>
                 </div>
             </div>
-            <a href="#" class="log-out">
+            <a href="../../tpc/logout.php" class="log-out">
                 <i class='bx bx-log-out'></i>
             </a>
         </div>
-        <div class="tooltip">
-            <span class="show">Jimish</span>
-            <span>Logout</span>
-        </div>
+        
     </div>
 </nav>

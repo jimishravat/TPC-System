@@ -5,4 +5,6 @@
 <link rel="stylesheet" href="./core/css/footer.css">
 <title>Home</title>
 <script src="https://kit.fontawesome.com/42b1d6cb59.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 </head>

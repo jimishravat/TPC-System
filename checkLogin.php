@@ -38,7 +38,6 @@ if (isset($_POST["login"])) {
             $_SESSION["studentUserId"] = $username;
             echo "<script> window.location.href = './student/index.php'; </script>";
 
-            // $row = $checkQuery->fetch_assoc();
             // var_dump($row["s_id"]);
             // var_dump($row["s_email"]);
             // var_dump($checkQuery);
@@ -55,14 +54,56 @@ if (isset($_POST["login"])) {
     if ($typeOfUser == 4) {
         $checkQuery = $conn->query("SELECT * FROM tpo WHERE tpo_email = '$username' and tpo_password = '$password'");
         if ($checkQuery->num_rows == 1) {
+            $_SESSION["admin"] = "TPO";
+            $_SESSION["access"] = 1;
+
+            echo "<script> window.location.href = './admin/index.php'; </script>";
         }
     }
 
     // if the user is TPF
     if ($typeOfUser == 5) {
+        $checkQuery = $conn->query("SELECT * FROM tpf WHERE tpf_email = '$username' and tpf_password = '$password'");
+        if ($checkQuery->num_rows == 1) {
+            $row = $checkQuery->fetch_assoc();
+            if ($row["is_active"] == 1) {
+
+                $_SESSION["admin"] = "TPF";
+                $_SESSION["adminUserName"] = $row["tpf_fname"] . ' ' . $row["tpf_lname"];
+                $_SESSION["access"] = 2;
+                $_SESSION["adminDept"] = $row["tpf_department"];
+                echo "<script> window.location.href = './admin/index.php'; </script>";
+            } else {
+
+                echo "<script> alert('You are Not Authorized. Please Contact placement@bvm.com'); </script>";
+                echo "<script> window.location.href = './login.php'; </script>";
+            }
+        } else {
+            echo "<script> alert('Check Username or Password'); </script>";
+            echo "<script> window.location.href = './login.php'; </script>";
+        }
     }
 
     // if the user is TPC
     if ($typeOfUser == 6) {
+        $checkQuery = $conn->query("SELECT * FROM tpc WHERE tpc_email = '$username' and tpc_password = '$password'");
+        if ($checkQuery->num_rows == 1) {
+            $row = $checkQuery->fetch_assoc();
+            if ($row["is_active"] == 1) {
+
+                $_SESSION["admin"] = "TPC";
+                $_SESSION["adminUserName"] = $row["tpc_fname"] . ' ' . $row["tpc_lname"];
+                $_SESSION["access"] = 3;
+                $_SESSION["adminDept"] = $row["tpc_department"];
+                echo "<script> window.location.href = './admin/index.php'; </script>";
+            } else {
+
+                echo "<script> alert('You are Not Authorized. Please Contact placement@bvm.com'); </script>";
+                echo "<script> window.location.href = './login.php'; </script>";
+            }
+        } else {
+            echo "<script> alert('Check Username or Password'); </script>";
+            echo "<script> window.location.href = './login.php'; </script>";
+        }
     }
 }

@@ -57,9 +57,9 @@ if (isset($_GET["editAccess"])) {
                                                     <i class="bg-warning"></i> Pending
                                                 </span>
                                             </p>
-                                            <h2 class="f-w-600">Dhyey Badheka</h2>
-                                            <p>19IT450@bvmengineering.ac.in</p>
-                                            <p>19IT450</p>
+                                            <h2 class="f-w-600">Jimish Ravat</h2>
+                                            <p>19CP015@bvmengineering.ac.in</p>
+                                            <p>19CP015</p>
                                             <!-- <p>Information Technology</p> -->
                                             <div class="row">
 

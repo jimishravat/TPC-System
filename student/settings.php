@@ -44,10 +44,10 @@ include("../database.php");
                                         <div class="m-b-25">
                                             <img src="http://localhost/tpc-main/images/Dhyey.png" class="img-radius" alt="User-Profile-Image">
                                         </div>
-                                        <h2 class="f-w-600">Dhyey Badheka</h2>
-                                        <p>19IT450@bvmengineering.ac.in</p>
-                                        <p>19IT450</p>
-                                        <p>Information Technology</p>
+                                        <h2 class="f-w-600">Jimish Ravat</h2>
+                                        <p>19CP015@bvmengineering.ac.in</p>
+                                        <p>19CP015</p>
+                                        <p>Computer Department</p>
                                     </div>
                                 </div>
                                 <div class="col-sm-8">
