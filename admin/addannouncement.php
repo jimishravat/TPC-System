@@ -1,12 +1,37 @@
 <?php
 
 include("../database.php");
+include("../helper/authorization.php");
 
-// $id_number = $_GET["id"];
+if ($access != 1) {
+    echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
+}
 
+// add the annoucement
 
-
-
+if (isset($_POST["add-annouce"])) {
+    $title = $_POST["annouce-heading"];
+    $desc = $_POST["annouce-desc"];
+    $date_annouce = $_POST["annouce-date"];
+    $deptEligible = array();
+    foreach ($_POST["eligible_dept"] as $selected) {
+        if ($selected == 0) {
+            for ($i = 1; $i <= 10; $i++) {
+                array_push($deptEligible, intval($i));
+            }
+            break;
+        }
+        if ($selected == 1 || $selected == 6) {
+            array_push($deptEligible, intval($selected));
+            array_push($deptEligible, intval($selected + 1));
+            continue;
+        }
+        array_push($deptEligible, intval($selected));
+    }
+    $deptEligible = json_encode($deptEligible);
+    $insert = "INSERT INTO `annoucements`( `title`, `description`, `date_annouce`, `dept_eligible`) VALUES ('$title','$desc','$date_annouce','$deptEligible')";
+    // var_dump($insert);
+}
 
 ?>
 
@@ -43,23 +68,70 @@ include("../database.php");
                                 <div class="col">
                                     <div class="card-block">
                                         <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Add An Announcement</h6>
-                                        <div class="col">
-                                            <p class="m-b-5 f-w-600 anno">Heading</p>
-                                            <input type="text" class="m-b-5 form-control" name="" id="" value="">
+                                        <div class="col d-flex justify-content-start">
+                                            <p class="m-b-5 f-w-600">Date</p>
+                                            <p class="mx-10">:</p>
+                                            <?php $date = getdate(date("U"));
+                                            $currentDate = $date['month'] . ' ' . $date['mday'] . ', ' . $date['year'];
+
+                                            ?>
+                                            <p class="mx-10"><?php echo $currentDate ?></p>
                                         </div>
-                                        <div class="col">
-                                            <p class="m-b-5 f-w-600 anno">Description</p>
-                                            <input type="text" class="m-b-5 form-control" name="" id="" value="">
-                                        </div>
-                                        <div class="col">
-                                            <p class="m-b-5 f-w-600 anno">Date</p>
-                                            <input type="date" class="m-b-5 form-control" name="" id="" value="">
-                                        </div>
+                                        <form action="./addannouncement.php" method="post">
+                                            <input type="text"  name="annouce-date" id="" value="<?php echo $currentDate; ?>" hidden>
+
+                                            <div class="col">
+                                                <p class="m-b-5 f-w-600 anno">Heading</p>
+                                                <input type="text" class="m-b-5 form-control" name="annouce-heading" id="" placeholder="Enter Title of Annoucement">
+                                            </div>
+                                            <div class="col">
+                                                <p class="m-b-5 f-w-600 anno">Description</p>
+                                                <input type="text" class="m-b-5 form-control" name="annouce-desc" id="" placeholder="Enter Description of Annoucement">
+                                            </div>
+                                            <!-- <div class="col">
+                                                <p class="m-b-5 f-w-600 anno">Date</p>
+                                                <input type="date" class="m-b-5 form-control" name="annouce-date" id="" value="">
+                                            </div> -->
+                                            <div class="col">
+                                                <p class="m-b-5 f-w-600 anno">Department</p>
+                                                <div class="row">
+                                                    <div class="form-check col-sm-3">
+                                                        <input type="checkbox" class="form-check-input" name="eligible_dept[]" id="" value="0"><label class="form-check-label"> All Department</label>
+                                                    </div>
+                                                    <div class="form-check col-sm-3">
+                                                        <input type="checkbox" class="form-check-input" name="eligible_dept[]" id="" value="1"><label class="form-check-label">Civil</label>
+                                                    </div>
+                                                    <div class="form-check col-sm-3">
+                                                        <input type="checkbox" class="form-check-input" name="eligible_dept[]" id="" value="3"><label class="form-check-label"> Computer</label>
+                                                    </div>
+                                                    <div class="form-check col-sm-3">
+                                                        <input type="checkbox" class="form-check-input" name="eligible_dept[]" id="" value="4"><label class="form-check-label"> Electronics</label>
+                                                    </div>
+                                                    <div class="form-check col-sm-3">
+                                                        <input type="checkbox" class="form-check-input" name="eligible_dept[]" id="" value="5"><label class="form-check-label"> Electrical</label>
+                                                    </div>
+                                                    <div class="form-check col-sm-3">
+                                                        <input type="checkbox" class="form-check-input" name="eligible_dept[]" id="" value="6"><label class="form-check-label"> Mechanical</label>
+                                                    </div>
+                                                    <div class="form-check col-sm-3">
+                                                        <input type="checkbox" class="form-check-input" name="eligible_dept[]" id="" value="8"><label class="form-check-label">Production</label>
+                                                    </div>
+                                                    <div class="form-check col-sm-3">
+                                                        <input type="checkbox" class="form-check-input" name="eligible_dept[]" id="" value="9"><label class="form-check-label">Electronics & Communication</label>
+                                                    </div>
+                                                    <div class="form-check col-sm-3">
+                                                        <input type="checkbox" class="form-check-input" name="eligible_dept[]" id="" value="10"><label class="form-check-label">Information & Technology</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <button class="text-center btn btn-primary">Add </button>
+                        <!-- <button class="text-center btn btn-primary">Add </button> -->
+                        <input type="submit" value="Add" name="add-annouce" class="text-center btn btn-primary">
+                        </form>
                     </div>
                 </div>
         </main>

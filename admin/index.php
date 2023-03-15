@@ -248,8 +248,9 @@ include("../helper/authorization.php");
             <!-- Average Package of different departments -->
 
             <?php
-            $show = $_SESSION["adminDept"];
-
+            if ($access == 2) {
+                $show = $_SESSION["adminDept"];
+            }
             if ($access == 1 || $access == 3 || ($access == 2 && ($show == 1 || $show == 2))) : ?>
                 <!-- Average Package of Civil Department -->
 
