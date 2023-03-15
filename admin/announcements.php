@@ -47,10 +47,11 @@ if ($access == 2 || $access == 3) {
                                 <div>
                                     <?php
 
-                                    if ($access == 1) {
-                                        $search = $conn->query("SELECT * FROM  `annoucements`");
-                                    } elseif ($access == 2 || $access == 3) {
-                                        $search = $conn->query("SELECT * FROM  `annoucements` WHERE JSON_CONTAINS(dept_eligible,'$dept')");
+                                    if ($access == 1 || $access == 3) {
+                                        $search = $conn->query("SELECT * FROM  `annoucements` ORDER BY timestamp DESC");
+                                    } elseif ($access == 2) {
+
+                                        $search = $conn->query("SELECT * FROM  `annoucements` WHERE JSON_CONTAINS(dept_eligible,'$dept') ORDER BY timestamp DESC");
                                     }
 
                                     while ($row = $search->fetch_assoc()) {

@@ -33,6 +33,7 @@ if (isset($_POST["add-annouce"])) {
         array_push($deptEligible, intval($selected));
     }
     $deptEligible = json_encode($deptEligible);
+    // var_dump($deptEligible);
     $insert = $conn->query("INSERT INTO `annoucements`( `title`, `description`, `date_annouce`, `dept_eligible`) VALUES ('$title','$desc','$date_annouce','$deptEligible')");
     if ($conn->affected_rows) {
         $insertSuccess = 1;
