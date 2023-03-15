@@ -3,6 +3,10 @@
 include("../database.php");
 include("../helper/authorization.php");
 
+if ($access == 2 || $access == 3) {
+    $dept = $_SESSION["adminDept"];
+}
+
 
 ?>
 <!DOCTYPE html>
@@ -41,22 +45,37 @@ include("../helper/authorization.php");
 
                             <div class="announcement-slider border-r-xs-0 border-r position-relative">
                                 <div>
-                                    <ul class="nolist list-unstyled position-relative mb-0 px-lg-5 pt-lg-5">
-                                        <li class="border-bottom pb-3 mt-3">
-                                            <span class="meta text-uppercase">April 02nd, 2018</span>
-                                            <?php if ($access == 1) : ?>
-                                                <div style="float:right;" class="mt-5">
-                                                    <a href="updateannounce.php"><button type="button" class="btn btn-success float-right">Update</button></a>
-                                                    <button type="button" class="btn btn-danger float-right">Delete</button>
-                                                </div>
-                                            <?php endif ?>
-                                            <h3 class="font-weight-bold mt-0">
-                                                <a href="#">Job Description of TCS has been added</a>
-                                            </h3>
-                                            <p class="m-0 post_intro bl">Check your eligibilty and apply for it.</p>
-                                        </li>
+                                    <?php
 
-                                    </ul>
+                                    if ($access == 1) {
+                                        $search = $conn->query("SELECT * FROM  `annoucements`");
+                                    } elseif ($access == 2 || $access == 3) {
+                                        $search = $conn->query("SELECT * FROM  `annoucements` WHERE JSON_CONTAINS(dept_eligible,'$dept')");
+                                    }
+
+                                    while ($row = $search->fetch_assoc()) {
+
+
+
+                                    ?>
+                                        <ul class="nolist list-unstyled position-relative mb-0 px-lg-5 pt-lg-5">
+                                            <li class="border-bottom pb-3 mt-3">
+                                                <span class="meta text-uppercase"><?php echo $row["date_annouce"] ?></span>
+                                                <?php if ($access == 1) : ?>
+                                                    <div style="float:right;" class="mt-5">
+                                                        <a href="updateannounce.php?updateId=<?php echo $row["annouce_id"]; ?>"><button type="button" class="btn btn-success float-right">Update</button></a>
+                                                        <a href="updateannounce.php?deleteId=<?php echo $row["annouce_id"]; ?>"><button type="button" class="btn btn-danger float-right">Delete</button></a>
+                                                        <!-- <button type="button" class="btn btn-danger float-right">Delete</button> -->
+                                                    </div>
+                                                <?php endif ?>
+                                                <h3 class="font-weight-bold mt-0">
+                                                    <?php echo $row["title"] ?>
+                                                </h3>
+                                                <p class="m-0 post_intro bl"> <?php echo $row["description"] ?> </p>
+                                            </li>
+
+                                        </ul>
+                                    <?php } ?>
                                     <!-- <a class="all pos-stat text-uppercase ml-lg-5" href="#">All announcements
                                         <i class="fa fa-caret-right" aria-hidden="true"></i>
                                     </a> -->

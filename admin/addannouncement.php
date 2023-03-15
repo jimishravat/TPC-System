@@ -9,6 +9,10 @@ if ($access != 1) {
 
 // add the annoucement
 
+$insertSuccess = 0;
+$insertFailure = 0;
+
+
 if (isset($_POST["add-annouce"])) {
     $title = $_POST["annouce-heading"];
     $desc = $_POST["annouce-desc"];
@@ -29,7 +33,12 @@ if (isset($_POST["add-annouce"])) {
         array_push($deptEligible, intval($selected));
     }
     $deptEligible = json_encode($deptEligible);
-    $insert = "INSERT INTO `annoucements`( `title`, `description`, `date_annouce`, `dept_eligible`) VALUES ('$title','$desc','$date_annouce','$deptEligible')";
+    $insert = $conn->query("INSERT INTO `annoucements`( `title`, `description`, `date_annouce`, `dept_eligible`) VALUES ('$title','$desc','$date_annouce','$deptEligible')");
+    if ($conn->affected_rows) {
+        $insertSuccess = 1;
+    }else{
+        $insertFailure = 1;
+    }
     // var_dump($insert);
 }
 
@@ -42,7 +51,9 @@ if (isset($_POST["add-annouce"])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <?php if ($insertSuccess == 1 || $insertFailure == 1) : ?>
+        <meta http-equiv="refresh" content="5;url=http://localhost/tpc/admin/addannouncement.php" />
+    <?php endif ?>
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
@@ -63,6 +74,12 @@ if (isset($_POST["add-annouce"])) {
             <div class="page-content page-container" id="page-content">
                 <div class="padding">
                     <div class="row  d-flex justify-content-center">
+                        <?php if ($insertSuccess == 1) : ?>
+                            <p class="bg-success text-white text-center">Successfully Added </p>
+                        <?php endif ?>
+                        <?php if ($insertFailure == 1) : ?>
+                            <p class="bg-danger text-white text-center">Error in Adding the Annoucement </p>
+                        <?php endif ?>
                         <div class="card user-card-full">
                             <div class="row m-l-0 m-r-0">
                                 <div class="col">
@@ -78,7 +95,7 @@ if (isset($_POST["add-annouce"])) {
                                             <p class="mx-10"><?php echo $currentDate ?></p>
                                         </div>
                                         <form action="./addannouncement.php" method="post">
-                                            <input type="text"  name="annouce-date" id="" value="<?php echo $currentDate; ?>" hidden>
+                                            <input type="text" name="annouce-date" id="" value="<?php echo $currentDate; ?>" hidden>
 
                                             <div class="col">
                                                 <p class="m-b-5 f-w-600 anno">Heading</p>

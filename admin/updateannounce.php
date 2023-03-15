@@ -1,8 +1,26 @@
 <?php
 
 include("../database.php");
+include("../helper/authorization.php");
+if ($access != 1) {
+    echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
+}
 
-// $id_number = $_GET["id"];
+$updateSuccess = 0;
+$updateFailure = 0;
+$updateSearch = 0;
+
+if (isset($_GET["updateId"])) {
+    $id = $_GET["updateId"];
+
+    $search = $conn->query("SELECT * FROM  `annoucements` WHERE annouce_id = '$id'");
+
+    if ($search->num_rows == 1) {
+        $updateSearch = 1;
+    }
+}
+
+
 
 
 
@@ -39,29 +57,39 @@ include("../database.php");
             <div class="page-content page-container" id="page-content">
                 <div class="padding">
                     <div class="row  d-flex justify-content-center">
-                        <div class="card user-card-full">
-                            <div class="row m-l-0 m-r-0">
-                                <div class="col">
-                                    <div class="card-block">
-                                        <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Update An Announcement</h6>
-                                        <div class="col">
-                                            <p class="m-b-5 f-w-600 anno">Heading</p>
-                                            <input type="text" class="m-b-5 form-control" name="" id="" value="Job Description of TCS has been added">
-                                        </div>
-                                        <div class="col">
-                                            <p class="m-b-5 f-w-600 anno">Description</p>
-                                            <input type="text" class="m-b-5 form-control" name="" id="" value="Check your eligibilty and apply for it.">
-                                        </div>
-                                        <div class="col">
-                                            <p class="m-b-5 f-w-600 anno">Date</p>
-                                            <input type="date" class="m-b-5 form-control" name="" id="" value="">
+                        <?php if ($updateSuccess == 1) : ?>
+                            <p class="bg-success text-white text-center">Successfully Added </p>
+                        <?php endif ?>
+                        <?php if ($updateFailure == 1) : ?>
+                            <p class="bg-danger text-white text-center">Error in Adding the Annoucement </p>
+                        <?php endif ?>
+                        <form action="./updateannounce.php" method="post">
+
+                            <div class="card user-card-full">
+                                <div class="row m-l-0 m-r-0">
+                                    <div class="col">
+                                        <div class="card-block">
+                                            <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Update An Announcement</h6>
+                                            <div class="col">
+                                                <p class="m-b-5 f-w-600 anno">Heading</p>
+                                                <input type="text" class="m-b-5 form-control" name="update-title" id="" value="Job Description of TCS has been added">
+                                            </div>
+                                            <div class="col">
+                                                <p class="m-b-5 f-w-600 anno">Description</p>
+                                                <input type="text" class="m-b-5 form-control" name="update-desc" id="" value="Check your eligibilty and apply for it.">
+                                            </div>
+                                            <div class="col">
+                                                <p class="m-b-5 f-w-600 anno">Date</p>
+                                                <input type="date" class="m-b-5 form-control" name="" id="" value="">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                        </div>
-                        <button class="text-center btn btn-primary">Update and Save</button>
+                            </div>
+                            <input type="submit" value="Update" name="update-annouce" class="text-center btn btn-primary">
+                        </form>
+
                     </div>
         </main>
 
