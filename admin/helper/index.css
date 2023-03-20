@@ -16,6 +16,12 @@
 .card-width-full {
   width: 100%;
 }
+.card-width-sm{
+  width: 40%;
+}
+.card-height-sm{
+  height: 20vh;
+}
 
 .btn-danger-hover:hover {
   background-color: #f108088b;

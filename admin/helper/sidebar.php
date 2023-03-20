@@ -132,12 +132,12 @@
                 </li>
             <?php endif ?>
             <li class="tooltip-element" data-tooltip="2">
-                <a href="#" data-active="6">
+                <a href="../admin/settings.php" data-active="6">
                     <div class="icon">
                         <i class='bx bx-cog'></i>
                         <i class='bx bxs-cog'></i>
                     </div>
-                    <span class="link hide">Settings</span>
+                    <span class="link hide">Change Password</span>
                 </a>
             </li>
 

@@ -37,10 +37,6 @@ if (isset($_POST["login"])) {
 
             $_SESSION["studentUserId"] = $username;
             echo "<script> window.location.href = './student/index.php'; </script>";
-
-            // var_dump($row["s_id"]);
-            // var_dump($row["s_email"]);
-            // var_dump($checkQuery);
         }
     }
 
@@ -56,7 +52,7 @@ if (isset($_POST["login"])) {
         if ($checkQuery->num_rows == 1) {
             $_SESSION["admin"] = "TPO";
             $_SESSION["access"] = 1;
-
+            $_SESSION["adminId"] = $row["tpo_id"];
             echo "<script> window.location.href = './admin/index.php'; </script>";
         }
     }
@@ -72,6 +68,9 @@ if (isset($_POST["login"])) {
                 $_SESSION["adminUserName"] = $row["tpf_fname"] . ' ' . $row["tpf_lname"];
                 $_SESSION["access"] = 2;
                 $_SESSION["adminDept"] = $row["tpf_department"];
+                $_SESSION["adminId"] = $row["tpf_id"];
+
+                // var_dump($row["tpf_id"]);
                 echo "<script> window.location.href = './admin/index.php'; </script>";
             } else {
 
@@ -95,6 +94,8 @@ if (isset($_POST["login"])) {
                 $_SESSION["adminUserName"] = $row["tpc_fname"] . ' ' . $row["tpc_lname"];
                 $_SESSION["access"] = 3;
                 $_SESSION["adminDept"] = $row["tpc_department"];
+                $_SESSION["adminId"] = $row["tpc_id"];
+
                 echo "<script> window.location.href = './admin/index.php'; </script>";
             } else {
 

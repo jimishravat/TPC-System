@@ -2,8 +2,10 @@
 
 //Including Database Connection From db.php file to avoid rewriting in all files
 require_once("database.php");
-
-
+session_start();
+if (isset($_SESSION["admin"])) {
+    echo "<script> window.location.href = 'http://localhost/tpc/admin/index.php'; </script>";
+}
 
 ?>
 

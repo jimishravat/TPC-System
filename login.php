@@ -2,6 +2,17 @@
 
 session_start();
 
+// include("./helper/authorization.php");
+
+// for admin
+if(isset($_SESSION["admin"]))
+{
+    echo "<script> window.location.href = 'http://localhost/tpc/admin/index.php'; </script>";
+
+}
+
+// For students
+
 if (isset($_SESSION["showUser"])) {
     unset($_SESSION["showUser"]);
 }

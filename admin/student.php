@@ -1,3 +1,14 @@
+<?php
+include("../database.php");
+include("../helper/authorization.php");
+
+if ($access == 2 || $access == 3) {
+    $dept = $_SESSION["adminDept"];
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,7 +37,7 @@
                         <h1 class="h2 mb-0 ls-tight">Student</h1>
                     </div>
                     <!-- Actions -->
-                    <div class="col-sm-6 col-12 text-sm-end">
+                    <!-- <div class="col-sm-6 col-12 text-sm-end">
                         <div class="mx-n1">
                             <a href="#" class="btn d-inline-flex btn-sm btn-neutral border-base mx-1">
                                 <span class=" pe-2">
@@ -41,7 +52,7 @@
                                 <span>Create</span>
                             </a>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <!-- Nav -->
                 <ul class="nav nav-tabs mt-4 overflow-x border-0">
@@ -51,7 +62,7 @@
                     <li class="nav-item">
                         <a href="#" class="nav-link font-regular">Pending</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a href="#" class="nav-link font-regular">Computer</a>
                     </li>
                     <li class="nav-item">
@@ -59,7 +70,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link font-regular">Mechanical</a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </div>

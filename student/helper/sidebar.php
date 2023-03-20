@@ -100,7 +100,7 @@
                     <h3>Student</h3>
                 </div>
             </div>
-            <a href="#" class="log-out">
+            <a href="../../tpc/logout.php" class="log-out">
                 <i class='bx bx-log-out'></i>
             </a>
         </div>

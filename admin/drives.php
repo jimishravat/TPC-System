@@ -1,3 +1,15 @@
+<?php
+
+include("../database.php");
+include("../helper/authorization.php");
+
+if ($access == 2 || $access == 3) {
+    $dept = $_SESSION["adminDept"];
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
