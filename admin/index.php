@@ -3,6 +3,8 @@
 include("../database.php");
 include("../helper/authorization.php");
 
+// var_dump($access);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -244,7 +246,7 @@ include("../helper/authorization.php");
                     </div>
                 </div>
             </div>
-
+            <h1>Departmental Statistics</h1>
             <!-- Average Package of different departments -->
 
             <?php

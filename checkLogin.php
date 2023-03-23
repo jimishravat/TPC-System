@@ -50,9 +50,11 @@ if (isset($_POST["login"])) {
     if ($typeOfUser == 4) {
         $checkQuery = $conn->query("SELECT * FROM tpo WHERE tpo_email = '$username' and tpo_password = '$password'");
         if ($checkQuery->num_rows == 1) {
+            $row = $checkQuery->fetch_assoc();
             $_SESSION["admin"] = "TPO";
             $_SESSION["access"] = 1;
             $_SESSION["adminId"] = $row["tpo_id"];
+            $_SESSION["adminEmail"] = $row["tpo_email"];
             echo "<script> window.location.href = './admin/index.php'; </script>";
         }
     }
@@ -69,6 +71,7 @@ if (isset($_POST["login"])) {
                 $_SESSION["access"] = 2;
                 $_SESSION["adminDept"] = $row["tpf_department"];
                 $_SESSION["adminId"] = $row["tpf_id"];
+                $_SESSION["adminEmail"] = $row["tpf_email"];
 
                 // var_dump($row["tpf_id"]);
                 echo "<script> window.location.href = './admin/index.php'; </script>";
@@ -95,6 +98,7 @@ if (isset($_POST["login"])) {
                 $_SESSION["access"] = 3;
                 $_SESSION["adminDept"] = $row["tpc_department"];
                 $_SESSION["adminId"] = $row["tpc_id"];
+                $_SESSION["adminEmail"] = $row["tpc_email"];
 
                 echo "<script> window.location.href = './admin/index.php'; </script>";
             } else {

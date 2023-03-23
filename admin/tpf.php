@@ -69,12 +69,12 @@ if ($action == "active") {
         <div class="container-fluid">
             <div class="mb-npx">
                 <div class="row align-items-center">
-                    <div class="col-sm-6 col-12 mb-4 mb-sm-0">
+                    <div class="col-sm-8 col-12 mb-4 mb-sm-0">
                         <!-- Title -->
                         <h1 class="h2 mb-0 ls-tight">Welcome, TPO</h1>
                     </div>
                     <!-- Actions -->
-                    <div class="col-sm-6 col-12 text-sm-end">
+                    <div class="col-sm-4 col-12 text-sm-end">
                         <div class="mx-n1">
                             <!-- <a href="#" class="btn d-inline-flex btn-sm btn-neutral border-base mx-1">
                                 <span class=" pe-2">

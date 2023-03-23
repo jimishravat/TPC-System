@@ -4,11 +4,11 @@ include("./database.php");
 
 $statusmsg = '';
 
-$id_number = $_GET["id"];
+// $id_number = $_GET["id"];
 
-$ac = '20' . $id_number[0] . $id_number[1];
-$ac = intval($ac);
-var_dump($ac);
+// $ac = '20' . $id_number[0] . $id_number[1];
+// $ac = intval($ac);
+// var_dump($ac);
 
 if (isset($_POST["upload"])) {
     $targetdir = "uploads/";
@@ -26,7 +26,10 @@ if (isset($_POST["upload"])) {
     }
 }
 echo $statusmsg;
-var_dump(base64_encode(strrev(md5("123456"))));
+
+
+// $output = shell_exec("python ../predict/test.py");
+// var_dump($output);
 ?>
 
 <!DOCTYPE html>
@@ -87,7 +90,7 @@ var_dump(base64_encode(strrev(md5("123456"))));
     </div>
 
     <form action="./test.php" enctype="multipart/form-data" method="post">
-        <input type="file" name="pdf" id="">
+        <input type="file" name="pdf" id="" multiple>
         <input type="submit" value="Submit" name="upload">
     </form>
     <?php

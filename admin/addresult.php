@@ -2,7 +2,11 @@
 
 include("../database.php");
 
-// $id_number = $_GET["id"];
+include("../helper/authorization.php");
+
+if ($access != 1) {
+    echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
+}
 
 
 
@@ -38,15 +42,7 @@ include("../database.php");
                 cell = row.insertCell(i);
                 var copycel = document.getElementById('col' + i).innerHTML;
                 cell.innerHTML = copycel;
-                // if (i == 3) {
-                //     var radioinput = document.getElementById('col3').getElementsByTagName('input');
-                //     for (var j = 0; j <= radioinput.length; j++) {
-                //         if (radioinput[j].type == 'radio') {
-                //             var rownum = rowCount;
-                //             radioinput[j].name = 'gender[' + rownum + ']';
-                //         }
-                //     }
-                // }
+                
             }
         }
 

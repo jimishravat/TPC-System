@@ -7,6 +7,10 @@ if ($access == 2 || $access == 3) {
     $dept = $_SESSION["adminDept"];
 }
 
+if ($access != 3) {
+    echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
+}
+
 
 ?>
 
@@ -46,7 +50,7 @@ if ($access == 2 || $access == 3) {
                                 </span>
                                 <span>Edit</span>
                             </a> -->
-                            
+
                         </div>
                     </div>
                 </div>
@@ -75,7 +79,7 @@ if ($access == 2 || $access == 3) {
 
             <!-- Total Students -->
             <div class="col-xl-12 col-sm-12 col-12 row">
-                <div class="card shadow border-0 mt-5 card-width-sm card-height-sm mx-2 col-sm-6">
+                <div class="card shadow-3 border-0 mt-5 card-width-sm card-height-sm mx-2 col-sm-6">
                     <div class="card-body  ">
                         <div class="row ">
                             <div class="col d-flex align-items-center">
@@ -83,17 +87,17 @@ if ($access == 2 || $access == 3) {
                                 <span class="h3 font-semibold mb-0">Jimish Ravat</span>
                             </div>
                         </div>
-                        <div class="mt-2 mb-0 text-sm d-flex justify-content-start">                            
-                            
-                                <a href="#" class="btn btn-primary btn-sm mx-2">View</a>
-                                <a href="#" class="btn btn-success btn-sm mx-2">Approve</a>
-                                <a href="#" class="btn btn-danger btn-sm mx-2">Reject</a>
-                            
+                        <div class="mt-5 mb-0 text-sm d-flex justify-content-start">
+
+                            <!-- <a href="./studentApprove.php?id=<?php echo "id" ?>" class="btn btn-primary btn-sm mx-2">View</a> -->
+                            <a href="./studentApprove.php?id=<?php echo "id" ?>&action=approve" class="btn btn-success btn-sm mx-2">Approve</a>
+                            <a href="./studentApprove.php?id=<?php echo "id" ?>&action=reject" class="btn btn-danger btn-sm mx-2">Reject</a>
+
                         </div>
                     </div>
-                    
+
                 </div>
-                <div class="card shadow border-0 mt-5 card-width-sm card-height-sm mx-2 col-sm-6">
+                <div class="card shadow-3 border-0 mt-5 card-width-sm card-height-sm mx-2 col-sm-6">
                     <div class="card-body  ">
                         <div class="row ">
                             <div class="col d-flex align-items-center">
@@ -101,17 +105,17 @@ if ($access == 2 || $access == 3) {
                                 <span class="h3 font-semibold mb-0">Jimish Ravat</span>
                             </div>
                         </div>
-                        <div class="mt-2 mb-0 text-sm d-flex justify-content-start">                            
-                            
-                                <a href="#" class="btn btn-primary btn-sm mx-2">View</a>
-                                <a href="#" class="btn btn-success btn-sm mx-2">Approve</a>
-                                <a href="#" class="btn btn-danger btn-sm mx-2">Reject</a>
-                            
+                        <div class="mt-2 mb-0 text-sm d-flex justify-content-start">
+
+                            <a href="#" class="btn btn-primary btn-sm mx-2">View</a>
+                            <a href="#" class="btn btn-success btn-sm mx-2">Approve</a>
+                            <a href="#" class="btn btn-danger btn-sm mx-2">Reject</a>
+
                         </div>
                     </div>
-                    
+
                 </div>
-                <div class="card shadow border-0 mt-5 card-width-sm card-height-sm mx-2 col-sm-6">
+                <div class="card shadow-3 border-0 mt-5 card-width-sm card-height-sm mx-2 col-sm-6">
                     <div class="card-body  ">
                         <div class="row ">
                             <div class="col d-flex align-items-center">
@@ -119,17 +123,17 @@ if ($access == 2 || $access == 3) {
                                 <span class="h3 font-semibold mb-0">Jimish Ravat</span>
                             </div>
                         </div>
-                        <div class="mt-2 mb-0 text-sm d-flex justify-content-start">                            
-                            
-                                <a href="#" class="btn btn-primary btn-sm mx-2">View</a>
-                                <a href="#" class="btn btn-success btn-sm mx-2">Approve</a>
-                                <a href="#" class="btn btn-danger btn-sm mx-2">Reject</a>
-                            
+                        <div class="mt-2 mb-0 text-sm d-flex justify-content-start">
+
+                            <a href="#" class="btn btn-primary btn-sm mx-2">View</a>
+                            <a href="#" class="btn btn-success btn-sm mx-2">Approve</a>
+                            <a href="#" class="btn btn-danger btn-sm mx-2">Reject</a>
+
                         </div>
                     </div>
-                    
+
                 </div>
-                <div class="card shadow border-0 mt-5 card-width-sm card-height-sm mx-2 col-sm-6">
+                <div class="card shadow-3 border-0 mt-5 card-width-sm card-height-sm mx-2 col-sm-6">
                     <div class="card-body  ">
                         <div class="row ">
                             <div class="col d-flex align-items-center">
@@ -137,127 +141,20 @@ if ($access == 2 || $access == 3) {
                                 <span class="h3 font-semibold mb-0">Jimish Ravat</span>
                             </div>
                         </div>
-                        <div class="mt-2 mb-0 text-sm d-flex justify-content-start">                            
-                            
-                                <a href="#" class="btn btn-primary btn-sm mx-2">View</a>
-                                <a href="#" class="btn btn-success btn-sm mx-2">Approve</a>
-                                <a href="#" class="btn btn-danger btn-sm mx-2">Reject</a>
-                            
+                        <div class="mt-2 mb-0 text-sm d-flex justify-content-start">
+
+                            <a href="#" class="btn btn-primary btn-sm mx-2">View</a>
+                            <a href="#" class="btn btn-success btn-sm mx-2">Approve</a>
+                            <a href="#" class="btn btn-danger btn-sm mx-2">Reject</a>
+
                         </div>
                     </div>
-                    
+
                 </div>
-                <div class="card shadow border-0 mt-5 card-width-sm card-height-sm mx-2 col-sm-6">
-                    <div class="card-body  ">
-                        <div class="row ">
-                            <div class="col d-flex align-items-center">
-                                <span class="h3 font-bold d-block">19CP015 - </span>
-                                <span class="h3 font-semibold mb-0">Jimish Ravat</span>
-                            </div>
-                        </div>
-                        <div class="mt-2 mb-0 text-sm d-flex justify-content-start">                            
-                            
-                                <a href="#" class="btn btn-primary btn-sm mx-2">View</a>
-                                <a href="#" class="btn btn-success btn-sm mx-2">Approve</a>
-                                <a href="#" class="btn btn-danger btn-sm mx-2">Reject</a>
-                            
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="card shadow border-0 mt-5 card-width-sm card-height-sm mx-2 col-sm-6">
-                    <div class="card-body  ">
-                        <div class="row ">
-                            <div class="col d-flex align-items-center">
-                                <span class="h3 font-bold d-block">19CP015 - </span>
-                                <span class="h3 font-semibold mb-0">Jimish Ravat</span>
-                            </div>
-                        </div>
-                        <div class="mt-2 mb-0 text-sm d-flex justify-content-start">                            
-                            
-                                <a href="#" class="btn btn-primary btn-sm mx-2">View</a>
-                                <a href="#" class="btn btn-success btn-sm mx-2">Approve</a>
-                                <a href="#" class="btn btn-danger btn-sm mx-2">Reject</a>
-                            
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="card shadow border-0 mt-5 card-width-sm card-height-sm mx-2 col-sm-6">
-                    <div class="card-body  ">
-                        <div class="row ">
-                            <div class="col d-flex align-items-center">
-                                <span class="h3 font-bold d-block">19CP015 - </span>
-                                <span class="h3 font-semibold mb-0">Jimish Ravat</span>
-                            </div>
-                        </div>
-                        <div class="mt-2 mb-0 text-sm d-flex justify-content-start">                            
-                            
-                                <a href="#" class="btn btn-primary btn-sm mx-2">View</a>
-                                <a href="#" class="btn btn-success btn-sm mx-2">Approve</a>
-                                <a href="#" class="btn btn-danger btn-sm mx-2">Reject</a>
-                            
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="card shadow border-0 mt-5 card-width-sm card-height-sm mx-2 col-sm-6">
-                    <div class="card-body  ">
-                        <div class="row ">
-                            <div class="col d-flex align-items-center">
-                                <span class="h3 font-bold d-block">19CP015 - </span>
-                                <span class="h3 font-semibold mb-0">Jimish Ravat</span>
-                            </div>
-                        </div>
-                        <div class="mt-2 mb-0 text-sm d-flex justify-content-start">                            
-                            
-                                <a href="#" class="btn btn-primary btn-sm mx-2">View</a>
-                                <a href="#" class="btn btn-success btn-sm mx-2">Approve</a>
-                                <a href="#" class="btn btn-danger btn-sm mx-2">Reject</a>
-                            
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="card shadow border-0 mt-5 card-width-sm card-height-sm mx-2 col-sm-6">
-                    <div class="card-body  ">
-                        <div class="row ">
-                            <div class="col d-flex align-items-center">
-                                <span class="h3 font-bold d-block">19CP015 - </span>
-                                <span class="h3 font-semibold mb-0">Jimish Ravat</span>
-                            </div>
-                        </div>
-                        <div class="mt-2 mb-0 text-sm d-flex justify-content-start">                            
-                            
-                                <a href="#" class="btn btn-primary btn-sm mx-2">View</a>
-                                <a href="#" class="btn btn-success btn-sm mx-2">Approve</a>
-                                <a href="#" class="btn btn-danger btn-sm mx-2">Reject</a>
-                            
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="card shadow border-0 mt-5 card-width-sm card-height-sm mx-2 col-sm-6">
-                    <div class="card-body  ">
-                        <div class="row ">
-                            <div class="col d-flex align-items-center">
-                                <span class="h3 font-bold d-block">19CP015 - </span>
-                                <span class="h3 font-semibold mb-0">Jimish Ravat</span>
-                            </div>
-                        </div>
-                        <div class="mt-2 mb-0 text-sm d-flex justify-content-start">                            
-                            
-                                <a href="#" class="btn btn-primary btn-sm mx-2">View</a>
-                                <a href="#" class="btn btn-success btn-sm mx-2">Approve</a>
-                                <a href="#" class="btn btn-danger btn-sm mx-2">Reject</a>
-                            
-                        </div>
-                    </div>
-                    
-                </div>
-                
-                
-                
+
+
+
+
             </div>
         </div>
 
