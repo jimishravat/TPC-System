@@ -277,12 +277,12 @@ $user = isset($_GET["user"]) ? isset($_GET["user"]) : 0;
             var oneSpecial = document.getElementById('oneSpecial');
             var pass = document.getElementById('password').value;
             // var confirm_pass = document.getElementById('cPassword').value;
-            if (pass.length > 8) {
+            if (pass.length >= 8) {
                 eightCharacter.classList.remove("extra");
                 eightCharacter.classList.add("done");
                 c1 = 1
             }
-            if (pass.length <= 8) {
+            if (pass.length < 8) {
                 eightCharacter.classList.remove("done");
                 eightCharacter.classList.add("extra");
                 c1 = 0

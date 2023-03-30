@@ -7,6 +7,36 @@ if ($access == 2 || $access == 3) {
     $dept = $_SESSION["adminDept"];
 }
 
+// if action button is clicked
+$action = isset($_GET["action"]) ? $_GET["action"] : 0;
+
+// var_dump($action);
+if ($action == "active") {
+    $id = $_GET["id"];
+    // change the status from 0 to 1
+    $update = $conn->query("UPDATE `drive` SET `is_active`=1 WHERE drive_id = '$id'");
+
+    if ($conn->affected_rows) {
+        echo "<script> window.location.href = 'http://localhost/tpc/admin/drives.php'; </script>";
+    }
+} elseif ($action == "inactive") {
+    $id = $_GET["id"];
+
+    // change the status from 1 to 0
+    $update = $conn->query("UPDATE `drive` SET `is_active`=0 WHERE drive_id = '$id'");
+    if ($conn->affected_rows) {
+        echo "<script> window.location.href = 'http://localhost/tpc/admin/drives.php'; </script>";
+    }
+} elseif ($action == "delete") {
+    $id = $_GET["id"];
+    $deleteJob = $conn->query("DELETE FROM `drive_job_role` WHERE drive_id='$id'");
+    if ($conn->affected_rows) {
+        $deleteDrive = $conn->query("DELETE FROM `drive` WHERE drive_id='$id'");
+        if ($conn->affected_rows) {
+            echo "<script> window.location.href = 'http://localhost/tpc/admin/drives.php'; </script>";
+        }
+    }
+}
 
 ?>
 
@@ -46,12 +76,16 @@ if ($access == 2 || $access == 3) {
                                 </span>
                                 <span>Edit</span>
                             </a> -->
-                            <a href="./adddrive.php" class="btn d-inline-flex btn-sm btn-primary mx-1">
-                                <span class=" pe-2">
-                                    <i class="bi bi-plus"></i>
-                                </span>
-                                <span>Create</span>
-                            </a>
+                            <!-- Add Drive Button -->
+                            <!-- Only Access to TPO -->
+                            <?php if ($access == 1) : ?>
+                                <a href="./adddrive.php" class="btn d-inline-flex btn-sm btn-primary mx-1">
+                                    <span class=" pe-2">
+                                        <i class="bi bi-plus"></i>
+                                    </span>
+                                    <span>Create</span>
+                                </a>
+                            <?php endif ?>
                         </div>
                     </div>
                 </div>
@@ -78,86 +112,133 @@ if ($access == 2 || $access == 3) {
 
         <div class="row">
 
-            <!-- Total Students -->
+            <!-- Total Drives -->
             <div class="col-xl-12 col-sm-12 col-12">
-                <div class="card shadow border-0 my-10 card-width-full">
-                    <div class="card-body ">
-                        <div class="row">
-                            <div class="col">
-                                <span class="h2 font-bold  d-block mb-2">Tata Consultancy Services</span>
-                                <span class="h5 font-semibold mb-0">www.tcs.com</span>
-                            </div>
-                            <div class="col-auto">
-                                <div class="icon icon-shape text-white text-lg rounded-circle">
-                                    <img src="../images/logo.png" alt="">
+                <?php
+
+                $allDrives = $conn->query("SELECT company.*, drive.* FROM company,drive WHERE company.company_id = drive.company_id ");
+
+                while ($drive = $allDrives->fetch_assoc()) {
+                    $driveId = $drive["drive_id"];
+
+                ?>
+                    <div class="card shadow my-5 card-width-full">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-2 col-auto align-items-center d-flex justify-content-center">
+                                    <div class="icon icon-shape text-white text-lg rounded-circle">
+                                        <img src="./uploads/logo/<?php echo $drive["company_logo"] ?>" alt="">
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-8 col-8 d-flex flex-column justify-content-center">
+                                    <div class="row">
+                                        <span class="h3 font-bold "><?php echo $drive["company_name"] ?></span>
+                                    </div>
+                                    <div class="row">
+                                        <span class="h6  font-bold "><?php echo $drive["company_url"] ?></span>
+                                    </div>
+                                    <div class="row d-flex ">
+                                        <span class="h5 font-bold  mt-2"><?php echo $drive["job_role"] ?></span>
+
+                                    </div>
+                                    <div class="row mt-5">
+
+                                        <!-- View Button  -->
+                                        <div class="col-auto">
+                                            <a href="./viewDrive.php?drive_id=<?php echo $drive["drive_id"] ?>" class="btn btn-primary btn-sm">View</a>
+                                        </div>
+
+                                        <!-- Collect Data Button -->
+                                        <div class="col-auto">
+                                            <a href="./download_excel.php?drive_id=<?php echo $drive["drive_id"] ?>" target="_blank" rel="noopener noreferrer" class="btn btn-warning btn-sm">Collect Data</a>
+                                        </div>
+
+                                        <!-- Add Result Button -->
+                                        <!-- Only Access to TPO -->
+                                        <?php if ($access == 1) : ?>
+                                            <?php if (!$drive["result_out"]) : ?>
+                                                <div class="col-auto">
+                                                    <a href="./addresult.php?drive_id=<?php echo $drive["drive_id"] ?>" class="btn btn-secondary btn-sm">Add Result</a>
+
+                                                </div>
+                                            <?php endif ?>
+                                            <div class="col-auto">
+                                                <a title="Edit" href="./updateDrive.php?drive_id=<?php echo $drive["drive_id"] ?>" class="btn btn-square btn-sm btn-neutral text-warning-hover"><i class="bi bi-pencil"></i></a>
+                                            </div>
+                                        <?php endif ?>
+
+                                        <!-- Active and Inactive Button -->
+                                        <!-- Only Access to TPO -->
+                                        <?php if ($access == 1) : ?>
+                                            <div class="col-auto">
+                                                <?php if ($drive["is_active"]) : ?>
+
+                                                    <a title="De-Activate" href="./drives.php?id=<?php echo $drive["drive_id"] ?>&action=inactive" class="btn btn-square btn-sm btn-neutral btn-danger-hover">
+                                                        <i class="bi bi-bookmark-x "></i>
+                                                    </a>
+                                                <?php else : ?>
+                                                    <a title="Activate" href="./drives.php?id=<?php echo $drive["drive_id"] ?>&action=active" class="btn btn-square btn-sm btn-neutral btn-success-hover">
+                                                        <i class="bi bi-bookmark-check "></i>
+                                                    </a>
+
+                                                <?php endif ?>
+                                            </div>
+                                        <?php endif ?>
+
+                                        <!-- Delete Button -->
+                                        <!-- Only Access to TPO -->
+                                        <?php if ($access == 1) : ?>
+
+                                            <div class="col-auto">
+                                                <a title="Delete" href="./drives.php?id=<?php echo $drive["drive_id"] ?>&action=delete" class="btn btn-square btn-sm btn-neutral btn-danger-hover"><i class="bi bi-trash"></i></a>
+                                            </div>
+                                        <?php endif ?>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-2 col-sm-2">
+                                    <div class="row d-flex flex-column align-items-center">
+                                        <div class="col">
+
+                                            <?php if ($drive["is_active"]) : ?>
+                                                <span class="badge  badge-lg badge-dot">
+                                                    <i class="bg-success"></i>Active
+                                                </span>
+                                            <?php else : ?>
+                                                <span class="badge  badge-lg badge-dot">
+                                                    <i class="bg-danger"></i>In-Active
+                                                </span>
+                                            <?php endif ?>
+                                        </div>
+                                        <div class="col">
+                                            <span class="badge badge-lg badge-dot">
+
+                                                <?php if ($drive["result_out"]) : ?>
+                                                    <i class="bg-success"></i>
+                                                <?php else : ?>
+                                                    <i class="bg-warning"></i>
+                                                <?php endif ?>
+
+                                                Result
+                                            </span>
+                                        </div>
+                                        <div class="col">
+                                            <p class="font-bold ">Deadline : </p>
+                                            <p><?php echo $drive["drive_deadline"] ?></p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="mt-2 mb-0 text-sm">
-                            <!-- <span class="badge badge-pill bg-soft-warning text-warning me-2">
-                                <i class="bi bi-arrow-up me-1"></i>13%
-                                <i class='bx bxs-error'></i>13
-                            </span> -->
-                            <span>
-
-                                <a href="#" class="btn btn-primary btn-sm">View</a>
-                                <a href="#" class="btn btn-warning btn-sm">Collect Data</a>
-                                <a href="./updateStudent.php?id=<?php echo "id" ?>" class="btn btn-square btn-sm btn-neutral text-warning-hover"><i class="bi bi-pencil"></i></a>
-                                <a href="./updateStudent.php?id=<?php echo "id" ?>" class="btn btn-square btn-sm btn-neutral btn-danger-hover"><i class="bi bi-trash"></i></a>
-
-                            </span>
-
-                            <!-- Status -->
-                            <span class="badge mx-5 badge-lg badge-dot">
-                                <i class="bg-success"></i>Active
-                            </span>
-                            <span class="badge mx-5 badge-lg badge-dot">
-                                <i class="bg-warning"></i>Result
-                            </span>
-                            <!-- <span class="text-nowrap text-xs text-muted">Status</span> -->
                         </div>
                     </div>
-                </div>
-                <div class="card shadow border-0 my-10 card-width-full">
-                    <div class="card-body ">
-                        <div class="row">
-                            <div class="col">
-                                <span class="h2 font-bold  d-block mb-2">Tata Consultancy Services</span>
-                                <span class="h5 font-semibold mb-0">www.tcs.com</span>
-                            </div>
-                            <div class="col-auto">
-                                <div class="icon icon-shape text-white text-lg rounded-circle">
-                                    <img src="../images/logo.png" alt="">
-                                </div>
-                            </div>
-                        </div>
+                <?php
+                }
 
-                        <div class="mt-2 mb-0 text-sm">
-                            <!-- <span class="badge badge-pill bg-soft-warning text-warning me-2">
-                                <i class="bi bi-arrow-up me-1"></i>13%
-                                <i class='bx bxs-error'></i>13
-                            </span> -->
-                            <span>
+                ?>
 
-                                <a href="./viewDrive.php?id=<?php echo "id" ?>" class="btn btn-primary btn-sm">View</a>
-                                <a href="./collectData.php?id=<?php echo "id" ?>" class="btn btn-warning btn-sm">Collect Data</a>
-                                <a href="./updateStudent.php?id=<?php echo "id" ?>" class="btn btn-square btn-sm btn-neutral text-warning-hover"><i class="bi bi-pencil"></i></a>
-                                <a href="./updateStudent.php?id=<?php echo "id" ?>" class="btn btn-square btn-sm btn-neutral btn-danger-hover"><i class="bi bi-trash"></i></a>
-
-                            </span>
-
-                            <!-- Status -->
-                            <span class="badge mx-5 badge-lg badge-dot">
-                                <i class="bg-danger"></i>In-Active
-                            </span>
-                            <span class="badge mx-5 badge-lg badge-dot">
-                                <i class="bg-success"></i>Result
-                            </span>
-                            <!-- <span class="text-nowrap text-xs text-muted">Status</span> -->
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 

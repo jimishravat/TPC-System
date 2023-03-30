@@ -56,6 +56,9 @@ if (isset($_POST["login"])) {
             $_SESSION["adminId"] = $row["tpo_id"];
             $_SESSION["adminEmail"] = $row["tpo_email"];
             echo "<script> window.location.href = './admin/index.php'; </script>";
+        } else {
+            echo "<script> alert('Check Username or Password'); </script>";
+            echo "<script> window.location.href = './login.php'; </script>";
         }
     }
 
