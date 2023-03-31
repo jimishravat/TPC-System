@@ -183,7 +183,7 @@ $statusmsg = '';
         You have selected <strong>blue radio button</strong> so i am here
     </div>
 
-    <form action="./test.php" enctype="multipart/form-data" method="post">
+    <!-- <form action="./test.php" enctype="multipart/form-data" method="post">
         <input type="file" name="pdf" id="" multiple>
         <input type="submit" value="Submit" name="upload">
     </form>
@@ -197,20 +197,20 @@ $statusmsg = '';
     ?>
         <a href="./uploads/<?php echo $row["file_loc"] ?>" target="_blank" rel="noopener noreferrer"><?php echo $row["file_loc"] ?></a>
 
-    <?php } ?>
+    <?php } ?> -->
 
     <?php
     var_dump(base64_encode(strrev(md5("Tpo@1234"))));
     // $a = array("19cp015", "19cp016", "19cp017", "19cp018");
     // $a = json_encode($a);
     // $insert = $conn->query("UPDATE `drive_job_role` SET `applied`='$a' WHERE job_id = '1'");
-    $select = $conn->query("SELECT company.company_name, company.company_url, company.company_location, drive.drive_deadline, drive.dept_eligible, drive_job_role.job_role FROM company,drive_job_role,drive WHERE company.company_id = drive.company_id AND drive_job_role.drive_id = drive.drive_id;");
+    // $select = $conn->query("SELECT company.company_name, company.company_url, company.company_location, drive.drive_deadline, drive.dept_eligible, drive_job_role.job_role FROM company,drive_job_role,drive WHERE company.company_id = drive.company_id AND drive_job_role.drive_id = drive.drive_id;");
     // $applied = json_decode($row["applied"], true);
 
-    while ($row = $select->fetch_assoc()) {
+    // while ($row = $select->fetch_assoc()) {
 
-        var_dump($row);
-    }
+    //     var_dump($row);
+    // }
     ?>
 </body>
 

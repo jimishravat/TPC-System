@@ -22,6 +22,26 @@
 	}
 }
 
+.card-body {
+	height: 170px;
+	flex: 1 1 auto;
+	padding: 1.5rem 1.5rem;
+	color: #525f7f;
+  }
+  
+  .card-width-full {
+	width: 100%;
+  }
+  .card-width-sm{
+	width: 30%;
+  }
+  .card-width-m{
+	width: 70%;
+  }
+  .card-height-sm{
+	height: 20vh;
+  }
+
 .announcements .slick-slider ul {
 	font-family: "Open Sans Condensed", Arial, Verdana, sans-serif;
 }

@@ -37,7 +37,7 @@ else {
         <div class="wrapper">
             <div class="title"><span>Succesfully Registered</span></div>
             <div class="details">
-                <p>User Name : <strong> <?php echo $user_id ?> </strong>
+                <p>User Name : <strong> <?php echo strtoupper($user_id)  ?> </strong>
                 </p>
                 <p> Your account is in <strong>IN-ACTIVE</strong> state. It will be active only after the TPC approves you. You can check the status in the profile section after you <a href="./login.php"> LOGIN </a> </p>
                 <p> Once you fill your details and all supporting documents then only you will be allowed to apply in any Placement Drive </p>

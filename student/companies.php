@@ -1,3 +1,18 @@
+<?php
+include("../database.php");
+include("./applyDrive.php");
+session_start();
+
+if (!isset($_SESSION["studentUserId"])) {
+    echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
+}
+
+$dept = $_SESSION["studentDept"];
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,183 +32,132 @@
     <script src="/student/helper/index.js"></script>
     <?php include("./helper/sidebar.php") ?>
     <main>
-        <h1>Welcome Student,</h1>
+        <h1>Welcome <?php echo strtoupper($_SESSION["studentUserId"]) ?>,</h1>
+        <div class="container-fluid">
 
-        <div class="p-5 bg-light" style="margin-top: 30px; overflow-y: scroll; height:350px;">
-            <h1 class="mb-3 he">Tata Consultancy Services</h1>
-            <img src="http://localhost/tpc-main/images/logo.png" class="float-end img-thumbnail " alt="..." style="height:200px;width:200px">
-            <h3 class="mb-3 ur">www.tcs.com</h3>
-            <h4 class="mb-3 jr">System Engineer</h4>
-            <p>Location : <span>Gandhinagar</span></p>
-            <p>Salary: <span>7,00,022</span></p>
-            <p>Job Description:
-                <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!
-                    Ad dolore dignissimos asperiores dicta facere optio quod commodi nam tempore recusandae. Rerum sed nulla eum vero expedita ex delectus voluptates rem at neque quos facere sequi unde optio aliquam
-                    Tenetur quod quidem in voluptatem corporis dolorum dicta sit pariatur porro quaerat autem ipsam odit quam beatae tempora quibusdam illum! Modi velit odio nam nulla unde amet odit pariatur at!
-                    Consequatur rerum amet fuga expedita sunt et tempora saepe? Iusto nihil explicabo perferendis quos provident delectus ducimus necessitatibus reiciendis optio tempora unde earum doloremque commodi laudantium ad nulla vel odio?
-                </span>
-            </p>
-            <p>No of Vacancies: <span>Approx 3</span></p>
-            <p>Bond: <span>1 year</span></p>
-            <p>Will Provide Internship:<span> Yes </span></p>
-            <p>Minimum Qualification:
-                <span>
-                    <ol>
-                        <li>No Backlog</li>
-                        <li>Atleast 6 SPI throughout all Semester</li>
-                        <li>B.E./B.TECH. equivalent degree</li>
-                        <li>IT/CP/EC/EL</li>
-                    </ol>
-                </span>
-            </p>
-            <p>Skills Required:
-                <span>
-                    <ol>
-                        <li>Java And/Or Python(Programing Language)</li>
-                        <li>HTML,CSS,JS</li>
-                    </ol>
-                </span>
-            </p>
-            <p>Download the attached PDF: </p>
-            <span><a href="http://localhost/tpc-main/demopdf/1.pdf" target="_blank"><button class="btn btn-primary">Download</button></a></span>
-            <p><span id="eligible">You are eligible for this drive
-                    <button class="btn btn-success">Apply with Primary Resume</button>
-                    <button class="btn btn-danger">Apply with Secondary Resume</button></span>
-            </p>
+            <div class="row">
+                <?php if (checkProfile($_SESSION["studentUserId"]) == 0) : ?>
+                    <div class="mx-2  bg-danger rounded">
+                        <p class="text-white text-center">Your Profile is not yet approved. &nbsp; Please fill all details and contact your respective TPC </p>
+                        <p class="text-white text-center font-italic"><u>NOTE:</u> You will not able to apply for drive until your profile is approved</p>
+                    </div>
+                <?php endif ?>
+                <!-- Total Drives -->
+                <div class="col-xl-12 col-sm-12 col-12">
+                    <?php
+
+                    $allDrives = $conn->query("SELECT company.*, drive.* FROM company,drive WHERE company.company_id = drive.company_id AND JSON_CONTAINS(dept_eligible,'$dept') ORDER BY drive_deadline DESC");
+
+                    while ($drive = $allDrives->fetch_assoc()) {
+                        $driveId = $drive["drive_id"];
+
+                    ?>
+                        <div class="card shadow my-5 card-width-full">
+                            <div class="card-body row d-flex">
+                                <!-- <div class="row"> -->
+                                <div class="col-sm-2 col-auto align-items-center d-flex justify-content-center">
+                                    <div class="icon icon-shape text-white text-lg rounded-circle">
+                                        <img src="../admin/uploads/logo/<?php echo $drive["company_logo"] ?>" alt="">
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-8 col d-flex flex-column justify-content-center">
+                                    <div class="row">
+                                        <span class="h3 font-bold "><?php echo $drive["company_name"] ?></span>
+                                    </div>
+                                    <div class="row">
+                                        <span class="h6  font-bold "><?php echo $drive["company_url"] ?></span>
+                                    </div>
+                                    <div class="row d-flex ">
+                                        <span class="h5 font-bold  mt-2"><?php echo $drive["job_role"] ?></span>
+
+                                    </div>
+                                    <div class="row mt-5 align-items-center">
+
+                                        <!-- View Button  -->
+                                        <div class="col-auto">
+                                            <a href="./viewDrive.php?drive_id=<?php echo $drive["drive_id"] ?>" class="btn text-white btn-primary btn-sm">View</a>
+                                        </div>
+
+                                        <!-- Apply Data Button -->
+                                        <div class="col-auto">
+                                            <a href="./applyDrive.php?drive_id=<?php echo $drive["drive_id"] ?>&stu_id=<?php echo $_SESSION["studentUserId"] ?>" class="btn text-white btn-warning btn-sm">Apply</a>
+                                        </div>
+
+                                        <div class="col-auto">
+                                            <span class="badge badge-lg badge-dot ">
+                                                <?php if (checkApplied($_SESSION["studentUserId"], $drive["drive_id"]) == 1) : ?>
+                                                    <i class="bg-success"></i>Applied
+                                                <?php else : ?>
+                                                    <i class="bg-danger"></i>Not Applied
+                                                <?php endif ?>
+                                            </span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span class="badge badge-lg badge-dot">
+                                                <?php if (checkEligiblity($drive["drive_id"], $_SESSION["studentUserId"]) == 1) : ?>
+                                                    <i class="bg-success"></i>Eligible
+                                                <?php else : ?>
+                                                    <i class="bg-danger"></i>Not-Eligible
+                                                <?php endif ?>
+                                            </span>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                                <div class="col-2 col-sm-2">
+                                    <div class="row d-flex flex-column align-items-center">
+                                        <div class="col">
+
+                                            <?php if ($drive["is_active"]) : ?>
+                                                <span class="badge  badge-lg badge-dot">
+                                                    <i class="bg-success"></i>Active
+                                                </span>
+                                            <?php else : ?>
+                                                <span class="badge badge-lg badge-dot">
+                                                    <i class="bg-danger"></i>In-Active
+                                                </span>
+                                            <?php endif ?>
+                                        </div>
+                                        <div class="col">
+                                            <span class="badge badge-lg badge-dot">
+
+                                                <?php if ($drive["result_out"]) : ?>
+                                                    <i class="bg-success"></i>
+                                                <?php else : ?>
+                                                    <i class="bg-warning"></i>
+                                                <?php endif ?>
+
+                                                Result
+                                            </span>
+                                        </div>
+                                        <div class="col">
+                                            <p class="font-bold  text-danger">Deadline : </p>
+                                            <p class="text-danger font-bold"><?php echo $drive["drive_deadline"] ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- </div> -->
+
+                            </div>
+                        </div>
+                    <?php
+                    }
+
+                    ?>
+
+                </div>
+            </div>
+
         </div>
-
-
-
-
-        <div class="p-5 bg-light" style="margin-top: 30px; overflow-y: scroll; height:350px;">
-            <h1 class="mb-3 he">Tata Consultancy Services</h1>
-            <img src="http://localhost/tpc-main/images/logo.png" class="float-end img-thumbnail " alt="..." style="height:200px;width:200px">
-            <h3 class="mb-3 ur">www.tcs.com</h3>
-            <h4 class="mb-3 jr">System Engineer</h4>
-            <p>Location : <span>Gandhinagar</span></p>
-            <p>Salary: <span>7,00,022</span></p>
-            <p>Job Description:
-                <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!
-                    Ad dolore dignissimos asperiores dicta facere optio quod commodi nam tempore recusandae. Rerum sed nulla eum vero expedita ex delectus voluptates rem at neque quos facere sequi unde optio aliquam
-                    Tenetur quod quidem in voluptatem corporis dolorum dicta sit pariatur porro quaerat autem ipsam odit quam beatae tempora quibusdam illum! Modi velit odio nam nulla unde amet odit pariatur at!
-                    Consequatur rerum amet fuga expedita sunt et tempora saepe? Iusto nihil explicabo perferendis quos provident delectus ducimus necessitatibus reiciendis optio tempora unde earum doloremque commodi laudantium ad nulla vel odio?
-                </span>
-            </p>
-            <p>No of Vacancies: <span>Approx 3</span></p>
-            <p>Bond: <span>1 year</span></p>
-            <p>Will Provide Internship:<span> Yes </span></p>
-            <p>Minimum Qualification:
-                <span>
-                    <ol>
-                        <li>No Backlog</li>
-                        <li>Atleast 6 SPI throughout all Semester</li>
-                        <li>B.E./B.TECH. equivalent degree</li>
-                        <li>IT/CP/EC/EL</li>
-                    </ol>
-                </span>
-            </p>
-            <p>Skills Required:
-                <span>
-                    <ol>
-                        <li>Java And/Or Python(Programing Language)</li>
-                        <li>HTML,CSS,JS</li>
-                    </ol>
-                </span>
-            </p>
-            <p>Download the attached PDF: </p>
-            <span><a href="http://localhost/tpc-main/demopdf/1.pdf" target="_blank"><button class="btn btn-primary">Download</button></a></span>
-            <p><span id="ineligible">You are not eligible for this drive
-                    <button class="btn btn-success">Apply with Primary Resume</button>
-                    <button class="btn btn-danger">Apply with Secondary Resume</button></span>
-            </p>
-        </div>
-
-
-        <div class="p-5 bg-light" style="margin-top: 30px; overflow-y: scroll; height:350px;">
-            <h1 class="mb-3 he">Tata Consultancy Services</h1>
-            <img src="http://localhost/tpc-main/images/logo.png" class="float-end img-thumbnail " alt="..." style="height:200px;width:200px">
-            <h3 class="mb-3 ur">www.tcs.com</h3>
-            <h4 class="mb-3 jr">System Engineer</h4>
-            <p>Location : <span>Gandhinagar</span></p>
-            <p>Salary: <span>7,00,022</span></p>
-            <p>Job Description:
-                <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!
-                    Ad dolore dignissimos asperiores dicta facere optio quod commodi nam tempore recusandae. Rerum sed nulla eum vero expedita ex delectus voluptates rem at neque quos facere sequi unde optio aliquam
-                    Tenetur quod quidem in voluptatem corporis dolorum dicta sit pariatur porro quaerat autem ipsam odit quam beatae tempora quibusdam illum! Modi velit odio nam nulla unde amet odit pariatur at!
-                    Consequatur rerum amet fuga expedita sunt et tempora saepe? Iusto nihil explicabo perferendis quos provident delectus ducimus necessitatibus reiciendis optio tempora unde earum doloremque commodi laudantium ad nulla vel odio?
-                </span>
-            </p>
-            <p>No of Vacancies: <span>Approx 3</span></p>
-            <p>Bond: <span>1 year</span></p>
-            <p>Will Provide Internship:<span> Yes </span></p>
-            <p>Minimum Qualification:
-                <span>
-                    <ol>
-                        <li>No Backlog</li>
-                        <li>Atleast 6 SPI throughout all Semester</li>
-                        <li>B.E./B.TECH. equivalent degree</li>
-                        <li>IT/CP/EC/EL</li>
-                    </ol>
-                </span>
-            </p>
-            <p>Skills Required:
-                <span>
-                    <ol>
-                        <li>Java And/Or Python(Programing Language)</li>
-                        <li>HTML,CSS,JS</li>
-                    </ol>
-                </span>
-            </p>
-            <p>Download the attached PDF: </p>
-            <span><a href="http://localhost/tpc-main/demopdf/1.pdf" target="_blank"><button class="btn btn-primary">Download</button></a></span>
-        </div>
-
-
-        <div class="p-5 bg-light" style="margin-top: 30px; overflow-y: scroll; height:350px;">
-            <h1 class="mb-3 he">Tata Consultancy Services</h1>
-            <img src="http://localhost/tpc-main/images/logo.png" class="float-end img-thumbnail " alt="..." style="height:200px;width:200px">
-            <h3 class="mb-3 ur">www.tcs.com</h3>
-            <h4 class="mb-3 jr">System Engineer</h4>
-            <p>Location : <span>Gandhinagar</span></p>
-            <p>Salary: <span>7,00,022</span></p>
-            <p>Job Description:
-                <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!
-                    Ad dolore dignissimos asperiores dicta facere optio quod commodi nam tempore recusandae. Rerum sed nulla eum vero expedita ex delectus voluptates rem at neque quos facere sequi unde optio aliquam
-                    Tenetur quod quidem in voluptatem corporis dolorum dicta sit pariatur porro quaerat autem ipsam odit quam beatae tempora quibusdam illum! Modi velit odio nam nulla unde amet odit pariatur at!
-                    Consequatur rerum amet fuga expedita sunt et tempora saepe? Iusto nihil explicabo perferendis quos provident delectus ducimus necessitatibus reiciendis optio tempora unde earum doloremque commodi laudantium ad nulla vel odio?
-                </span>
-            </p>
-            <p>No of Vacancies: <span>Approx 3</span></p>
-            <p>Bond: <span>1 year</span></p>
-            <p>Will Provide Internship:<span> Yes </span></p>
-            <p>Minimum Qualification:
-                <span>
-                    <ol>
-                        <li>No Backlog</li>
-                        <li>Atleast 6 SPI throughout all Semester</li>
-                        <li>B.E./B.TECH. equivalent degree</li>
-                        <li>IT/CP/EC/EL</li>
-                    </ol>
-                </span>
-            </p>
-            <p>Skills Required:
-                <span>
-                    <ol>
-                        <li>Java And/Or Python(Programing Language)</li>
-                        <li>HTML,CSS,JS</li>
-                    </ol>
-                </span>
-            </p>
-            <p>Download the attached PDF: </p>
-            <span><a href="http://localhost/tpc-main/demopdf/1.pdf" target="_blank"><button class="btn btn-primary">Download</button></a></span>
-        </div>
-
 
 
 
 
         <p class="copyright">
-            &copy; 2023 - <span>Dhyey Badheka</span> All Rights Reserved.
+            &copy; 2023 - <span>Jimish Ravat</span> All Rights Reserved.
         </p>
     </main>
 

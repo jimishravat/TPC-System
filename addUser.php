@@ -13,6 +13,8 @@ if (isset($_POST["registerStudent"])) {
     $mobile = $_POST["mobile"];
     $password = $_POST["password"];
     $dept = $_POST["department"];
+    $fname = $_POST["fname"];
+    $lname = $_POST["lname"];
     $gender = strtolower($_POST["gender"]);
 
     $academic_year = intval('20' . $id_number[0] . $id_number[1]);
@@ -28,7 +30,7 @@ if (isset($_POST["registerStudent"])) {
     }
 
     // INSERT query
-    $insertQuery = $conn->query("INSERT INTO `student`(`s_id`,  `s_email`, `s_mobile`, `s_dept`, `s_gender`, `s_password`,   `s_academic_year`, `is_d2d`) VALUES ('$id_number','$email','$mobile','$dept','$gender','$password','$academic_year','$is_d2d')");
+    $insertQuery = $conn->query("INSERT INTO `student`(`s_id`, `s_fname`,`s_lname`,  `s_email`, `s_mobile`, `s_dept`, `s_gender`, `s_password`,   `s_academic_year`, `is_d2d`) VALUES ('$id_number','$fname','$lname','$email','$mobile','$dept','$gender','$password','$academic_year','$is_d2d')");
 
     // if successfully inserted the value in the database then show the user details page with User ID
     if ($insertQuery) {
@@ -36,6 +38,6 @@ if (isset($_POST["registerStudent"])) {
             unset($_SESSION["alreadyRegisteredId"]);
         }
         $_SESSION["showUser"] = true;
-        echo "<script> window.location.href = './showUserDetails.php?user_id=$email'; </script>";
+        echo "<script> window.location.href = './showUserDetails.php?user_id=$id_number'; </script>";
     }
 }

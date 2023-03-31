@@ -54,6 +54,16 @@ $user = isset($_GET["user"]) ? isset($_GET["user"]) : 0;
 
                         </div>
                         <div class="input-box">
+                            <span class="details">First Name</span>
+                            <input type="text" name="fname" placeholder="Enter your First Name" required>
+
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Last Name</span>
+                            <input type="text" name="lname" placeholder="Enter your Last Name" required>
+
+                        </div>
+                        <div class="input-box">
                             <span class="details">Email</span>
                             <input type="email" name="email" id="email" onkeyup="check_email()" placeholder="Enter your email" required>
                             <span id="emailmessage"></span>
@@ -99,11 +109,11 @@ $user = isset($_GET["user"]) ? isset($_GET["user"]) : 0;
                         <div class="input-box">
                             <span class="details">Gender</span>
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadio1" name="gender" class="custom-control-input">
+                                <input type="radio" id="customRadio1" name="gender" value="male" class="custom-control-input">
                                 <label class="custom-control-label" for="customRadio1">Male</label>
                             </div>
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadio2" name="gender" class="custom-control-input">
+                                <input type="radio" id="customRadio2" name="gender" value="female" class="custom-control-input">
                                 <label class="custom-control-label" for="customRadio2">Female</label>
                             </div>
                         </div>
@@ -362,12 +372,12 @@ $user = isset($_GET["user"]) ? isset($_GET["user"]) : 0;
         function check_email() {
             var email = document.getElementById('email').value;
 
-            if (email.match(/[0-9A-Za-z]+@bvmengineering.ac.in/)) {
+            if (email.match(/[0-9A-Za-z]+@[A-Za-z.-]+\.[A-Za-z]{2,6}/)) {
                 document.getElementById('emailmessage').style.color = 'green';
                 document.getElementById('emailmessage').innerHTML = '🗹 Valid Email';
                 checkEmail = 1;
             }
-            if (!email.match(/[0-9A-Za-z]+@bvmengineering.ac.in/)) {
+            if (!email.match(/[0-9A-Za-z]+@[A-Za-z.-]+\.[A-Za-z]{2,6}/)) {
                 document.getElementById('emailmessage').style.color = 'red';
                 document.getElementById('emailmessage').innerHTML = '☒ InValid Email';
                 checkEmail = 0;

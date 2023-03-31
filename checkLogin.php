@@ -34,9 +34,15 @@ if (isset($_POST["login"])) {
     if ($typeOfUser == 1) {
         $checkQuery = $conn->query("SELECT * FROM student WHERE s_id = '$username' AND s_password = '$password' ");
         if ($checkQuery->num_rows == 1) {
-
+            $row = $checkQuery->fetch_assoc();
             $_SESSION["studentUserId"] = $username;
+            $_SESSION["studentEmail"] = $row["s_email"];
+            $_SESSION["studentDept"] = $row["s_dept"];
+            $_SESSION["isApproved"] = $row["is_approved"];
             echo "<script> window.location.href = './student/index.php'; </script>";
+        } else {
+            echo "<script> alert('Check Username or Password'); </script>";
+            echo "<script> window.location.href = './login.php'; </script>";
         }
     }
 

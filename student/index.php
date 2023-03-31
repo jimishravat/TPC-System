@@ -1,3 +1,17 @@
+<?php
+
+include("../database.php");
+
+session_start();
+
+if (!isset($_SESSION["studentUserId"])) {
+    echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
+}
+
+$dept = $_SESSION["studentDept"];
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,41 +44,29 @@
                             <div class="announcement-slider border-r-xs-0 border-r position-relative">
                                 <div>
                                     <ul class="nolist list-unstyled position-relative mb-0 px-lg-5 pt-lg-5">
-                                        <li class="border-bottom pb-3 mt-3">
-                                            <span class="meta text-uppercase">April 02nd, 2018</span>
-                                            <h3 class="font-weight-bold mt-0">
-                                                <a href="#">
-                                                    Solodev Ranked as High Performer on G2 Crowd
-                                                </a>
-                                            </h3>
-                                            <p class="m-0 post_intro bl">Florida's premier web content management software company ranked favorably in user-based G2 Crowd ratings.</p>
-                                        </li>
-                                        <li class="border-bottom pb-3 mt-3">
-
-                                            <span class="meta text-uppercase">January 30th, 2018</span>
+                                        <?php
 
 
-                                            <h3 class="font-weight-bold mt-0">
-                                                <a href="#">
-                                                    Solodev Earns “Highest Ranking Software Tool”
-                                                </a>
-                                            </h3>
-                                            <p class="m-0 post_intro bl">In a national survey, users ranked Solodev as among the best software tools in the country.</p>
-                                        </li>
-                                        <li class="border-bottom pb-3 mt-3">
-                                            <span class="meta text-uppercase">January 18th, 2018</span>
-                                            <h3 class="font-weight-bold mt-0">
-                                                <a href="#">
-                                                    City of Miami Beach Launches Enticing Website
-                                                </a>
-                                            </h3>
 
-                                            <p class="m-0 post_intro bl">The iconic tourist destination looked to become the golden standard for other city websites throughout the United States.</p>
-                                        </li>
+                                        $search = $conn->query("SELECT * FROM  `annoucements` WHERE JSON_CONTAINS(dept_eligible,'$dept') ORDER BY timestamp DESC");
+
+
+                                        while ($row = $search->fetch_assoc()) {
+
+
+
+                                        ?>
+                                            <li class="border-bottom pb-3 mt-3">
+                                                <span class="meta text-uppercase"><?php echo $row["date_annouce"] ?></span>
+                                               
+                                                <h3 class="font-weight-bold mt-0">
+                                                    <?php echo $row["title"] ?>
+                                                </h3>
+                                                <p class="m-0 post_intro bl"> <?php echo $row["description"] ?> </p>
+                                            </li>
+
+                                        <?php } ?>
                                     </ul>
-                                    <a class="all pos-stat text-uppercase ml-lg-5" href="#">All announcements
-                                        <i class="fa fa-caret-right" aria-hidden="true"></i>
-                                    </a>
 
                                 </div>
 
