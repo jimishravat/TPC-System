@@ -136,7 +136,9 @@ if (isset($_GET["editAccess"])) {
                                                     <p class="m-b-5 f-w-600">Gender</p>
                                                     <h6 class="text-muted f-w-400">gender</h6>
 
-                                                    <p> <input type="radio" id="Male" name="gender" value="male" checked> Male</input> </p>
+                                                    <p> 
+                                                        <input type="radio" id="Male" name="gender" value="male" checked> Male</input> 
+                                                    </p>
 
                                                     <p>
                                                         <input type="radio" id="Female" name="gender" value="female"> Female</input>

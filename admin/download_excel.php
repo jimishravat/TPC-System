@@ -2,10 +2,9 @@
 include("../database.php");
 include("../helper/authorization.php");
 
-if ($access != 1) {
-    echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
+if ($access == 2 || $access == 3) {
+    $dept = $_SESSION["adminDept"];
 }
-
 $drive_id = $_GET["drive_id"];
 
 $searchDrive = $conn->query("SELECT job_role,company_name,applied FROM drive,company WHERE drive.company_id = company.company_id AND drive.drive_id = '$drive_id'");
@@ -23,12 +22,11 @@ $driveDetails = $searchDrive->fetch_assoc();
 
 
 */
-$columnHeader = "\t" . "Birla Vishvakarma Mahavidyalaya" .   "\n"  . "\t" . "An Autonomous Institution" .   "\n" . "\t" . "VallabhVidyanagar-Anand 388120" .   "\n" . "\t" . $driveDetails["company_name"] . " - " . $driveDetails["job_role"] .   "\n"  . "\n"  . "Sr. No." . "\t" . "Student ID" . "\t" . "Student Name" . "\t" . "Phone" . "\t" . "Email" . "\t" . "Gender" . "\t" . "SSC %" . "\t" . "HSC %" . "\t" . "D2D CPI" . "\t" . "Current CPI" . "\t" . "Active Backlogs";
+$columnHeader = "\t" . "Birla Vishvakarma Mahavidyalaya" .   "\n"  . "\t" . "An Autonomous Institution" .   "\n" . "\t" . "VallabhVidyanagar-Anand 388120" .   "\n" . "\t" . $driveDetails["company_name"] . " - " . $driveDetails["job_role"] .   "\n"  . "\n"  . "Sr. No." . "\t" . "Student ID" . "\t" . "Student Name" . "\t" . "Phone" . "\t" . "Email" . "\t" . "Gender" . "\t" . "SSC %" . "\t" . "HSC %" . "\t" . "D2D CPI" . "\t" . "Current CPI" . "\t" . "Active Backlogs" . "\n";
 $setData = '';
 $studentArray = json_decode($driveDetails["applied"], true);
 $srNo = 1;
 foreach ($studentArray as $student) {
-    // var_dump($student);
     $studentDetailsArray = $conn->query("SELECT student_academic.*, student.* FROM student_academic, student WHERE student.s_id = student_academic.s_id");
     $studentDetail = $studentDetailsArray->fetch_assoc();
     $rowData = '"' . $srNo++ . '"' . "\t";
@@ -54,6 +52,4 @@ header("Content-type: application/octet-stream");
 header("Content-Disposition: attachment; filename=$fileName.xls");
 header("Pragma: no-cache");
 header("Expires: 0");
-echo ucwords($columnHeader) . "\n" . $setData . "\n";
-?>
-
+echo $columnHeader . "\n" . $setData . "\n";

@@ -71,22 +71,37 @@ function applyForDrive($stu_id, $drive_id, $conn)
         return 0;
     }
 }
+function checkDeadline($drive_id)
+{
+    global $conn;
+    $drive_fetch = $conn->query("SELECT * FROM drive WHERE drive_id = '$drive_id'");
+    $driveDetails = $drive_fetch->fetch_assoc();
+
+    $deadline = strtotime($driveDetails["drive_deadline"]);
+    $current = strtotime(date('y-m-d'));
+    $is_active = $current <= $deadline ? 1 : 0;
+    // var_dump($is_active);
+
+    return $is_active;
+}
 function checkEligiblity($drive_id, $stu_id)
 {
     global $conn;
     $drive_fetch = $conn->query("SELECT * FROM drive WHERE drive_id = '$drive_id'");
     $driveDetails = $drive_fetch->fetch_assoc();
 
-    $student_fetch = $conn->query("SELECT * FROM student_academic WHERE s_id = '$stu_id'");
+    $student_fetch = $conn->query("SELECT * FROM student_academic,student WHERE student_academic.s_id = student.s_id AND student_academic.s_id = '$stu_id'");
     $studentDetails = $student_fetch->fetch_assoc();
 
     $isEligible = 0;
+
 
     if (($driveDetails["hsc_criteria"] <= intval($studentDetails["hsc_th_p_percentage"]))
         && ($driveDetails["ssc_criteria"] <= $studentDetails["ssc_percentage"])
         && ($driveDetails["cpi_criteria"] <= $studentDetails["bvm_cpi"])
         && ($driveDetails["total_backlog"] >= $studentDetails["bvm_total_backlog"])
         && ($driveDetails["active_backlog"] >= $studentDetails["bvm_active_backlog"])
+        && $studentDetails["is_approved"] == 1
     ) {
         $isEligible = 1;
     }

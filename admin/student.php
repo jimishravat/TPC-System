@@ -187,10 +187,10 @@ if ($show == 0) {
                                     <?php endif ?>
                                 </td>
                                 <td class="text-end">
-                                    <a href="./viewStudent.php?id=<?php echo "id" ?>" class="btn btn-sm btn-neutral">View</a>
-                                    <a href="./updateStudent.php?id=<?php echo "id" ?>" class="btn btn-square btn-sm btn-neutral text-warning-hover"><i class="bi bi-pencil"></i></a>
+                                    <a href="./viewStudent.php?id=<?php echo $row["s_id"] ?>" class="btn btn-sm btn-neutral">View</a>
+                                    <!-- <a href="./updateStudent.php?id=<?php echo "id" ?>" class="btn btn-square btn-sm btn-neutral text-warning-hover"><i class="bi bi-pencil"></i></a> -->
 
-                                    <a href="./delStudent.php?id=<?php echo "id" ?>" class="btn btn-sm btn-square btn-neutral text-danger-hover">
+                                    <a href="./viewStudent.php?id=<?php echo  $row["s_id"] ?>&action=delete" class="btn btn-sm btn-square btn-neutral text-danger-hover">
                                         <i class="bi bi-trash"></i>
                                     </a>
                                 </td>

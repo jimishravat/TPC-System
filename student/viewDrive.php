@@ -1,6 +1,8 @@
 <?php
 
 include("../database.php");
+include("./applyDrive.php");
+
 
 session_start();
 
@@ -59,9 +61,9 @@ $driveDetail = $driveDetailQuery->fetch_assoc();
                                                 <!-- <div class="preview"></div> -->
                                                 <img src="../admin/uploads/logo/<?php echo $driveDetail["company_logo"] ?>" id="showLogo" class="img-radius my-5" alt="Company-Logo">
 
-                                                <!-- Edit Button -->
-                                                <!-- Only Access to TPO -->
-                                                <a href="./applyDrive.php?drive_id=<?php echo $driveDetail["drive_id"] ?>" class="d-block btn text-white btn-primary"> <span> <i class='bx bxs-hand-up'></i></span> Apply Drive </a>
+                                                <?php if (checkApplied($_SESSION["studentUserId"], $driveDetail["drive_id"]) == 0) : ?>
+                                                    <a href="./applyDrive.php?drive_id=<?php echo $driveDetail["drive_id"] ?>&stu_id=<?php echo $_SESSION["studentUserId"] ?>" class="d-block btn text-white btn-primary"> <span> <i class='bx bxs-hand-up'></i></span> Apply Drive </a>
+                                                <?php endif ?>
                                                 <!-- <button class="text-center btn my-2 btn-success">Upload Logo</button> -->
                                             </div>
                                         </div>

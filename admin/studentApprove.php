@@ -11,6 +11,25 @@ if ($access != 3) {
     echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
 }
 
+$action = isset($_GET["action"]) ? $_GET["action"] : 0;
+
+if (isset($_POST["approve"])) {
+    
+    $id = $_POST["id"];
+    $student_update = $conn->query("UPDATE student SET is_approved = '1' WHERE s_id = '$id'");
+    if ($conn->affected_rows) {
+        echo "<script> window.location.href = 'http://localhost/tpc/admin/studentApprove.php'; </script>";
+    }
+}
+
+if ($action == "approve") {
+    $id = $_GET["id"];
+    $student_update = $conn->query("UPDATE student SET is_approved = '1' WHERE s_id = '$id'");
+    if ($conn->affected_rows) {
+        echo "<script> window.location.href = 'http://localhost/tpc/admin/studentApprove.php'; </script>";
+    }
+}
+
 
 ?>
 
@@ -79,78 +98,38 @@ if ($access != 3) {
 
             <!-- Total Students -->
             <div class="col-xl-12 col-sm-12 col-12 row">
-                <div class="card shadow-3 border-0 mt-5 card-width-sm card-height-sm mx-2 col-sm-6">
-                    <div class="card-body  ">
-                        <div class="row ">
-                            <div class="col d-flex align-items-center">
-                                <span class="h3 font-bold d-block">19CP015 - </span>
-                                <span class="h3 font-semibold mb-0">Jimish Ravat</span>
+
+
+                <!-- Loop starts -->
+
+                <?php
+                $student_fetch = $conn->query("SELECT * FROM student WHERE is_approved = '0'");
+                while ($student = $student_fetch->fetch_assoc()) {
+
+                ?>
+
+                    <div class="card shadow-3 border-0 mt-5 card-width-sm card-height-sm mx-2 col-sm-6">
+                        <div class="card-body  ">
+                            <div class="row ">
+                                <div class="col d-flex align-items-center">
+                                    <span class="h3 font-bold d-block"><?php echo strtoupper($student["s_id"]) ?> - </span>
+                                    <span class="h3 font-semibold mb-0"><?php echo $student["s_fname"] . " " . $student["s_lname"] ?></span>
+                                </div>
+                            </div>
+                            <div class="mt-5 mb-0 text-sm d-flex justify-content-start">
+
+                                <a href="./viewStudent.php?id=<?php echo $student["s_id"] ?>" class="btn btn-primary btn-sm mx-2">View</a>
+                                <a href="./studentApprove.php?id=<?php echo $student["s_id"] ?>&action=approve" class="btn btn-success btn-sm mx-2">Approve</a>
+
                             </div>
                         </div>
-                        <div class="mt-5 mb-0 text-sm d-flex justify-content-start">
 
-                            <!-- <a href="./studentApprove.php?id=<?php echo "id" ?>" class="btn btn-primary btn-sm mx-2">View</a> -->
-                            <a href="./studentApprove.php?id=<?php echo "id" ?>&action=approve" class="btn btn-success btn-sm mx-2">Approve</a>
-                            <a href="./studentApprove.php?id=<?php echo "id" ?>&action=reject" class="btn btn-danger btn-sm mx-2">Reject</a>
-
-                        </div>
                     </div>
+                <?php
+                }
 
-                </div>
-                <div class="card shadow-3 border-0 mt-5 card-width-sm card-height-sm mx-2 col-sm-6">
-                    <div class="card-body  ">
-                        <div class="row ">
-                            <div class="col d-flex align-items-center">
-                                <span class="h3 font-bold d-block">19CP015 - </span>
-                                <span class="h3 font-semibold mb-0">Jimish Ravat</span>
-                            </div>
-                        </div>
-                        <div class="mt-2 mb-0 text-sm d-flex justify-content-start">
-
-                            <a href="#" class="btn btn-primary btn-sm mx-2">View</a>
-                            <a href="#" class="btn btn-success btn-sm mx-2">Approve</a>
-                            <a href="#" class="btn btn-danger btn-sm mx-2">Reject</a>
-
-                        </div>
-                    </div>
-
-                </div>
-                <div class="card shadow-3 border-0 mt-5 card-width-sm card-height-sm mx-2 col-sm-6">
-                    <div class="card-body  ">
-                        <div class="row ">
-                            <div class="col d-flex align-items-center">
-                                <span class="h3 font-bold d-block">19CP015 - </span>
-                                <span class="h3 font-semibold mb-0">Jimish Ravat</span>
-                            </div>
-                        </div>
-                        <div class="mt-2 mb-0 text-sm d-flex justify-content-start">
-
-                            <a href="#" class="btn btn-primary btn-sm mx-2">View</a>
-                            <a href="#" class="btn btn-success btn-sm mx-2">Approve</a>
-                            <a href="#" class="btn btn-danger btn-sm mx-2">Reject</a>
-
-                        </div>
-                    </div>
-
-                </div>
-                <div class="card shadow-3 border-0 mt-5 card-width-sm card-height-sm mx-2 col-sm-6">
-                    <div class="card-body  ">
-                        <div class="row ">
-                            <div class="col d-flex align-items-center">
-                                <span class="h3 font-bold d-block">19CP015 - </span>
-                                <span class="h3 font-semibold mb-0">Jimish Ravat</span>
-                            </div>
-                        </div>
-                        <div class="mt-2 mb-0 text-sm d-flex justify-content-start">
-
-                            <a href="#" class="btn btn-primary btn-sm mx-2">View</a>
-                            <a href="#" class="btn btn-success btn-sm mx-2">Approve</a>
-                            <a href="#" class="btn btn-danger btn-sm mx-2">Reject</a>
-
-                        </div>
-                    </div>
-
-                </div>
+                ?>
+                <!-- loop ends -->
 
 
 

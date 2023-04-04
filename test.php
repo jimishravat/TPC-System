@@ -38,92 +38,92 @@ $statusmsg = '';
 
 <!-- <?php
 
-                $allDrives = $conn->query("SELECT company.*, drive.* FROM company,drive WHERE company.company_id = drive.drive_id ");
+        $allDrives = $conn->query("SELECT company.*, drive.* FROM company,drive WHERE company.company_id = drive.drive_id ");
 
-                while ($drive = $allDrives->fetch_assoc()) {
-                    $driveId = $drive["drive_id"];
-                    $jobSearch = $conn->query("SELECT * FROM drive_job_role WHERE drive_id = '$driveId'");
-                ?>
+        while ($drive = $allDrives->fetch_assoc()) {
+            $driveId = $drive["drive_id"];
+            $jobSearch = $conn->query("SELECT * FROM drive_job_role WHERE drive_id = '$driveId'");
+        ?>
                     <!-- LOOP START -->
-                    <div class="card shadow border-0 my-10 card-width-full">
-                        <div class="card-body  ">
-                            <div class="row">
-                                <div class="col">
-                                    <span class="h6 font-bold d-block"> Deadline : <?php echo $drive["drive_deadline"] ?></span>
-                                    <span class="h3 font-bold d-block mb-2"><?php echo $drive["company_name"] ?></span>
-                                    <?php while ($job = $jobSearch->fetch_assoc()) {
-                                    ?>
-                                        <!-- <span class="h5"> | </span> -->
-                                        <span class="h5 font-bold  mb-2"><?php echo $job["job_role"] ?> &nbsp; &nbsp;</span>
-                                        <!-- <span class="h5"> | &nbsp; &nbsp; </span> -->
-                                    <?php
-                                    } ?>
-                                    <span class="h5 font-semibold d-block mb-0"><?php echo $drive["company_url"] ?></span>
-                                </div>
-                                <div class="col-auto">
-                                    <div class="icon icon-shape text-white text-lg rounded-circle">
-                                        <img src="./uploads/logo/<?php echo $drive["company_logo"] ?>" alt="">
-                                    </div>
-                                </div>
-                            </div>
+<div class="card shadow border-0 my-10 card-width-full">
+    <div class="card-body  ">
+        <div class="row">
+            <div class="col">
+                <span class="h6 font-bold d-block"> Deadline : <?php echo $drive["drive_deadline"] ?></span>
+                <span class="h3 font-bold d-block mb-2"><?php echo $drive["company_name"] ?></span>
+                <?php while ($job = $jobSearch->fetch_assoc()) {
+                ?>
+                    <!-- <span class="h5"> | </span> -->
+                    <span class="h5 font-bold  mb-2"><?php echo $job["job_role"] ?> &nbsp; &nbsp;</span>
+                    <!-- <span class="h5"> | &nbsp; &nbsp; </span> -->
+                <?php
+                } ?>
+                <span class="h5 font-semibold d-block mb-0"><?php echo $drive["company_url"] ?></span>
+            </div>
+            <div class="col-auto">
+                <div class="icon icon-shape text-white text-lg rounded-circle">
+                    <img src="./uploads/logo/<?php echo $drive["company_logo"] ?>" alt="">
+                </div>
+            </div>
+        </div>
 
-                            <div class="mt-2 mb-0 text-sm">
-                                <!-- <span class="badge badge-pill bg-soft-warning text-warning me-2">
+        <div class="mt-2 mb-0 text-sm">
+            <!-- <span class="badge badge-pill bg-soft-warning text-warning me-2">
                                 <i class="bi bi-arrow-up me-1"></i>13%
                                 <i class='bx bxs-error'></i>13
                             </span> -->
-                                <span>
+            <span>
 
-                                    <a href="./viewDrive.php?drive_id=<?php echo $drive["drive_id"] ?>" class="btn btn-primary btn-sm">View</a>
-                                    <a href="./download_excel.php?drive_id=<?php echo $drive["drive_id"] ?>" class="btn btn-warning btn-sm">Collect Data</a>
-                                    <?php if (!$drive["result_out"]) : ?>
-                                        <a href="./addresult.php?drive_id=<?php echo $drive["drive_id"] ?>" class="btn btn-secondary btn-sm">Add Result</a>
-                                    <?php endif ?>
-                                    <a title="Edit" href="./updateStudent.php?id=<?php echo "id" ?>" class="btn btn-square btn-sm btn-neutral text-warning-hover"><i class="bi bi-pencil"></i></a>
+                <a href="./viewDrive.php?drive_id=<?php echo $drive["drive_id"] ?>" class="btn btn-primary btn-sm">View</a>
+                <a href="./download_excel.php?drive_id=<?php echo $drive["drive_id"] ?>" class="btn btn-warning btn-sm">Collect Data</a>
+                <?php if (!$drive["result_out"]) : ?>
+                    <a href="./addresult.php?drive_id=<?php echo $drive["drive_id"] ?>" class="btn btn-secondary btn-sm">Add Result</a>
+                <?php endif ?>
+                <a title="Edit" href="./updateStudent.php?id=<?php echo "id" ?>" class="btn btn-square btn-sm btn-neutral text-warning-hover"><i class="bi bi-pencil"></i></a>
 
-                                    <?php if ($drive["is_active"]) : ?>
+                <?php if ($drive["is_active"]) : ?>
 
-                                        <a title="De-Activate" href="./updateStudent.php?id=<?php echo "id" ?>" class="btn btn-square btn-sm btn-neutral btn-danger-hover">
-                                            <i class="bi bi-bookmark-x "></i>
-                                        </a>
-                                    <?php else : ?>
-                                        <a title="Activate" href="./updateStudent.php?id=<?php echo "id" ?>" class="btn btn-square btn-sm btn-neutral btn-success-hover">
-                                            <i class="bi bi-bookmark-check "></i>
-                                        </a>
+                    <a title="De-Activate" href="./updateStudent.php?id=<?php echo "id" ?>" class="btn btn-square btn-sm btn-neutral btn-danger-hover">
+                        <i class="bi bi-bookmark-x "></i>
+                    </a>
+                <?php else : ?>
+                    <a title="Activate" href="./updateStudent.php?id=<?php echo "id" ?>" class="btn btn-square btn-sm btn-neutral btn-success-hover">
+                        <i class="bi bi-bookmark-check "></i>
+                    </a>
 
-                                    <?php endif ?>
-                                    <a title="Delete" href="./updateStudent.php?id=<?php echo "id" ?>" class="btn btn-square btn-sm btn-neutral btn-danger-hover"><i class="bi bi-trash"></i></a>
+                <?php endif ?>
+                <a title="Delete" href="./updateStudent.php?id=<?php echo "id" ?>" class="btn btn-square btn-sm btn-neutral btn-danger-hover"><i class="bi bi-trash"></i></a>
 
-                                </span>
+            </span>
 
-                                <!-- Status -->
-                                <?php if ($drive["is_active"]) : ?>
-                                    <span class="badge mx-5 badge-lg badge-dot">
-                                        <i class="bg-success"></i>Active
-                                    </span>
-                                <?php else : ?>
-                                    <span class="badge mx-5 badge-lg badge-dot">
-                                        <i class="bg-danger"></i>In-Active
-                                    </span>
-                                <?php endif ?>
-                                <span class="badge mx-5 badge-lg badge-dot">
-                                    <?php if ($drive["result_out"]) : ?>
-                                        <i class="bg-success"></i>
-                                    <?php else : ?>
-                                        <i class="bg-warning"></i>
-                                    <?php endif ?>
+            <!-- Status -->
+            <?php if ($drive["is_active"]) : ?>
+                <span class="badge mx-5 badge-lg badge-dot">
+                    <i class="bg-success"></i>Active
+                </span>
+            <?php else : ?>
+                <span class="badge mx-5 badge-lg badge-dot">
+                    <i class="bg-danger"></i>In-Active
+                </span>
+            <?php endif ?>
+            <span class="badge mx-5 badge-lg badge-dot">
+                <?php if ($drive["result_out"]) : ?>
+                    <i class="bg-success"></i>
+                <?php else : ?>
+                    <i class="bg-warning"></i>
+                <?php endif ?>
 
-                                    Result
-                                </span>
-                                <!-- <span class="text-nowrap text-xs text-muted">Status</span> -->
-                            </div>
-                        </div>
-                    </div>
-                    <!-- LOOP ENDS -->
-                <?php
-                }
+                Result
+            </span>
+            <!-- <span class="text-nowrap text-xs text-muted">Status</span> -->
+        </div>
+    </div>
+</div>
+<!-- LOOP ENDS -->
+<?php
+        }
 
-                ?> -->
+?> -->
 
 
 <!DOCTYPE html>
@@ -201,10 +201,23 @@ $statusmsg = '';
 
     <?php
     var_dump(base64_encode(strrev(md5("Tpo@1234"))));
+
+    $select = $conn->query("SELECT * FROM drive WHERE drive_id='4';");
+    $row = $select->fetch_assoc();
+    $a = date('y-m-d');
+    var_dump($a);
+    var_dump($row["drive_deadline"]);
+    $a = strtotime($a);
+    $b = strtotime($row["drive_deadline"]);
+
+
+    var_dump($a); //current
+    var_dump($b); // deadline
+    var_dump($a < $b) // if false then deadline is gone and if true deadline is yet to meet
+
     // $a = array("19cp015", "19cp016", "19cp017", "19cp018");
     // $a = json_encode($a);
     // $insert = $conn->query("UPDATE `drive_job_role` SET `applied`='$a' WHERE job_id = '1'");
-    // $select = $conn->query("SELECT company.company_name, company.company_url, company.company_location, drive.drive_deadline, drive.dept_eligible, drive_job_role.job_role FROM company,drive_job_role,drive WHERE company.company_id = drive.company_id AND drive_job_role.drive_id = drive.drive_id;");
     // $applied = json_decode($row["applied"], true);
 
     // while ($row = $select->fetch_assoc()) {

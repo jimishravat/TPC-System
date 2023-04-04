@@ -80,9 +80,13 @@ $dept = $_SESSION["studentDept"];
                                         </div>
 
                                         <!-- Apply Data Button -->
-                                        <div class="col-auto">
-                                            <a href="./applyDrive.php?drive_id=<?php echo $drive["drive_id"] ?>&stu_id=<?php echo $_SESSION["studentUserId"] ?>" class="btn text-white btn-warning btn-sm">Apply</a>
-                                        </div>
+                                        <?php if (checkDeadline($drive["drive_id"]) == 1) : ?>
+                                            <?php if (checkApplied($_SESSION["studentUserId"], $drive["drive_id"]) == 0) : ?>
+                                                <div class="col-auto">
+                                                    <a href="./applyDrive.php?drive_id=<?php echo $drive["drive_id"] ?>&stu_id=<?php echo $_SESSION["studentUserId"] ?>" class="btn text-white btn-warning btn-sm">Apply</a>
+                                                </div>
+                                            <?php endif ?>
+                                        <?php endif ?>
 
                                         <div class="col-auto">
                                             <span class="badge badge-lg badge-dot ">
@@ -111,7 +115,7 @@ $dept = $_SESSION["studentDept"];
                                     <div class="row d-flex flex-column align-items-center">
                                         <div class="col">
 
-                                            <?php if ($drive["is_active"]) : ?>
+                                            <?php if (checkDeadline($drive["drive_id"]) == 1) : ?>
                                                 <span class="badge  badge-lg badge-dot">
                                                     <i class="bg-success"></i>Active
                                                 </span>
