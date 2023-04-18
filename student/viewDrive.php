@@ -60,9 +60,14 @@ $driveDetail = $driveDetailQuery->fetch_assoc();
                                             <div class="m-b-25">
                                                 <!-- <div class="preview"></div> -->
                                                 <img src="../admin/uploads/logo/<?php echo $driveDetail["company_logo"] ?>" id="showLogo" class="img-radius my-5" alt="Company-Logo">
+                                                <?php if (checkDeadline($driveDetail["drive_id"]) == 1) : ?>
 
-                                                <?php if (checkApplied($_SESSION["studentUserId"], $driveDetail["drive_id"]) == 0) : ?>
-                                                    <a href="./applyDrive.php?drive_id=<?php echo $driveDetail["drive_id"] ?>&stu_id=<?php echo $_SESSION["studentUserId"] ?>" class="d-block btn text-white btn-primary"> <span> <i class='bx bxs-hand-up'></i></span> Apply Drive </a>
+                                                    <?php if (checkApplied($_SESSION["studentUserId"], $driveDetail["drive_id"]) == 0) : ?>
+                                                        <?php if (checkEligiblity($driveDetail["drive_id"], $_SESSION["studentUserId"]) == 1) : ?>
+
+                                                            <a href="./applyDrive.php?drive_id=<?php echo $driveDetail["drive_id"] ?>&stu_id=<?php echo $_SESSION["studentUserId"] ?>" class="d-block btn text-white btn-primary"> <span> <i class='bx bxs-hand-up'></i></span> Apply Drive </a>
+                                                        <?php endif ?>
+                                                    <?php endif ?>
                                                 <?php endif ?>
                                                 <!-- <button class="text-center btn my-2 btn-success">Upload Logo</button> -->
                                             </div>

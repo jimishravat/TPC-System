@@ -2,6 +2,7 @@
 
 include("../database.php");
 include("../helper/authorization.php");
+include("../helper/sendMail.php");
 if ($access != 1) {
     echo "<script> window.location.href = 'http://localhost/tpc-main/helper/noAccess.php'; </script>";
 }
@@ -21,16 +22,30 @@ if (isset($_POST["add-result"])) {
     $drive_id = $_POST["add-drive-id"];
     $ids = array();
     foreach ($_POST["add_ids"] as $selected) {
-        array_push($ids, $selected);
+        array_push($ids, strval($selected));
     }
     $date_annouce = $_POST["annouce-date"];
     $no_of_stu = count($_POST["add_ids"]);
+    // var_dump($ids);
+    $student_query = $conn->query("SELECT * FROM student WHERE s_id IN ('" . implode(',', $ids) . "') ");
+    // var_dump($student_query);
+    $drive_query = $conn->query("SELECT * FROM drive,company WHERE drive.company_id = company.company_id AND drive_id = '$drive_id'");
+    $drive = $drive_query->fetch_assoc();
+
+    $subject = "Congratulations On Selection";
+    while ($student = $student_query->fetch_assoc()) {
+        $body = "Congratulations, " . $student["s_fname"] . " " . $student["s_lname"] . ". You are selected for " . $drive["company_name"] . "-" . $drive["job_role"] . ". Please confirm your selection by replying to this mail ACCEPT or REJECT";
+        sendMail($student["s_email"], $subject, $body);
+    }
+
     $arr_json = json_encode($ids);
 
     // var_dump($_POST);
     // var_dump($arr_json);
     $update = $conn->query("INSERT INTO `result` (`heading`, `description`, `no_of_stu`, `post_on`, `student_placed`, `drive_id`, `company_id`) VALUES
-('$title', '$desc', '$no_of_stu', '$date_annouce', '$arr_json', '$drive_id', '$comp_id');");
+    ('$title', '$desc', '$no_of_stu', '$date_annouce', '$arr_json', '$drive_id', '$comp_id');");
+
+    $updateDrive = $conn->query("UPDATE `drive` SET `result_out`='1' WHERE `drive_id`='$drive_id'");
 
     if ($conn->affected_rows) {
         $addSuccess = 1;
@@ -151,23 +166,23 @@ if (isset($_POST["add-result"])) {
                                                     </div>
                                                     <div class="col tabl">
                                                         <!-- <form action="./addresult.php" method="post"> -->
-                                                            <table id="emptbl">
-                                                                <tr>
-                                                                    <td id="col0">
-                                                                        <input class="form-control" type="text" name="add_ids[]" />
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                            <table>
-                                                                <tr>
-                                                                    <td><input type="button" value="Add Row" onclick="addRows()" class="text-center btn btn-success m-5" /></td>
-                                                                    <td><input type="button" value="Delete Row" onclick="deleteRows()" class="text-center btn btn-danger m-5" /></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td><input type="submit" value="Add Result" name="add-result" class="text-center btn btn-primary m-5" /></td>
+                                                        <table id="emptbl">
+                                                            <tr>
+                                                                <td id="col0">
+                                                                    <input class="form-control" type="text" name="add_ids[]" />
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                        <table>
+                                                            <tr>
+                                                                <td><input type="button" value="Add Row" onclick="addRows()" class="text-center btn btn-success m-5" /></td>
+                                                                <td><input type="button" value="Delete Row" onclick="deleteRows()" class="text-center btn btn-danger m-5" /></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><input type="submit" value="Add Result" name="add-result" class="text-center btn btn-primary m-5" /></td>
 
-                                                                </tr>
-                                                            </table>
+                                                            </tr>
+                                                        </table>
                                                     </div>
                                             </div>
                                         </div>

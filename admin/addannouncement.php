@@ -2,10 +2,12 @@
 
 include("../database.php");
 include("../helper/authorization.php");
+include("../helper/sendMail.php");
 
 if ($access != 1) {
     echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
 }
+
 
 // add the annoucement
 
@@ -36,8 +38,23 @@ if (isset($_POST["add-annouce"])) {
     // var_dump($deptEligible);
     $insert = $conn->query("INSERT INTO `annoucements`( `title`, `description`, `date_annouce`, `dept_eligible`) VALUES ('$title','$desc','$date_annouce','$deptEligible')");
     if ($conn->affected_rows) {
+
+
+        // Subject of the mail
+        $subject = "New Annoucement Arrived";
+        $body = "Date : " . $date_annouce . "\n \n";
+        $body .= "Title : " . $title . "\n ";
+        $body .= "\t" . $desc . "\n ";
+
+        // Fetch the student list email
+        $dept = json_decode($deptEligible);
+        $student_query = $conn->query("SELECT s_email FROM student WHERE s_dept IN (" . implode(',', $dept) . ") ");
+        while ($student = $student_query->fetch_assoc()) {
+            sendMail($student["s_email"], $subject, $body);
+        }
+
         $insertSuccess = 1;
-    }else{
+    } else {
         $insertFailure = 1;
     }
     // var_dump($insert);

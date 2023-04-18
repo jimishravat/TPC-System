@@ -18,7 +18,7 @@ if (isset($_GET["deleteId"])) {
     $id = $_GET["deleteId"];
     $delete = $conn->query("DELETE FROM result WHERE result_id = '$id'");
     if ($conn->affected_rows) {
-        echo "<script> window.location.href = 'http://localhost/tpc-main/admin/results.php'; </script>";
+        echo "<script> window.location.href = 'http://localhost/tpc/admin/results.php'; </script>";
     }
 }
 

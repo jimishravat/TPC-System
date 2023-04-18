@@ -1,3 +1,9 @@
+<?php
+
+include("../helper/authorization.php");
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

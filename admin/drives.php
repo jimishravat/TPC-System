@@ -38,6 +38,20 @@ if ($action == "active") {
     }
 }
 
+function checkDeadline($drive_id)
+{
+    global $conn;
+    $drive_fetch = $conn->query("SELECT * FROM drive WHERE drive_id = '$drive_id'");
+    $driveDetails = $drive_fetch->fetch_assoc();
+
+    $deadline = strtotime($driveDetails["drive_deadline"]);
+    $current = strtotime(date('y-m-d'));
+    $is_active = $current <= $deadline ? 1 : 0;
+    // var_dump($is_active);
+
+    return $is_active;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -168,23 +182,8 @@ if ($action == "active") {
                                             </div>
                                         <?php endif ?>
 
-                                        <!-- Active and Inactive Button -->
-                                        <!-- Only Access to TPO -->
-                                        <?php if ($access == 1) : ?>
-                                            <div class="col-auto">
-                                                <?php if ($drive["is_active"]) : ?>
-
-                                                    <a title="De-Activate" href="./drives.php?id=<?php echo $drive["drive_id"] ?>&action=inactive" class="btn btn-square btn-sm btn-neutral btn-danger-hover">
-                                                        <i class="bi bi-bookmark-x "></i>
-                                                    </a>
-                                                <?php else : ?>
-                                                    <a title="Activate" href="./drives.php?id=<?php echo $drive["drive_id"] ?>&action=active" class="btn btn-square btn-sm btn-neutral btn-success-hover">
-                                                        <i class="bi bi-bookmark-check "></i>
-                                                    </a>
-
-                                                <?php endif ?>
-                                            </div>
-                                        <?php endif ?>
+                                        
+                                       
 
                                         <!-- Delete Button -->
                                         <!-- Only Access to TPO -->
@@ -202,12 +201,12 @@ if ($action == "active") {
                                     <div class="row d-flex flex-column align-items-center">
                                         <div class="col">
 
-                                            <?php if ($drive["is_active"]) : ?>
+                                            <?php if (checkDeadline($drive["drive_id"]) == 1) : ?>
                                                 <span class="badge  badge-lg badge-dot">
                                                     <i class="bg-success"></i>Active
                                                 </span>
                                             <?php else : ?>
-                                                <span class="badge  badge-lg badge-dot">
+                                                <span class="badge badge-lg badge-dot">
                                                     <i class="bg-danger"></i>In-Active
                                                 </span>
                                             <?php endif ?>

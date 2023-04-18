@@ -89,7 +89,7 @@
         </a>
         <div class="admin-user tooltip-element" data-tooltip="1">
             <div class="admin-profile hide">
-                <img src="../../tpc/images/logo.png" alt="">
+                <!-- <img src="../../uploads/student/<?php echo $student["photo"] ?>" alt=""> -->
                 <div class="admin-info">
                     <h3><?php echo strtoupper($_SESSION["studentUserId"]) ?></h3>
                 </div>

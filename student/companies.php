@@ -82,9 +82,12 @@ $dept = $_SESSION["studentDept"];
                                         <!-- Apply Data Button -->
                                         <?php if (checkDeadline($drive["drive_id"]) == 1) : ?>
                                             <?php if (checkApplied($_SESSION["studentUserId"], $drive["drive_id"]) == 0) : ?>
-                                                <div class="col-auto">
-                                                    <a href="./applyDrive.php?drive_id=<?php echo $drive["drive_id"] ?>&stu_id=<?php echo $_SESSION["studentUserId"] ?>" class="btn text-white btn-warning btn-sm">Apply</a>
-                                                </div>
+                                                <?php if (checkEligiblity($drive["drive_id"], $_SESSION["studentUserId"]) == 1) : ?>
+
+                                                    <div class="col-auto">
+                                                        <a href="./applyDrive.php?drive_id=<?php echo $drive["drive_id"] ?>&stu_id=<?php echo $_SESSION["studentUserId"] ?>" class="btn text-white btn-warning btn-sm">Apply</a>
+                                                    </div>
+                                                <?php endif ?>
                                             <?php endif ?>
                                         <?php endif ?>
 

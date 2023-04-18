@@ -19,9 +19,9 @@ if (isset($_POST["login"])) {
     }
 
     // take the username as the input
-    $username = strtolower($_POST["username"]);
+    $username = mysqli_real_escape_string($conn, strtolower($_POST["username"]));
     // for password convert the input passsword into base64_encode
-    $password = base64_encode(strrev(md5($_POST["password"])));
+    $password = base64_encode(strrev(md5(mysqli_real_escape_string($conn, $_POST["password"]))));
 
     // Flow of data 
     // 1) check for the user in the respective table

@@ -49,6 +49,7 @@ if ($access == 2 || $access == 3) {
                                 </span>
                                 <span>Edit</span>
                             </a> -->
+                            <!-- 
                             <?php if ($access == 1) : ?>
 
                                 <a href="./addresult.php" class="btn d-inline-flex btn-sm btn-primary mx-1">
@@ -58,7 +59,7 @@ if ($access == 2 || $access == 3) {
                                     <span>Add Result</span>
                                 </a>
                             <?php endif ?>
-
+                            -->
                         </div>
                     </div>
                     <?php
@@ -69,7 +70,7 @@ if ($access == 2 || $access == 3) {
                         $date = explode("-", $date);
                         $month = DateTime::createFromFormat('!m', $date[1])->format('F');
 
-                        
+
                     ?>
 
                         <div class="card shadow-3 border-0 mt-5 card-height-sm mx-2 col-sm-12">
@@ -82,7 +83,7 @@ if ($access == 2 || $access == 3) {
                                     </div>
                                 </div>
                                 <div class=" mb-0 text-sm">
-                                    <a href="./viewResult.php?result_id=<?php echo $result["result_id"] ?>" class="btn btn-warning  mx-2">View</a>
+                                    <!-- <a href="./viewResult.php?result_id=<?php echo $result["result_id"] ?>" class="btn btn-warning  mx-2">View</a> -->
                                     <?php if ($access == 1) : ?>
                                         <a href="./updateresult.php?updateId=<?php echo $result["result_id"] ?>" class="btn btn-primary  mx-2">Update</a>
                                         <a href="./updateresult.php?deleteId=<?php echo $result["result_id"] ?>" class="btn btn-danger  mx-2">Delete</a>
@@ -95,8 +96,8 @@ if ($access == 2 || $access == 3) {
                     }
 
                     ?>
-                    
-                   
+
+
         </section>
         </div>
         </div>

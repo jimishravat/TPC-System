@@ -15,11 +15,21 @@ if (isset($_SESSION["admin"])) {
     // Get the access token and the name of the admin
     $access = $_SESSION["access"];
 }
-else{
+
+
+// Check if the student has logged in or not
+
+else if (isset($_SESSION["studentUserId"])) {
+    // check for the approval
+    $studentAccess = 0;
+    $id = $_SESSION["studentUserId"];
+    $checkApproval = $conn->query("SELECT * FROM student WHERE s_id='$id'");
+    $checkApprovalValue = $checkApproval->fetch_assoc();
+    $_SESSION["is_d2d"] = $checkApprovalValue["is_d2d"];
+    if ($checkApprovalValue["is_approved"] == 1) {
+        // var_dump("hgelo");
+        $studentAccess = 1;
+    }
+} else {
     echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
 }
-
-// $password = base64_encode(strrev(md5("Admin@123")));
-// var_dump($password);
-// var_dump($adminUser);
-// var_dump($access);
