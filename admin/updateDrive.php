@@ -3,7 +3,9 @@
 include("../database.php");
 include("../helper/authorization.php");
 include("../helper/fileUpload.php");
-
+if (!isset($access)) {
+    echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
+}
 if ($access != 1) {
     echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
 }
@@ -21,30 +23,30 @@ $singleUpdateSuccess = 0;
 // $pass = "Company@123";
 // $driveInsert = 0;
 if (isset($_POST["update-drive"])) {
-    $targetLogoLoc = 'uploads/logo/';
-    $targetPdfLoc = 'uploads/pdf/';
-    $companyName = $_POST["companyName"];
-    $companyUrl  = $_POST["companyUrl"];
-    $HRName = $_POST["HRName"];
-    $HRMobile = $_POST["HRMobile"];
-    $HREmail = $_POST["HREmail"];
-    $deadline = $_POST["deadline"];
-    $location = $_POST["location"];
-    $jobDesc = $_POST["jobDesc"];
-    $skills = $_POST["skills"];
-    $addInfo = $_POST["additionalInfo"];
-    $bond = $_POST["bond"];
-    $intern = $_POST["checkInternship"];
-    $stipend = $_POST["stipend"];
-    $internPeriod = $_POST["internshipPeriod"];
-    $bonus = $_POST["bonus"];
-    $bonusIncluded = $_POST["bonusIncluded"];
-    $ssc = $_POST["sscCriteria"];
-    $hsc = $_POST["hscCriteria"];
-    $cpi = $_POST["cpiCriteria"];
-    $spi = $_POST["spiCriteria"];
-    $totalBacklog = $_POST["totalBacklog"];
-    $activeBacklog = $_POST["activeBacklog"];
+    $targetLogoLoc = '../uploads/logo/';
+    $targetPdfLoc = '../uploads/pdf/';
+    $companyName = mysqli_real_escape_string($conn, $_POST["companyName"]);
+    $companyUrl  = mysqli_real_escape_string($conn, $_POST["companyUrl"]);
+    $HRName = mysqli_real_escape_string($conn, $_POST["HRName"]);
+    $HRMobile = mysqli_real_escape_string($conn, $_POST["HRMobile"]);
+    $HREmail = mysqli_real_escape_string($conn, $_POST["HREmail"]);
+    $deadline = mysqli_real_escape_string($conn, $_POST["deadline"]);
+    $location = mysqli_real_escape_string($conn, $_POST["location"]);
+    $jobDesc = mysqli_real_escape_string($conn, $_POST["jobDesc"]);
+    $skills = mysqli_real_escape_string($conn, $_POST["skills"]);
+    $addInfo = mysqli_real_escape_string($conn, $_POST["additionalInfo"]);
+    $bond = mysqli_real_escape_string($conn, $_POST["bond"]);
+    $intern = mysqli_real_escape_string($conn, $_POST["checkInternship"]);
+    $stipend = mysqli_real_escape_string($conn, $_POST["stipend"]);
+    $internPeriod = mysqli_real_escape_string($conn, $_POST["internshipPeriod"]);
+    $bonus = mysqli_real_escape_string($conn, $_POST["bonus"]);
+    $bonusIncluded = mysqli_real_escape_string($conn, $_POST["bonusIncluded"]);
+    $ssc = mysqli_real_escape_string($conn, $_POST["sscCriteria"]);
+    $hsc = mysqli_real_escape_string($conn, $_POST["hscCriteria"]);
+    $cpi = mysqli_real_escape_string($conn, $_POST["cpiCriteria"]);
+    $spi = mysqli_real_escape_string($conn, $_POST["spiCriteria"]);
+    $totalBacklog = mysqli_real_escape_string($conn, $_POST["totalBacklog"]);
+    $activeBacklog = mysqli_real_escape_string($conn, $_POST["activeBacklog"]);
     $password = base64_encode(strrev(md5($pass)));
 
     $deptEligible = array();
@@ -53,23 +55,23 @@ if (isset($_POST["update-drive"])) {
     }
     $deptEligible = json_encode($deptEligible);
 
-    $jobRole = $_POST["jobRole"];
-    $salary = $_POST["salary"];
+    $jobRole = mysqli_real_escape_string($conn, $_POST["jobRole"]);
+    $salary = mysqli_real_escape_string($conn, $_POST["salary"]);
 
 
 
-    $cId = $_POST["cId"];
-    $drive_id = $_POST["driveId"];
+    $cId = mysqli_real_escape_string($conn, $_POST["cId"]);
+    $drive_id = mysqli_real_escape_string($conn, $_POST["driveId"]);
     if (file_exists($_FILES["file"]["name"])) {
         $logo = singleFile($_FILES["file"]["name"], $_FILES["file"]["tmp_name"], $targetLogoLoc);
     } else {
-        $logo = $_POST["logoDatabase"];
+        $logo = mysqli_real_escape_string($conn, $_POST["logoDatabase"]);
     }
     $updateCompany = $conn->query("UPDATE `company` SET `company_name`='$companyName',`HR_name`='$HRName',`HR_email`='$HREmail',`HR_mobile`='$HRMobile',`company_url`='$companyUrl',`company_location`='$location',`company_logo`='$logo' WHERE `company_id`='$cId'");
     // $checkForCompany = $conn->query("SELECT * FROM company WHERE company_name='$companyName'");
     // if ($checkForCompany->num_rows) {
     //     $row = $checkForCompany->fetch_assoc();
-    //     $cId = $row["company_id"];
+    //     $cId = $row["company_id"]);
     // } else {
 
     //     $insertCompany = $conn->query("INSERT INTO `company`( `company_name`, `company_description`, `password`, `HR_name`, `HR_email`, `HR_mobile`, `company_url`, `company_location`, `company_logo`) VALUES ('$companyName','$companyDesc','$password','$HRName','$HREmail','$HRMobile','$companyUrl','$location','$logo')");
@@ -80,7 +82,7 @@ if (isset($_POST["update-drive"])) {
     if (file_exists($_FILES["PDF"]["name"])) {
         $pdf = singleFile($_FILES["PDF"]["name"], $_FILES["PDF"]["tmp_name"], $targetPdfLoc);
     } else {
-        $pdf = $_POST["pdfDatabase"];
+        $pdf = mysqli_real_escape_string($conn, $_POST["pdfDatabase"]);
     }
 
     $updateDrive = $conn->query("UPDATE `drive` SET `drive_deadline`='$deadline',`skills`='$skills',`additional_info`='$addInfo',`job_location`='$location',`job_description`='$jobDesc',`job_role`='$jobRole',`salary`='$salary',`internship`='$intern',`stipend`='$stipend',`internship_duration`='$internPeriod',`bond_period`='$bond',`bonus_amount`='$bonus',`included_ctc`='$bonusIncluded',`hsc_criteria`='$hsc',`ssc_criteria`='$ssc',`cpi_criteria`='$cpi',`spi_criteria`='$spi',`total_backlog`='$totalBacklog',`active_backlog`='$activeBacklog',`dept_eligible`='$deptEligible',`pdf`='$pdf' WHERE drive_id = '$drive_id'");
@@ -142,7 +144,7 @@ if (isset($_POST["update-drive"])) {
                                             <div class="card-block text-center text-white">
                                                 <div class="m-b-25">
                                                     <!-- <div class="preview"></div> -->
-                                                    <img src="./uploads/logo/<?php echo $driveDetails["company_logo"] ?>" id="showLogo" class="img-radius my-5" alt="Company-Logo">
+                                                    <img src="../uploads/logo/<?php echo $driveDetails["company_logo"] ?>" id="showLogo" class="img-radius my-5" alt="Company-Logo">
                                                     <input type="text" value="<?php echo $driveDetails["company_logo"] ?>" name="logoDatabase" hidden>
                                                     <input type="file" name="file" id="file" class="inputfile" />
                                                     <label for="file">Upload Logo</label>
@@ -365,7 +367,7 @@ if (isset($_POST["update-drive"])) {
                                                         <div class=" col-sm-7 mx-2 mb-4">
                                                             <p class="m-b-5 f-w-600">Attach PDF('s)</p>
 
-                                                            <a href="./uploads/pdf/<?php echo $driveDetails["pdf"] ?>" class="btn btn-primary" target="_blank" rel="noopener noreferrer">View</a>
+                                                            <a href="../uploads/pdf/<?php echo $driveDetails["pdf"] ?>" class="btn btn-primary" target="_blank" rel="noopener noreferrer">View</a>
 
                                                             <input type="text" value="<?php echo $driveDetails["pdf"] ?>" hidden name="pdfDatabase">
                                                             <input type="file" id="actual-btn" name="PDF" multiple hidden />

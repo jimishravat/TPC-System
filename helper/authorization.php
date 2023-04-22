@@ -30,6 +30,11 @@ else if (isset($_SESSION["studentUserId"])) {
         // var_dump("hgelo");
         $studentAccess = 1;
     }
-} else {
+} 
+else if(isset($_SESSION["companyUserId"])){
+    $companyAccess = 1;
+}
+
+else {
     echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
 }

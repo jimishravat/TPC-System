@@ -48,8 +48,18 @@ if (isset($_POST["login"])) {
 
     // if the user is company then search in the company table for the credentials
     if ($typeOfUser == 2) {
-        // :TODO 
-        // :FUTURE SCOPE
+        $checkQuery = $conn->query("SELECT * FROM company WHERE HR_email = '$username' AND password = '$password' ");
+        if($checkQuery->num_rows == 1) 
+        {
+            $row = $checkQuery->fetch_assoc();
+            $_SESSION["companyId"] = $row["company_id"];
+            $_SESSION["companyUserId"] = $row["company_name"];
+            $_SESSION["cURL"] =$row["company_url"];
+            $_SESSION["HR_name"] = $row["HR_name"];
+            $_SESSION["HR_email"] = $row["HR_email"];
+            $_SESSION["HR_mobile"] = $row["HR_mobile"];
+            echo "<script> window.location.href = './company/index.php'; </script>";
+        }
     }
 
     // if the user is TPO

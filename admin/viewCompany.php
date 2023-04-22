@@ -1,8 +1,10 @@
 <?php
 
 include("../database.php");
-
-$id_number = $_GET["id"];
+if (!isset($access)) {
+    echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
+}
+$id_number = mysqli_real_escape_string($conn, $_GET["id"]);
 
 
 

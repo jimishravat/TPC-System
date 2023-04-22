@@ -2,7 +2,9 @@
 
 include("../database.php");
 include("../helper/authorization.php");
-
+if (!isset($access)) {
+    echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
+}
 if ($access == 2 || $access == 3) {
     $dept = $_SESSION["adminDept"];
 }

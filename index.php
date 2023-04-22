@@ -7,6 +7,13 @@ if (isset($_SESSION["admin"])) {
     echo "<script> window.location.href = 'http://localhost/tpc/admin/index.php'; </script>";
 }
 
+if(isset($_SESSION["studentUserId"])) {
+    echo "<script> window.location.href = 'http://localhost/tpc/student/index.php'; </script>";
+}
+if(isset($_SESSION["companyUserId"])) {
+    echo "<script> window.location.href = 'http://localhost/tpc/company/index.php'; </script>";
+}
+
 ?>
 
 <!DOCTYPE html>

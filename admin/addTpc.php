@@ -2,7 +2,9 @@
 
 include("../database.php");
 include("../helper/authorization.php");
-
+if (!isset($access)) {
+    echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
+}
 if ($access > 2) {
     echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
 }
@@ -19,7 +21,7 @@ $id = "";
 $pass = "Tpc@1234";
 
 if (isset($_POST["searchTpc"])) {
-    $id = $_POST["stdId"];
+    $id = mysqli_real_escape_string($conn,$_POST["stdId"]);
 
     $checkRegis = $conn->query("SELECT * FROM tpc WHERE tpc_id='$id'");
 
@@ -38,16 +40,16 @@ if (isset($_POST["searchTpc"])) {
 // var_dump($studentRegis, $foundTpc);
 
 if (isset($_POST["addTpc"])) {
-    $id = $_POST["id"];
-    $email = $_POST["email"];
+    $id = mysqli_real_escape_string($conn,$_POST["id"]);
+    $email = mysqli_real_escape_string($conn,$_POST["email"]);
     $password = base64_encode(strrev(md5($pass)));
-    $dept = $_POST["dept"];
-    $acaYear = $_POST["acaYear"];
-    $mobile = $_POST["mobile"];
-    $fname = $_POST["fname"];
-    $lname = $_POST["lname"];
+    $dept = mysqli_real_escape_string($conn,$_POST["dept"]);
+    $acaYear = mysqli_real_escape_string($conn,$_POST["acaYear"]);
+    $mobile = mysqli_real_escape_string($conn,$_POST["mobile"]);
+    $fname = mysqli_real_escape_string($conn,$_POST["fname"]);
+    $lname = mysqli_real_escape_string($conn,$_POST["lname"]);
     // var_dump($password);
-    // var_dump($_POST);
+    // var_dump(mysqli_real_escape_string($conn,$_POST);
 
     $insert = $conn->query("INSERT INTO `tpc`(`tpc_id`, `tpc_fname`, `tpc_lname`, `tpc_email`, `tpc_mobile`, `tpc_password`, `tpc_department`, `academic_year`) VALUES ('$id','$fname','$lname','$email','$mobile','$password','$dept','$acaYear')");
     if ($conn->affected_rows) {

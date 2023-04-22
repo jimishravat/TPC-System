@@ -1,10 +1,10 @@
 <?php
 
 include("../database.php");
-$password = $_POST["password"];
+$password = mysqli_real_escape_string($conn,$_POST["password"]);
 $password = base64_encode(strrev(md5($password)));
-$admin = $_POST["admin"];
-$id = $_POST["id"];
+$admin = mysqli_real_escape_string($conn,$_POST["admin"]);
+$id = mysqli_real_escape_string($conn,$_POST["id"]);
 $matched = 0;
 if ($admin == 1) {
     $check = $conn->query("SELECT tpo_password FROM tpo WHERE tpo_id='$id'");

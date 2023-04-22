@@ -1,13 +1,15 @@
 <?php
 
 include("../database.php");
-
-session_start();
+include("../helper/authorization.php");
 
 if (!isset($_SESSION["studentUserId"])) {
     echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
 }
-
+if ($studentAccess == 0) {
+    echo "<script> alert('Complete Your Profile and Wait for Approval') </script>";
+    echo "<script> window.location.href = 'http://localhost/tpc/student/viewStudent.php'; </script>";
+}
 $dept = $_SESSION["studentDept"];
 
 ?>
@@ -58,7 +60,7 @@ $dept = $_SESSION["studentDept"];
                                         ?>
                                             <li class="border-bottom pb-3 mt-3">
                                                 <span class="meta text-uppercase"><?php echo $row["date_annouce"] ?></span>
-                                               
+
                                                 <h3 class="font-weight-bold mt-0">
                                                     <?php echo $row["title"] ?>
                                                 </h3>

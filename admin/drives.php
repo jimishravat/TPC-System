@@ -2,13 +2,15 @@
 
 include("../database.php");
 include("../helper/authorization.php");
-
+if (!isset($access)) {
+    echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
+}
 if ($access == 2 || $access == 3) {
     $dept = $_SESSION["adminDept"];
 }
 
 // if action button is clicked
-$action = isset($_GET["action"]) ? $_GET["action"] : 0;
+$action = isset($_GET["action"]) ? mysqli_real_escape_string($conn,$_GET["action"]) : 0;
 
 // var_dump($action);
 if ($action == "active") {
@@ -141,7 +143,7 @@ function checkDeadline($drive_id)
                             <div class="row">
                                 <div class="col-sm-2 col-auto align-items-center d-flex justify-content-center">
                                     <div class="icon icon-shape text-white text-lg rounded-circle">
-                                        <img src="./uploads/logo/<?php echo $drive["company_logo"] ?>" alt="">
+                                        <img src="../uploads/logo/<?php echo $drive["company_logo"] ?>" alt="">
 
                                     </div>
                                 </div>

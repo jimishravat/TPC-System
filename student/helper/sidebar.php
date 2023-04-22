@@ -89,7 +89,20 @@
         </a>
         <div class="admin-user tooltip-element" data-tooltip="1">
             <div class="admin-profile hide">
-                <!-- <img src="../../uploads/student/<?php echo $student["photo"] ?>" alt=""> -->
+                <?php
+                $id = $_SESSION["studentUserId"];
+             
+                $stu = $conn->query("SELECT photo FROM student_document WHERE s_id = '$id'");
+                $stu_data = $stu->fetch_assoc();
+                $stu_logo = $stu_data["photo"];
+                $logo = "";
+                if (is_null($stu_logo)) {
+                    $logo = "../../tpc/images/user-icon.png";
+                } else {
+                    $logo = "../../tpc/uploads/student/$stu_logo";
+                }
+                ?>
+                <img src="../../uploads/student/<?php echo $logo ?>" alt="">
                 <div class="admin-info">
                     <h3><?php echo strtoupper($_SESSION["studentUserId"]) ?></h3>
                 </div>

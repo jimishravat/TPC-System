@@ -59,7 +59,7 @@ $driveDetail = $driveDetailQuery->fetch_assoc();
                                         <div class="card-block text-center text-white">
                                             <div class="m-b-25">
                                                 <!-- <div class="preview"></div> -->
-                                                <img src="../admin/uploads/logo/<?php echo $driveDetail["company_logo"] ?>" id="showLogo" class="img-radius my-5" alt="Company-Logo">
+                                                <img src="../uploads/logo/<?php echo $driveDetail["company_logo"] ?>" id="showLogo" class="img-radius my-5" alt="Company-Logo">
                                                 <?php if (checkDeadline($driveDetail["drive_id"]) == 1) : ?>
 
                                                     <?php if (checkApplied($_SESSION["studentUserId"], $driveDetail["drive_id"]) == 0) : ?>
@@ -246,7 +246,7 @@ $driveDetail = $driveDetailQuery->fetch_assoc();
                                                 <div class="col-sm-6 mt-5" id="noOfJR">
 
                                                     <p class="m-b-5 f-w-600">Attach PDF('s)</p>
-                                                    <a class="btn text-white btn-primary btn-sm" href="../admin/uploads/pdf/<?php echo $driveDetail["pdf"] ?>" target="_blank" rel="noopener noreferrer"> View PDF</a>
+                                                    <a class="btn text-white btn-primary btn-sm" href="../uploads/pdf/<?php echo $driveDetail["pdf"] ?>" target="_blank" rel="noopener noreferrer"> View PDF</a>
 
 
                                                 </div>

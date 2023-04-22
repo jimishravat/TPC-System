@@ -1,13 +1,15 @@
 <?php
 include("../database.php");
 include("../helper/authorization.php");
-
+if (!isset($access)) {
+    echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
+}
 if ($access != 1) {
     echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
 }
 
 
-$show = isset($_GET["show"]) ? $_GET["show"] : "active";
+$show = isset($_GET["show"]) ? mysqli_real_escape_string($conn, $_GET["show"]) : "active";
 
 // var_dump($show);
 
@@ -27,7 +29,7 @@ if ($action == "active") {
     $id = $_GET["id"];
     // change the status from 0 to 1
     $update = $conn->query("UPDATE `tpf` SET `is_active`=1 WHERE tpf_id = '$id'");
-    
+
     if ($conn->affected_rows) {
         echo "<script> window.location.href = 'http://localhost/tpc/admin/tpf.php'; </script>";
     }

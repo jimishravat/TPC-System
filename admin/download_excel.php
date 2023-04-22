@@ -1,11 +1,13 @@
 <?php
 include("../database.php");
 include("../helper/authorization.php");
-
+if (!isset($access)) {
+    echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
+}
 if ($access == 2 || $access == 3) {
     $dept = $_SESSION["adminDept"];
 }
-$drive_id = $_GET["drive_id"];
+$drive_id = mysqli_real_escape_string($conn, $_GET["drive_id"]);
 
 $searchDrive = $conn->query("SELECT job_role,company_name,applied FROM drive,company WHERE drive.company_id = company.company_id AND drive.drive_id = '$drive_id'");
 $driveDetails = $searchDrive->fetch_assoc();

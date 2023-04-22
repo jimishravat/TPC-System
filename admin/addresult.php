@@ -3,6 +3,9 @@
 include("../database.php");
 include("../helper/authorization.php");
 include("../helper/sendMail.php");
+if (!isset($access)) {
+    echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
+}
 if ($access != 1) {
     echo "<script> window.location.href = 'http://localhost/tpc-main/helper/noAccess.php'; </script>";
 }
@@ -16,15 +19,15 @@ $addFailure = 0;
 
 
 if (isset($_POST["add-result"])) {
-    $title = $_POST["result-heading"];
-    $desc = $_POST["result-desc"];
-    $comp_id = $_POST["add-comp-id"];
-    $drive_id = $_POST["add-drive-id"];
+    $title = mysqli_real_escape_string($conn, $_POST["result-heading"]);
+    $desc = mysqli_real_escape_string($conn, $_POST["result-desc"]);
+    $comp_id = mysqli_real_escape_string($conn, $_POST["add-comp-id"]);
+    $drive_id = mysqli_real_escape_string($conn, $_POST["add-drive-id"]);
     $ids = array();
     foreach ($_POST["add_ids"] as $selected) {
         array_push($ids, strval($selected));
     }
-    $date_annouce = $_POST["annouce-date"];
+    $date_annouce = mysqli_real_escape_string($conn, $_POST["annouce-date"]);
     $no_of_stu = count($_POST["add_ids"]);
     // var_dump($ids);
     $student_query = $conn->query("SELECT * FROM student WHERE s_id IN ('" . implode(',', $ids) . "') ");
@@ -40,7 +43,7 @@ if (isset($_POST["add-result"])) {
 
     $arr_json = json_encode($ids);
 
-    // var_dump($_POST);
+    // var_dump(mysqli_real_escape_string($conn,$_POST);
     // var_dump($arr_json);
     $update = $conn->query("INSERT INTO `result` (`heading`, `description`, `no_of_stu`, `post_on`, `student_placed`, `drive_id`, `company_id`) VALUES
     ('$title', '$desc', '$no_of_stu', '$date_annouce', '$arr_json', '$drive_id', '$comp_id');");

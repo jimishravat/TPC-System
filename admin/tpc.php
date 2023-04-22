@@ -2,14 +2,16 @@
 
 include("../database.php");
 include("../helper/authorization.php");
-
+if (!isset($access)) {
+    echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
+}
 if ($access > 2) {
     echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
 }
 if ($access == 2 || $access == 3) {
     $dept = $_SESSION["adminDept"];
 }
-$show = isset($_GET["show"]) ? $_GET["show"] : "active";
+$show = isset($_GET["show"]) ? mysqli_real_escape_string($conn, $_GET["show"]) : "active";
 
 // var_dump($show);
 if ($access == 1) {

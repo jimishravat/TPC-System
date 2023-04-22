@@ -2,6 +2,9 @@
 
 include("../database.php");
 include("../helper/authorization.php");
+if (!isset($access)) {
+    echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
+}
 if ($access != 1) {
     echo "<script> window.location.href = 'http://localhost/tpc-main/helper/noAccess.php'; </script>";
 }
@@ -15,7 +18,7 @@ $dateAnnouce = "";
 $ids = array();
 
 if (isset($_GET["deleteId"])) {
-    $id = $_GET["deleteId"];
+    $id = mysqli_real_escape_string($conn, $_GET["deleteId"]);
     $delete = $conn->query("DELETE FROM result WHERE result_id = '$id'");
     if ($conn->affected_rows) {
         echo "<script> window.location.href = 'http://localhost/tpc/admin/results.php'; </script>";
@@ -23,7 +26,7 @@ if (isset($_GET["deleteId"])) {
 }
 
 if (isset($_GET["updateId"]) || isset($_POST["id"])) {
-    $id = isset($_GET["updateId"]) ? $_GET["updateId"] : $_POST["id"];
+    $id = isset($_GET["updateId"]) ? mysqli_real_escape_string($conn, $_GET["updateId"]) : mysqli_real_escape_string($conn, $_POST["id"]);
     $search = $conn->query("SELECT * FROM  `result` WHERE result_id = '$id'");
 
     if ($search->num_rows == 1) {
@@ -39,11 +42,11 @@ if (isset($_GET["updateId"]) || isset($_POST["id"])) {
     }
 }
 if (isset($_POST["update-result"])) {
-    $title = $_POST["update-title"];
-    $desc = $_POST["update-desc"];
+    $title = mysqli_real_escape_string($conn, $_POST["update-title"]);
+    $desc = mysqli_real_escape_string($conn, $_POST["update-desc"]);
     $ids = array();
     foreach ($_POST["update_ids"] as $selected) {
-        array_push($ids, $selected);
+        array_push($ids, mysqli_real_escape_string($conn, $selected));
     }
     $no_of_stu = count($_POST["update_ids"]);
     $arr_json = json_encode($ids);

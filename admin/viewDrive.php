@@ -2,12 +2,14 @@
 
 include("../database.php");
 include("../helper/authorization.php");
-
+if (!isset($access)) {
+    echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
+}
 if ($access == 2 || $access == 3) {
     $dept = $_SESSION["adminDept"];
 }
 
-$driveId = isset($_GET["drive_id"]) ? $_GET["drive_id"] : 0;
+$driveId = isset($_GET["drive_id"]) ? mysqli_real_escape_string($conn, $_GET["drive_id"]) : 0;
 
 $driveDetailQuery = $conn->query("SELECT * FROM drive,company WHERE drive.company_id = company.company_id AND drive_id='$driveId'");
 
@@ -54,7 +56,7 @@ $driveDetail = $driveDetailQuery->fetch_assoc();
                                         <div class="card-block text-center text-white">
                                             <div class="m-b-25">
                                                 <!-- <div class="preview"></div> -->
-                                                <img src="./uploads/logo/<?php echo $driveDetail["company_logo"] ?>" id="showLogo" class="img-radius my-5" alt="Company-Logo">
+                                                <img src="../uploads/logo/<?php echo $driveDetail["company_logo"] ?>" id="showLogo" class="img-radius my-5" alt="Company-Logo">
 
                                                 <!-- Edit Button -->
                                                 <!-- Only Access to TPO -->
@@ -238,7 +240,7 @@ $driveDetail = $driveDetailQuery->fetch_assoc();
                                                 <div class="col-sm-6 mt-5" id="noOfJR">
 
                                                     <p class="m-b-5 f-w-600">Attach PDF('s)</p>
-                                                    <a class="btn btn-primary btn-sm" href="./uploads/pdf/<?php echo $driveDetail["pdf"] ?>" target="_blank" rel="noopener noreferrer"> View PDF</a>
+                                                    <a class="btn btn-primary btn-sm" href="../uploads/pdf/<?php echo $driveDetail["pdf"] ?>" target="_blank" rel="noopener noreferrer"> View PDF</a>
 
 
                                                 </div>

@@ -3,7 +3,9 @@
 include("../database.php");
 include("../helper/authorization.php");
 include("../helper/fileUpload.php");
-
+if (!isset($access)) {
+    echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
+}
 if ($access != 1) {
     echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
 }
@@ -12,30 +14,30 @@ $driveInsert = 0;
 $driveInsertFailure = 0;
 
 if (isset($_POST["add-drive"])) {
-    $targetLogoLoc = 'uploads/logo/';
-    $targetPdfLoc = 'uploads/pdf/';
-    $companyName = $_POST["companyName"];
-    $companyUrl  = $_POST["companyUrl"];
-    $HRName = $_POST["HRName"];
-    $HRMobile = $_POST["HRMobile"];
-    $HREmail = $_POST["HREmail"];
-    $deadline = $_POST["deadline"];
-    $location = $_POST["location"];
-    $jobDesc = $_POST["jobDesc"];
-    $skills = $_POST["skills"];
-    $addInfo = $_POST["additionalInfo"];
-    $bond = $_POST["bond"];
-    $intern = $_POST["checkInternship"];
-    $stipend = $_POST["stipend"];
-    $internPeriod = $_POST["internshipPeriod"];
-    $bonus = $_POST["bonus"];
-    $bonusIncluded = $_POST["bonusIncluded"];
-    $ssc = $_POST["sscCriteria"];
-    $hsc = $_POST["hscCriteria"];
-    $cpi = $_POST["cpiCriteria"];
-    $spi = $_POST["spiCriteria"];
-    $totalBacklog = $_POST["totalBacklog"];
-    $activeBacklog = $_POST["activeBacklog"];
+    $targetLogoLoc = '../uploads/logo/';
+    $targetPdfLoc = '../uploads/pdf/';
+    $companyName = mysqli_real_escape_string($conn, $_POST["companyName"]);
+    $companyUrl  = mysqli_real_escape_string($conn, $_POST["companyUrl"]);
+    $HRName = mysqli_real_escape_string($conn, $_POST["HRName"]);
+    $HRMobile = mysqli_real_escape_string($conn, $_POST["HRMobile"]);
+    $HREmail = mysqli_real_escape_string($conn, $_POST["HREmail"]);
+    $deadline = mysqli_real_escape_string($conn, $_POST["deadline"]);
+    $location = mysqli_real_escape_string($conn, $_POST["location"]);
+    $jobDesc = mysqli_real_escape_string($conn, $_POST["jobDesc"]);
+    $skills = mysqli_real_escape_string($conn, $_POST["skills"]);
+    $addInfo = mysqli_real_escape_string($conn, $_POST["additionalInfo"]);
+    $bond = mysqli_real_escape_string($conn, $_POST["bond"]);
+    $intern = mysqli_real_escape_string($conn, $_POST["checkInternship"]);
+    $stipend = mysqli_real_escape_string($conn, $_POST["stipend"]);
+    $internPeriod = mysqli_real_escape_string($conn, $_POST["internshipPeriod"]);
+    $bonus = mysqli_real_escape_string($conn, $_POST["bonus"]);
+    $bonusIncluded = mysqli_real_escape_string($conn, $_POST["bonusIncluded"]);
+    $ssc = mysqli_real_escape_string($conn, $_POST["sscCriteria"]);
+    $hsc = mysqli_real_escape_string($conn, $_POST["hscCriteria"]);
+    $cpi = mysqli_real_escape_string($conn, $_POST["cpiCriteria"]);
+    $spi = mysqli_real_escape_string($conn, $_POST["spiCriteria"]);
+    $totalBacklog = mysqli_real_escape_string($conn, $_POST["totalBacklog"]);
+    $activeBacklog = mysqli_real_escape_string($conn, $_POST["activeBacklog"]);
     $password = base64_encode(strrev(md5($pass)));
 
     $deptEligible = array();
@@ -44,16 +46,16 @@ if (isset($_POST["add-drive"])) {
     }
     $deptEligible = json_encode($deptEligible);
 
-    $jobRole = $_POST["jobRole"];
-    $salary = $_POST["salary"];
+    $jobRole = mysqli_real_escape_string($conn, $_POST["jobRole"]);
+    $salary = mysqli_real_escape_string($conn, $_POST["salary"]);
 
     // $jobRoleArray = array();
-    // foreach ($_POST["jobRole"] as $jobRole) {
+    // foreach (mysqli_real_escape_string($conn,$_POST["jobRole"] as $jobRole) {
     //     array_push($jobRoleArray, $jobRole);
     // }
 
     // $salaryArray = array();
-    // foreach ($_POST["salary"] as $salary) {
+    // foreach (mysqli_real_escape_string($conn,$_POST["salary"] as $salary) {
     //     array_push($salaryArray, $salary);
     // }
 
@@ -321,7 +323,7 @@ if (isset($_POST["add-drive"])) {
                                                             </tr>
 
                                                         </table>
-                                                       
+
                                                     </div>
                                                     <div class="row my-5" id="noOfJR">
                                                         <!-- <div class="col-sm-12">

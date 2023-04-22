@@ -11,7 +11,7 @@ if(isset($_SESSION["admin"]))
 
 }
 
-// For students
+// For students and company
 
 if (isset($_SESSION["showUser"])) {
     unset($_SESSION["showUser"]);

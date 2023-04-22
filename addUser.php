@@ -1,5 +1,6 @@
 <?php
 include("./database.php");
+include("./helper/fileUpload.php");
 
 // Session
 session_start();
@@ -43,6 +44,29 @@ if (isset($_POST["registerStudent"])) {
             unset($_SESSION["alreadyRegisteredId"]);
         }
         $_SESSION["showUser"] = true;
-        echo "<script> window.location.href = './showUserDetails.php?user_id=$id_number'; </script>";
+        echo "<script> window.location.href = './showUserDetails.php?user_id=$id_number'&user_type=0; </script>";
+    }
+}
+
+if (isset($_POST["registerCompany"])) {
+    $cName = mysqli_real_escape_string($conn, $_POST["cName"]);
+    $cURL = mysqli_real_escape_string($conn, $_POST["cURL"]);
+    $cLocation = mysqli_real_escape_string($conn, $_POST["cLocation"]);
+    $hrName = mysqli_real_escape_string($conn, $_POST["hrName"]);
+    $hrEmail = mysqli_real_escape_string($conn, $_POST["hrEmail"]);
+    $hrMobile = mysqli_real_escape_string($conn, $_POST["hrMobile"]);
+    $companyPassword = mysqli_real_escape_string($conn, $_POST["companyPassword"]);
+
+    $cPassword = base64_encode(strrev(md5($companyPassword)));
+
+    $targetLoc = '../uploads/logo/';
+
+    $cLogo = singleFile($_FILES["cLogo"]["name"], $_FILES["cLogo"]["tmp_name"], $targetLoc);
+
+    $insertQuery = $conn->query("INSERT INTO `company`(`company_name`, `password`, `HR_name`, `HR_email`, `HR_mobile`, `company_url`, `company_location`, `company_logo`) VALUES ('$cName','$cPassword','$hrName','$hrEmail','$hrMobile','$cURL','$cLocation','$cLogo')");
+    if ($insertQuery) {
+        
+        $_SESSION["showUser"] = true;
+        echo "<script> window.location.href = './showUserDetails.php?user_id=$hrEmail&user_type=1'; </script>";
     }
 }

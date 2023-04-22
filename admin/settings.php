@@ -3,6 +3,10 @@
 include("../database.php");
 include("../helper/authorization.php");
 
+if (!isset($access)) {
+    echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
+}
+
 if ($access == 2 || $access == 3) {
     $dept = $_SESSION["adminDept"];
 }
@@ -13,40 +17,40 @@ $updateFailure = 0;
 $updateSuccess = 0;
 
 if (isset($_POST["update-pass"])) {
-    $password = $_POST["newPassword"];
+    $password = mysqli_real_escape_string($conn, $_POST["newPassword"]);
     $password = base64_encode(strrev(md5($password)));
     $id = $_SESSION["adminId"];
 
-    var_dump($password);
+    // var_dump($password);
 
-    // if ($access == 1) {
+    if ($access == 1) {
 
-    //     $updatePassword = $conn->query("UPDATE `tp0` SET `tpo_password`='$password' WHERE tpo_id = '$id'");
-    //     if ($conn->affected_rows) {
-    //         $updateSuccess = 1;
-    //     } else {
-    //         $updateFailure = 1;
-    //     }
-    // }
+        $updatePassword = $conn->query("UPDATE `tp0` SET `tpo_password`='$password' WHERE tpo_id = '$id'");
+        if ($conn->affected_rows) {
+            $updateSuccess = 1;
+        } else {
+            $updateFailure = 1;
+        }
+    }
 
-    // if ($access == 2) {
+    if ($access == 2) {
 
-    //     $updatePassword = $conn->query("UPDATE `tpf` SET `tpf_password`='$password' WHERE tpf_id = '$id'");
-    //     if ($conn->affected_rows) {
-    //         $updateSuccess = 1;
-    //     } else {
-    //         $updateFailure = 1;
-    //     }
-    // }
+        $updatePassword = $conn->query("UPDATE `tpf` SET `tpf_password`='$password' WHERE tpf_id = '$id'");
+        if ($conn->affected_rows) {
+            $updateSuccess = 1;
+        } else {
+            $updateFailure = 1;
+        }
+    }
 
-    // if ($access == 3) {
-    //     $updatePassword = $conn->query("UPDATE `tpc` SET `tpc_password`='$password' WHERE tpc_id = '$id'");
-    //     if ($conn->affected_rows) {
-    //         $updateSuccess = 1;
-    //     } else {
-    //         $updateFailure = 1;
-    //     }
-    // }
+    if ($access == 3) {
+        $updatePassword = $conn->query("UPDATE `tpc` SET `tpc_password`='$password' WHERE tpc_id = '$id'");
+        if ($conn->affected_rows) {
+            $updateSuccess = 1;
+        } else {
+            $updateFailure = 1;
+        }
+    }
 }
 ?>
 

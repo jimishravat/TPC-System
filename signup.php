@@ -2,7 +2,7 @@
 
 include("./database.php");
 session_start();
-$user = isset($_GET["user"]) ? isset($_GET["user"]) : 0;
+
 
 ?>
 <!DOCTYPE html>
@@ -15,7 +15,11 @@ $user = isset($_GET["user"]) ? isset($_GET["user"]) : 0;
 
     <title>Home</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <style>
+        body {
+            font-size: 1;
+        }
+    </style>
 </head>
 
 <body>
@@ -26,100 +30,100 @@ $user = isset($_GET["user"]) ? isset($_GET["user"]) : 0;
     <div class="container">
 
 
-        <?php if ($user == 0) { ?>
-            <div class="title">Student Registration</div>
-            <div class="content">
-                <form action="./addUser.php" method="POST">
-                    <?php if (isset($_SESSION["alreadyRegisteredId"])) {
-                    ?>
-                        <div class="row d-flex justify-content-center">
-                            <span id="alreadyRegisteredId"><?php echo $_SESSION["alreadyRegisteredId"]; ?> is already registered</span>
-                        </div>
-                    <?php
-                    } ?>
 
-                    <div class="user-details">
+        <div class="title">Student Registration</div>
+        <div class="content">
+            <form action="./addUser.php" method="POST">
+                <?php if (isset($_SESSION["alreadyRegisteredId"])) {
+                ?>
+                    <div class="row d-flex justify-content-center">
+                        <span id="alreadyRegisteredId"><?php echo $_SESSION["alreadyRegisteredId"]; ?> is already registered</span>
+                    </div>
+                <?php
+                } ?>
 
-                        <div class="input-box">
-                            <span class="details">After 12th or D2D Student</span>
-                            <select name="typeStudent" id="typeStudent">
-                                <option value="1">After 12th</option>
-                                <option value="2">Diploma to Degree (D2D)</option>
-                            </select>
-                        </div>
-                        <div class="input-box">
-                            <span class="details">ID Number</span>
-                            <input type="text" name="id" id="idnumber" onkeyup="check_id()" placeholder="Enter your ID number" required>
-                            <span id="idmessage"></span>
+                <div class="user-details">
 
-                        </div>
-                        <div class="input-box">
-                            <span class="details">First Name</span>
-                            <input type="text" name="fname" placeholder="Enter your First Name" required>
-
-                        </div>
-                        <div class="input-box">
-                            <span class="details">Last Name</span>
-                            <input type="text" name="lname" placeholder="Enter your Last Name" required>
-
-                        </div>
-                        <div class="input-box">
-                            <span class="details">Email</span>
-                            <input type="email" name="email" id="email" onkeyup="check_email()" placeholder="Enter your email" required>
-                            <span id="emailmessage"></span>
-                        </div>
-                        <div class="input-box">
-                            <span class="details">Mobile Number</span>
-                            <input type="number" name="mobile" id="mobile" onkeyup="check_mobile()" placeholder="Enter your number" required>
-                            <span id="mobilemessage"></span>
-                        </div>
-                        <div class="input-box">
-                            <span class="details">Password</span>
-                            <input type="password" name="password" id="password" placeholder="Enter your password" onkeyup="validate_password()" required>
-                            <span class="extra" id="eightCharacter">Must be atleat 8 characters long</span><br>
-                            <span class="extra" id="oneDigit">Must include 1 digit</span> <br>
-                            <span class="extra" id="oneCapital">Must include 1 Capital Letter</span> <br>
-                            <span class="extra" id="oneSpecial">Must include 1 Special Character </span>
-
-
-
-                        </div>
-                        <div class="input-box">
-                            <span class="details">Confirm Password</span>
-                            <input type="password" id="cPassword" placeholder="Confirm your password" onkeyup="check_password()" required>
-                            <span id="message"></span>
-                        </div>
-                        <div class="input-box">
-                            <span class="details">Department</span>
-                            <select name="department" id="dept" required>
-                                <option value="0">Select Your Department</option>
-                                <?php
-                                $dept = "SELECT * FROM department";
-                                $result = mysqli_query($conn, $dept);
-                                while ($row = $result->fetch_assoc()) {
-                                ?>
-                                    <option value="<?php echo $row["dept_id"] ?>"><?php echo $row["dept_name"] ?></option>
-                                <?php
-
-                                }
-
-                                ?>
-                            </select>
-                        </div>
-                        <div class="input-box">
-                            <span class="details">Gender</span>
-                            <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadio1" name="gender" value="male" class="custom-control-input">
-                                <label class="custom-control-label" for="customRadio1">Male</label>
-                            </div>
-                            <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadio2" name="gender" value="female" class="custom-control-input">
-                                <label class="custom-control-label" for="customRadio2">Female</label>
-                            </div>
-                        </div>
+                    <div class="input-box">
+                        <span class="details">After 12th or D2D Student</span>
+                        <select name="typeStudent" id="typeStudent">
+                            <option value="1">After 12th</option>
+                            <option value="2">Diploma to Degree (D2D)</option>
+                        </select>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">ID Number</span>
+                        <input type="text" name="id" id="idnumber" onkeyup="check_id()" placeholder="Enter your ID number" required>
+                        <span id="idmessage"></span>
 
                     </div>
-                    <!-- <div class="gender-details">
+                    <div class="input-box">
+                        <span class="details">First Name</span>
+                        <input type="text" name="fname" placeholder="Enter your First Name" required>
+
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Last Name</span>
+                        <input type="text" name="lname" placeholder="Enter your Last Name" required>
+
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Email</span>
+                        <input type="email" name="email" id="email" onkeyup="check_email()" placeholder="Enter your email" required>
+                        <span id="emailmessage"></span>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Mobile Number</span>
+                        <input type="number" name="mobile" id="mobile" onkeyup="check_mobile()" placeholder="Enter your number" required>
+                        <span id="mobilemessage"></span>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Password</span>
+                        <input type="password" name="password" id="password" placeholder="Enter your password" onkeyup="validate_password()" required>
+                        <span class="extra" id="eightCharacter">Must be atleat 8 characters long</span><br>
+                        <span class="extra" id="oneDigit">Must include 1 digit</span> <br>
+                        <span class="extra" id="oneCapital">Must include 1 Capital Letter</span> <br>
+                        <span class="extra" id="oneSpecial">Must include 1 Special Character </span>
+
+
+
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Confirm Password</span>
+                        <input type="password" id="cPassword" placeholder="Confirm your password" onkeyup="check_password()" required>
+                        <span id="message"></span>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Department</span>
+                        <select name="department" id="dept" required>
+                            <option value="0">Select Your Department</option>
+                            <?php
+                            $dept = "SELECT * FROM department";
+                            $result = mysqli_query($conn, $dept);
+                            while ($row = $result->fetch_assoc()) {
+                            ?>
+                                <option value="<?php echo $row["dept_id"] ?>"><?php echo $row["dept_name"] ?></option>
+                            <?php
+
+                            }
+
+                            ?>
+                        </select>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Gender</span>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio1" name="gender" value="male" class="custom-control-input">
+                            <label class="custom-control-label" for="customRadio1">Male</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio2" name="gender" value="female" class="custom-control-input">
+                            <label class="custom-control-label" for="customRadio2">Female</label>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- <div class="gender-details">
                         <input type="radio" name="gender" value="male" id="dot-1">
                         <input type="radio" name="gender" value="female" id="dot-2">
                         <input type="radio" name="gender" value="other" id="dot-3">
@@ -139,105 +143,24 @@ $user = isset($_GET["user"]) ? isset($_GET["user"]) : 0;
                             </label>
                         </div>
                     </div> -->
-                    <div class="button">
-                        <span id="finalmessage" class="extra"></span>
-                        <input type="submit" name="registerStudent" id="registerStudent" value="Register">
+                <div class="button">
+                    <span id="finalmessage" class="extra"></span>
+                    <input type="submit" name="registerStudent" id="registerStudent" value="Register">
+                </div>
+                <div class="row d-flex flex-column">
+                    <div class="col-sm-6">
+
+                        <div class="signup-link">Already Registered? <a href="./login.php">Login now</a></div>
                     </div>
-                    <div class="row d-flex flex-column">
-                        <div class="col-sm-6">
+                    <div class="col-sm-6">
 
-                            <div class="signup-link">Already Registered? <a href="./login.php">Login now</a></div>
-                        </div>
-                        <div class="col-sm-6">
-
-                            <div class="signup-link">Company Registration <a href="./signup.php?user=1">I'm Company</a></div>
-                        </div>
+                        <div class="signup-link">Company Registration <a href="./signupCompany.php">I'm Company</a></div>
                     </div>
-                </form>
-            </div>
-        <?php } ?>
-        <?php if ($user == 1) { ?>
-            <div class="title">Company Registration</div>
-            <div class="content">
-                <form action="./addUser.php" method="POSt">
-                    <div class="user-details">
+                </div>
+            </form>
+        </div>
 
-                        <div class="input-box">
-                            <span class="details">Company Name</span>
-                            <input type="text" name="id" placeholder="Enter Company Name" required>
-                        </div>
-                        <div class="input-box">
-                            <span class="details">Company Email</span>
-                            <input type="email" name="email" placeholder="Enter Company Email" required>
-                        </div>
-                        <div class="input-box">
-                            <span class="details">Company Location (Headquaters)</span>
-                            <input type="number" name="text" placeholder="Enter Company Location" required>
-                        </div>
-                        <div class="input-box">
-                            <span class="details">HR Name</span>
-                            <input type="number" name="text" placeholder="Enter HR Name" required>
-                        </div>
-                        <div class="input-box">
-                            <span class="details">HR Email</span>
-                            <input type="number" name="email" placeholder="Enter HR Email" required>
-                        </div>
-                        <div class="input-box">
-                            <span class="details">HR Number</span>
-                            <input type="number" name="mobile" placeholder="Enter HR Number" required>
-                        </div>
-                        <div class="input-box">
-                            <span class="details">Password</span>
-                            <input type="password" name="password" id="password" placeholder="Enter your password" onkeyup="validate_password()" required>
-                            <span class="extra" id="eightCharacter">Must be atleat 8 characters long</span><br>
-                            <span class="extra" id="oneDigit">Must include 1 digit</span> <br>
-                            <span class="extra" id="oneCapital">Must include 1 Capital Letter</span> <br>
-                            <span class="extra" id="oneSpecial">Must include 1 Special Character </span>
-                        </div>
-                        <div class="input-box">
-                            <span class="details">Confirm Password</span>
-                            <input type="password" id="cPassword" placeholder="Confirm your password" onkeyup="check_password()" required>
-                            <span id="message"></span>
 
-                        </div>
-
-                    </div>
-                    <div class="gender-details">
-                        <input type="radio" name="gender" value="male" id="dot-1">
-                        <input type="radio" name="gender" value="female" id="dot-2">
-                        <input type="radio" name="gender" value="other" id="dot-3">
-                        <span class="gender-title">Gender</span>
-                        <div class="category">
-                            <label for="dot-1">
-                                <span class="dot one"></span>
-                                <span class="gender">Male</span>
-                            </label>
-                            <label for="dot-2">
-                                <span class="dot two"></span>
-                                <span class="gender">Female</span>
-                            </label>
-                            <label for="dot-3">
-                                <span class="dot three"></span>
-                                <span class="gender">Prefer not to say</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="button">
-                        <input type="submit" name="registerStudent" value="Register">
-                    </div>
-                    <div class="row d-flex">
-                        <div class="col-sm-6">
-
-                            <div class="signup-link">Already Registered <a href="./login.php">Login now</a></div>
-                        </div>
-                        <div class="col-sm-6">
-
-                            <div class="signup-link">Student Registeration <a href="./signup.php">I'm Students</a></div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        <?php } ?>
     </div>
     <!-- <span class="extra" id="eightCharacter">Must be atleat 8 characters long</span><br>
     <span class="extra" id="oneDigit">Must include 1 digit</span> <br>

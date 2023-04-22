@@ -1,10 +1,16 @@
 <?php
+// session_start();
 include("../database.php");
+include("../helper/authorization.php");
 include("./applyDrive.php");
-session_start();
 
 if (!isset($_SESSION["studentUserId"])) {
     echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
+}
+
+if ($studentAccess == 0) {
+    echo "<script> alert('Complete Your Profile and Wait for Approval') </script>";
+    echo "<script> window.location.href = 'http://localhost/tpc/student/viewStudent.php'; </script>";
 }
 
 $dept = $_SESSION["studentDept"];
@@ -57,7 +63,7 @@ $dept = $_SESSION["studentDept"];
                                 <!-- <div class="row"> -->
                                 <div class="col-sm-2 col-auto align-items-center d-flex justify-content-center">
                                     <div class="icon icon-shape text-white text-lg rounded-circle">
-                                        <img src="../admin/uploads/logo/<?php echo $drive["company_logo"] ?>" alt="">
+                                        <img src="../uploads/logo/<?php echo $drive["company_logo"] ?>" alt="">
 
                                     </div>
                                 </div>

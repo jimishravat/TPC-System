@@ -3,11 +3,15 @@
 include("../database.php");
 include("../helper/authorization.php");
 
+if (!isset($access)) {
+    echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
+}
+
 if ($access == 2 || $access == 3) {
     $dept = $_SESSION["adminDept"];
 }
 
-$id = $_GET["id"];
+$id = mysqli_real_escape_string($conn, $_GET["id"]);
 
 $student_fetch = $conn->query("SELECT * FROM student,department WHERE student.s_dept = department.dept_id AND s_id = '$id'");
 $student = $student_fetch->fetch_assoc();

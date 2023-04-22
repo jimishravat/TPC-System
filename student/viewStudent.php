@@ -236,7 +236,8 @@ if (isset($_POST["add-student"])) {
                                             <div class="card-block text-center text-white">
                                                 <div class="m-b-25">
 
-                                                    <img src=" <?php if ($show) echo "../uploads/student/" . $student["photo"] ?>" class="img-radius my-5" id="showProfile" alt="User-Profile-Image">
+                                                    <img src=" <?php if ($show) echo "../uploads/student/" . $student["photo"];
+                                                                else echo "../images/user-icon.png" ?>" class="img-radius my-5" id="showProfile" alt="User-Profile-Image">
 
                                                     <?php if ($addStudent || $isEdit) : ?>
                                                         <input type="file" name="profile" id="profile" class="btn btn-sm inputfile">
@@ -585,7 +586,7 @@ if (isset($_POST["add-student"])) {
 
                                                             </div>
                                                             <div class="col-sm-3">
-                                                                <p class="m-b-5 f-w-600">Upload SSC Marksheet</p>
+                                                                <p class="m-b-5 f-w-600">SSC Marksheet</p>
                                                                 <?php if ($show) : ?>
                                                                     <a href="../uploads/student/<?php echo $student["ssc_marksheet"] ?>" target="_blank" class=" text-white mb-2 btn btn-sm btn-primary" rel="noreferrer noopener">
                                                                         View
@@ -732,7 +733,7 @@ if (isset($_POST["add-student"])) {
 
                                                                     </div>
                                                                     <div class="col-sm-3">
-                                                                        <p class="m-b-5 f-w-600">Upload Marksheet</p>
+                                                                        <p class="m-b-5 f-w-600">HSC Marksheet</p>
                                                                         <?php if ($show) : ?>
                                                                             <a href="../uploads/student/<?php echo $student["hsc_marksheet"] ?>" target="_blank" class=" text-white mb-2 btn btn-sm btn-primary" rel="noreferrer noopener">
                                                                                 View
@@ -1078,7 +1079,7 @@ if (isset($_POST["add-student"])) {
                                                                             </a>
                                                                         <?php endif ?>
                                                                         <?php if ($addStudent || $isEdit) : ?>
-                                                                            <input type="file" name="bvmMarksheet" class="btn btn-sm btn-primary inputfile" id="sscMarksheet">
+                                                                            <input type="file" name="bvmMarksheet" class="btn btn-sm btn-primary inputfile" id="bvmMarksheet">
                                                                             <label for="bvmMarksheet" class="text-black">Upload</label>
                                                                         <?php endif ?>
                                                                     </div>
@@ -1091,7 +1092,7 @@ if (isset($_POST["add-student"])) {
                                                                             </a>
                                                                         <?php endif ?>
                                                                         <?php if ($addStudent || $isEdit) : ?>
-                                                                            <input type="file" name="resume" class="btn btn-sm btn-primary inputfile" id="sscMarksheet">
+                                                                            <input type="file" name="resume" class="btn btn-sm btn-primary inputfile" id="resume">
                                                                             <label for="resume" class="text-black">Upload</label>
                                                                         <?php endif ?>
                                                                     </div>

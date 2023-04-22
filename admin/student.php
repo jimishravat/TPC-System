@@ -1,12 +1,14 @@
 <?php
 include("../database.php");
 include("../helper/authorization.php");
-
+if (!isset($access)) {
+    echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
+}
 
 if ($access == 2 || $access == 3) {
     $dept = $_SESSION["adminDept"];
 }
-$show = isset($_GET["show"]) ? $_GET["show"] : 0;
+$show = isset($_GET["show"]) ? mysqli_real_escape_string($conn, $_GET["show"]) : 0;
 
 if ($access == 2 || $access == 3) {
     $show = $dept;

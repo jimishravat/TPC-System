@@ -10,7 +10,12 @@ session_start();
 // it will be shown for showing the user name of the student
 if (!empty($_GET["user_id"]) && isset($_SESSION["showUser"])) {
     $user_id = $_GET["user_id"];
+    $type = $_GET["user_type"];
 }
+
+
+
+
 // if any user try to see this page through URL then he will be restricted and redirected to index page
 else {
     header("Location: index.php");
@@ -39,8 +44,13 @@ else {
             <div class="details">
                 <p>User Name : <strong> <?php echo strtoupper($user_id)  ?> </strong>
                 </p>
-                <p> Your account is in <strong>IN-ACTIVE</strong> state. It will be active only after the TPC approves you. You can check the status in the profile section after you <a href="./login.php"> LOGIN </a> </p>
-                <p> Once you fill your details and all supporting documents then only you will be allowed to apply in any Placement Drive </p>
+
+                <?php if ($type == 0) : ?>
+                    <p> Your account is in <strong>IN-ACTIVE</strong> state. It will be active only after the TPC approves you. You can check the status in the profile section after you <a href="./login.php"> LOGIN </a> </p>
+                    <p> Once you fill your details and all supporting documents then only you will be allowed to apply in any Placement Drive </p>
+                <?php else : ?>
+                    <p> Your account is succesfullt created. Please <a href="./login.php"> LOGIN </a> to your account to go further with the placement drive. THANK YOU</p>
+                <?php endif ?>
             </div>
         </div>
     </div>

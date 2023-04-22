@@ -1,7 +1,9 @@
 <?php
 
 include("../database.php");
-session_start();
+include("../helper/authorization.php");
+
+
 // var_dump($_SESSION["adminId"]);
 // var_dump($_SESSION);
 
@@ -9,40 +11,20 @@ $updateFailure = 0;
 $updateSuccess = 0;
 
 if (isset($_POST["update-pass"])) {
-    $password = $_POST["newPassword"];
+    $password = mysqli_real_escape_string($conn, $_POST["newPassword"]);
     $password = base64_encode(strrev(md5($password)));
-    $id = $_SESSION["adminId"];
+    $id = $_SESSION["studentUserId"];
 
-    var_dump($password);
+    // var_dump($password);
 
-    // if ($access == 1) {
 
-    //     $updatePassword = $conn->query("UPDATE `tp0` SET `tpo_password`='$password' WHERE tpo_id = '$id'");
-    //     if ($conn->affected_rows) {
-    //         $updateSuccess = 1;
-    //     } else {
-    //         $updateFailure = 1;
-    //     }
-    // }
 
-    // if ($access == 2) {
-
-    //     $updatePassword = $conn->query("UPDATE `tpf` SET `tpf_password`='$password' WHERE tpf_id = '$id'");
-    //     if ($conn->affected_rows) {
-    //         $updateSuccess = 1;
-    //     } else {
-    //         $updateFailure = 1;
-    //     }
-    // }
-
-    // if ($access == 3) {
-    //     $updatePassword = $conn->query("UPDATE `tpc` SET `tpc_password`='$password' WHERE tpc_id = '$id'");
-    //     if ($conn->affected_rows) {
-    //         $updateSuccess = 1;
-    //     } else {
-    //         $updateFailure = 1;
-    //     }
-    // }
+    $updatePassword = $conn->query("UPDATE `student` SET `s_password`='$password' WHERE s_id = '$id'");
+    if ($conn->affected_rows) {
+        $updateSuccess = 1;
+    } else {
+        $updateFailure = 1;
+    }
 }
 ?>
 
@@ -67,7 +49,7 @@ if (isset($_POST["update-pass"])) {
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 
-    <title>Student | Setting</title>
+    <title>Admin | Setting</title>
 
     <style>
         .extra {
@@ -106,11 +88,9 @@ if (isset($_POST["update-pass"])) {
                                         <!-- <div class="m-b-25">
                                             <img src="http://localhost/tpc-main/images/Dhyey.png" class="img-radius" alt="User-Profile-Image">
                                         </div> -->
-                                        <h2 class="f-w-600"><?php echo $_SESSION["studentUserId"] ?></h2>
-                                        <p class="f-w-600"><?php echo $_SESSION["studentEmail"] ?></p>
-                                        <!-- <?php if ($access == 3) : ?>
-                                            <p class="f-w-600">19CP015</p>
-                                        <?php endif ?> -->
+
+                                        <p class="f-w-600"><?php echo strtoupper($_SESSION["studentUserId"]) ?></p>
+
                                         <!-- <p class="f-w-600">Computer Department</p> -->
                                     </div>
                                 </div>
@@ -124,7 +104,7 @@ if (isset($_POST["update-pass"])) {
                                                     <input type="password" class="m-b-5 form-control" name="" id="currentPass">
                                                 </div>
                                                 <div class="col-sm-6 align-item-center bg-rounded">
-                                                    <p class="m-b-5 f-w-600 my-6  " id="currentmsg"></p>
+                                                    <p class="m-b-5 f-w-600 my-6" id="currentmsg"></p>
                                                 </div>
 
                                                 <div class="col-sm-6 ">
@@ -175,6 +155,7 @@ if (isset($_POST["update-pass"])) {
 
         function validate_password() {
             var c1, c2, c3, c4 = 0
+            console.log("pas");
             var eightCharacter = document.getElementById('eightCharacter');
             var oneCapital = document.getElementById('oneCapital');
             var oneDigit = document.getElementById('oneDigit');
@@ -260,9 +241,10 @@ if (isset($_POST["update-pass"])) {
         $(function() {
             $("#currentPass").keyup(function() {
                 var searchid = $(this).val();
-                console.log(searchid);
+                // console.log(searchid);
                 var dataValues = {
                     password: searchid,
+
                     id: <?php echo $_SESSION["studentUserId"]; ?>
                 }
                 console.log(dataValues);
@@ -274,7 +256,7 @@ if (isset($_POST["update-pass"])) {
                         data: dataValues,
                         cache: false,
                         success: function(response) {
-                            console.log(response);
+                            // console.log(response);
                             if (response == 1) {
                                 oldPass = 1
                                 $("#currentmsg").addClass('bg-success');

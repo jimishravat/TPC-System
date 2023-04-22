@@ -1,7 +1,7 @@
 <?php
 include("../database.php");
+include("../helper/authorization.php");
 
-session_start();
 
 if (!isset($_SESSION["studentUserId"])) {
     echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
@@ -9,7 +9,10 @@ if (!isset($_SESSION["studentUserId"])) {
 
 $dept = $_SESSION["studentDept"];
 
-
+if ($studentAccess == 0) {
+    echo "<script> alert('Complete Your Profile and Wait for Approval') </script>";
+    echo "<script> window.location.href = 'http://localhost/tpc/student/viewStudent.php'; </script>";
+}
 ?>
 
 <!DOCTYPE html>

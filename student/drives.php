@@ -1,15 +1,60 @@
 <?php
 include("../database.php");
 include("./applyDrive.php");
-session_start();
+include("../helper/authorization.php");
 
 if (!isset($_SESSION["studentUserId"])) {
     echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
 }
 
+if ($studentAccess == 0) {
+    echo "<script> alert('Complete Your Profile and Wait for Approval') </script>";
+    echo "<script> window.location.href = 'http://localhost/tpc/student/viewStudent.php'; </script>";
+}
 $dept = $_SESSION["studentDept"];
 $id = $_SESSION["studentUserId"];
 
+function print_msg($s_id, $drive)
+{
+    global $conn;
+    $s_data = $conn->query("SELECT * FROM student_placed WHERE s_id = '$s_id'");
+    $s_drive_data = $s_data->fetch_assoc();
+
+    $applyDrive = json_decode($s_drive_data["drive_applied"], true);
+    $selectedInDrive = json_decode($s_drive_data["selected_in_drive"], true);
+    $rejectDrive = json_decode($s_drive_data["reject_drive"], true);
+    $finalDrive = $s_drive_data["drive_selected"];
+
+    // var_dump($applyDrive);
+    // var_dump($selectedInDrive);
+    // var_dump($rejectDrive);
+    // var_dump($finalDrive);
+
+    // Type of Msg
+    // 0 => Application Submitted
+    // 1 => Final Drive Selected
+    // 2 => Selected But Rejected
+    // 3 => Selected But Yet to Accept/Reject
+
+    $msg_type = 0;
+
+    if (in_array($drive, $applyDrive)) {
+
+        global $msg_type;
+        $msg_type = 0;
+        if (in_array($drive, $selectedInDrive)) {
+            if (in_array($drive, $rejectDrive)) {
+                $msg_type = 2;
+            } else if ($drive == $finalDrive) {
+                $msg_type = 1;
+            } else {
+                $msg_type = 3;
+            }
+        }
+    }
+
+    return is_null($msg_type) ? "0" : $msg_type;
+}
 
 ?>
 
@@ -36,7 +81,7 @@ $id = $_SESSION["studentUserId"];
         <h5>Below you will find job roles you have applied for</h5>
 
         <div class="row">
-            <div class="col-xl-12 col-sm-12 col-12 row">
+            <div class="col-xl-12 col-sm-12 col-12 row text-primary">
                 <?php
 
                 $drive_id_fetch = $conn->query("SELECT * FROM student_placed WHERE s_id = '$id'");
@@ -47,8 +92,10 @@ $id = $_SESSION["studentUserId"];
                     $drive_fetch = $conn->query("SELECT company.company_name, drive.job_role FROM drive,company WHERE drive.company_id=company.company_id AND drive.drive_id='$drive_id'");
                     $drive = $drive_fetch->fetch_assoc();
 
+                    $msg_type = print_msg($id, $drive_id);
                 ?>
-                    <div class="card shadow-3 border-0 mt-5 mx-2 col-sm-12">
+
+                    <div class="card shadow-3 border-0 mt-5 mx-2 col-sm-12 ">
                         <div class="card-body  ">
                             <div class="row ">
                                 <div class="col d-flex">
@@ -56,15 +103,29 @@ $id = $_SESSION["studentUserId"];
                                     <span class="h3 font-semibold mb-0 mx-5"><?php echo $drive["job_role"] ?></span>
                                 </div>
                             </div>
+
                             <div class="mt-2 mb-0 text-sm d-flex justify-content-start">
+                                <p class="text-primary">
+                                    <?php if ($msg_type == 0) {
+                                        echo "Application Submitted to Admin";
+                                    } elseif ($msg_type == 1 ) {
 
-                                <?php if ($drive_id == $help["drive_selected"]) : ?>
-                                    <p class="text-primary">Congratulations!! You are selected </p>
-                                <?php else : ?>
-                                    <p class="text-primary">Application Submitted to admin</p>
-                                <?php endif ?>
+                                        echo "Congratulations! You have been selected";
+                                    } elseif ($msg_type == 3 ) {
 
+                                        echo "Congratulations! You have been selected. Please Accept/Reject the offer as soon as possible";
+                                    }else {
+                                        echo "You have been selected but you rejected the offer";
+                                    }
+                                    ?>
+                                </p>
                             </div>
+                            <?php if ($msg_type == 3) : ?>
+                                <a href="" class="btn btn-sm btn-success text-white">Accept</a>
+                                <a href="" class="btn btn-sm btn-danger text-white">Reject</a>
+                            <?php endif ?>
+
+
                         </div>
 
                     </div>
