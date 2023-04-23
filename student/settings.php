@@ -155,7 +155,6 @@ if (isset($_POST["update-pass"])) {
 
         function validate_password() {
             var c1, c2, c3, c4 = 0
-            console.log("pas");
             var eightCharacter = document.getElementById('eightCharacter');
             var oneCapital = document.getElementById('oneCapital');
             var oneDigit = document.getElementById('oneDigit');
