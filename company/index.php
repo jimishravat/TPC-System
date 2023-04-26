@@ -21,7 +21,7 @@ include("../helper/authorization.php");
 
 
 
-    <title>Document</title>
+    <title>Company | Home</title>
 </head>
 
 <body>
@@ -42,12 +42,7 @@ include("../helper/authorization.php");
                             <!-- Add Drive Button -->
                             <!-- Only Access to TPO -->
 
-                            <a href="./adddrive.php" class="btn d-inline-flex btn-sm btn-primary mx-1">
-                                <span class=" pe-2">
-                                    <i class="bi bi-plus"></i>
-                                </span>
-                                <span>Request Drive</span>
-                            </a>
+                            <!-- Instructions -->
 
                         </div>
                     </div>

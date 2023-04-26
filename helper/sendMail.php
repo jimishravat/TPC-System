@@ -3,15 +3,15 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require "../tpc/phpmailer/src/Exception.php";
-require '../tpc/phpmailer/src/PHPMailer.php';
-require '../tpc/phpmailer/src/SMTP.php';
+include("C:/xampp/htdocs/tpc/phpmailer/src/Exception.php");
+include('C:/xampp/htdocs/tpc/phpmailer/src/PHPMailer.php');
+include('C:/xampp/htdocs/tpc/phpmailer/src/SMTP.php');
 $mail = new PHPMailer(true);
 $mail->isSMTP();
 $mail->Host = 'smtp.gmail.com';
 $mail->SMTPAuth = true;
 $mail->Username = 'jimishravat28@gmail.com';
-$mail->Password = 'evksojeawqopyuno';
+$mail->Password = 'uijfflngyeewesdl';
 $mail->SMTPSecure = 'ssl';
 $mail->Port = 465;
 $mail->setFrom('jimishravat28@gmail.com');
@@ -24,7 +24,9 @@ function sendMail($email, $subject, $body)
     $mail->addAddress($email);
     $mail->Body = $body;
     $mail->isHTML(true);
-    $mail->send();
+    if (!$mail->send()) {
+        echo "ERROR : $mail->ErrorInfo";
+    }
     $mail->clearAllRecipients();
     $mail->clearAddresses();
 }

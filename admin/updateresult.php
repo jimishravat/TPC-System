@@ -102,11 +102,12 @@ if (isset($_POST["update-result"])) {
         function deleteRows() {
             var table = document.getElementById('emptbl');
             var rowCount = table.rows.length;
-            if (rowCount > '2') {
+            if (rowCount > '1') {
                 var row = table.deleteRow(rowCount - 1);
                 rowCount--;
             } else {
                 alert('There should be atleast one row');
+             
             }
         }
     </script>
@@ -182,7 +183,13 @@ if (isset($_POST["update-result"])) {
                                                         $search = $conn->query("SELECT * FROM  `result` where result_id='$id'");
                                                         $row = $search->fetch_assoc();
                                                         $arr = json_decode($row["student_placed"], true);
-                                                        for ($i = 0; $i < count($arr); $i++) {
+                                                        if (count($arr) == 0) {
+                                                            $count = 1;
+                                                        }else{
+                                                            $count = count($arr);
+                                                        }
+
+                                                        for ($i = 0; $i < $count; $i++) {
                                                         ?><tr>
                                                                 <td id="col<?php echo $i ?>">
                                                                     <input class="form-control" type="text" name="update_ids[]" value="<?php echo $arr[$i] ?>" />

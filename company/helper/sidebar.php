@@ -14,6 +14,15 @@
             <li class="tooltip-element" data-tooltip="0">
                 <a href="../company/index.php" data-active="0">
                     <div class="icon">
+                    <i class='bx bx-info-circle'></i>
+                        <i class='bx bxs-tachometer'></i>
+                    </div>
+                    <span class="link hide">Instructions</span>
+                </a>
+            </li>
+            <li class="tooltip-element" data-tooltip="0">
+                <a href="../company/requestDrive.php" data-active="0">
+                    <div class="icon">
                         <i class='bx bx-tachometer'></i>
                         <i class='bx bxs-tachometer'></i>
                     </div>
@@ -76,8 +85,8 @@
         <div class="admin-user tooltip-element" data-tooltip="1">
             <div class="admin-profile hide">
                 <?php
-                $id = $_SESSION["companyId"];
-                $company = $conn->query("SELECT company_logo FROM company WHERE company_id = '$id'");
+                $company_id = $_SESSION["companyId"];
+                $company = $conn->query("SELECT company_logo FROM company WHERE company_id = '$company_id'");
                 $company_data = $company->fetch_assoc();
                 $company_logo = $company_data["company_logo"];
                 $logo = "";

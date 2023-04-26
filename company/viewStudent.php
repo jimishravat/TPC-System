@@ -1,15 +1,8 @@
 <?php
 
 include("../database.php");
-include("../helper/authorization.php");
+session_start();
 
-if (!isset($access)) {
-    echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
-}
-
-if ($access == 2 || $access == 3) {
-    $dept = $_SESSION["adminDept"];
-}
 
 $id = mysqli_real_escape_string($conn, $_GET["id"]);
 
@@ -22,7 +15,7 @@ $student_academic = $student_academic_fetch->fetch_assoc();
 $student_document_fetch = $conn->query("SELECT * FROM student_document WHERE s_id = '$id'");
 $student_document = $student_document_fetch->fetch_assoc();
 
-$root_folder = '../uploads/student/' . $id . '/';
+$root_folder = '../uploads/student/';
 // var_dump($root_folder);
 
 ?>
@@ -345,26 +338,26 @@ $root_folder = '../uploads/student/' . $id . '/';
                                                     </a>
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    <a href="<?php echo $root_folder . $student_document["ssc_marksheet"] ?>">
+                                                    <a href="<?php echo $root_folder . $student_document["ssc_marksheet"] ?>" target="_blank" rel="noopener noreferrer">
                                                         <p class="text-primary m-b-5">SSC Marksheet</p>
                                                     </a>
                                                 </div>
                                                 <?php if ($student["is_d2d"] == 1) : ?>
 
                                                     <div class="col-sm-3">
-                                                        <a href="<?php echo $root_folder . $student_document["d2d_marksheet"] ?>">
+                                                        <a href="<?php echo $root_folder . $student_document["d2d_marksheet"] ?>" target="_blank" rel="noopener noreferrer">
                                                             <p class="text-primary m-b-5">D2D Marksheet</p>
                                                         </a>
                                                     </div>
                                                 <?php else : ?>
                                                     <div class="col-sm-3">
-                                                        <a href="<?php echo $root_folder . $student_document["hsc_marksheet"] ?>">
+                                                        <a href="<?php echo $root_folder . $student_document["hsc_marksheet"] ?>" target="_blank" rel="noopener noreferrer">
                                                             <p class="text-primary m-b-5">HSC Marksheet</p>
                                                         </a>
                                                     </div>
                                                 <?php endif ?>
                                                 <div class="col-sm-3">
-                                                    <a href="<?php echo $root_folder . $student_document["bvm_marksheet"] ?>">
+                                                    <a href="<?php echo $root_folder . $student_document["bvm_marksheet"] ?>" target="_blank" rel="noopener noreferrer">
                                                         <p class="text-primary m-b-5">BVM Marksheet</p>
                                                     </a>
                                                 </div>

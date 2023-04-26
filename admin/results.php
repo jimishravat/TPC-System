@@ -33,7 +33,11 @@ if ($access == 2 || $access == 3) {
     <script src="/student/helper/index.js"></script>
     <?php include("./helper/sidebar.php") ?>
     <main>
-        <h1>Welcome TPO,</h1>
+        <h1 class=" mb-5 ls-tight">
+            <?php if ($access == 1) echo "Welcome, TPO";
+            elseif ($access == 2) echo "Welcome, TPF";
+            else echo "Welcome, TPC"; ?>
+        </h1>
 
 
         <section class="column-list mb-sm-2 pr-lg-1 container-fluid" id="two-column-list">
@@ -85,7 +89,7 @@ if ($access == 2 || $access == 3) {
                                     </div>
                                 </div>
                                 <div class=" mb-0 text-sm">
-                                    <!-- <a href="./viewResult.php?result_id=<?php echo $result["result_id"] ?>" class="btn btn-warning  mx-2">View</a> -->
+                                    <a href="./viewResult.php?result_id=<?php echo $result["result_id"] ?>" class="btn btn-warning  mx-2">View</a>
                                     <?php if ($access == 1) : ?>
                                         <a href="./updateresult.php?updateId=<?php echo $result["result_id"] ?>" class="btn btn-primary  mx-2">Update</a>
                                         <a href="./updateresult.php?deleteId=<?php echo $result["result_id"] ?>" class="btn btn-danger  mx-2">Delete</a>

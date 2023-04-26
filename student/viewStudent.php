@@ -24,10 +24,32 @@ if ($studentAccess == 0) {
     $addStudent = true;
 }
 
+$hsc_year = "";
+$hsc_th_p_pr = "";
+$hsc_th_pr = "";
+$hsc_th_marks  = "";
+$hsc_th_p_marks = "";
+$hsc_board = "";
+$hsc_school = "";
+$hsc_gap = "";
+$d2d_year = "";
+$d2d_cgpa = "";
+$d2d_college = "";
+$d2d_sem1 = "";
+$d2d_sem2 = "";
+$d2d_sem3 = "";
+$d2d_sem4 = "";
+$d2d_sem5 = "";
+$d2d_sem6 = "";
+$d2d_back = "";
+$d2d_gap = "";
+$d2d_marksheet = "";
+$hsc_marksheet = "";
+
 if (isset($_POST["add-student"])) {
 
     // target location for upload all document files
-    $targetLoc = "./uploads/student/";
+    $targetLoc = "C:/xampp/htdocs/tpc/uploads/student/";
 
     // basic information of student
     $id = $_SESSION["studentUserId"];
@@ -41,7 +63,7 @@ if (isset($_POST["add-student"])) {
     $pAdd = mysqli_real_escape_string($conn, $_POST["pAddress"]);
     $cAdd = mysqli_real_escape_string($conn, $_POST["cAddress"]);
     $gender = mysqli_real_escape_string($conn, $_POST["gender"]);
-    $enroll = mysqli_real_escape_string($conn, $_POST["enrollement"]);
+    $enroll = mysqli_real_escape_string($conn, $_POST["enrollment"]);
     $category = mysqli_real_escape_string($conn, $_POST["category"]);
     $placement = mysqli_real_escape_string($conn, $_POST["pgoal"]);
 
@@ -55,30 +77,46 @@ if (isset($_POST["add-student"])) {
     $ssc_gap = mysqli_real_escape_string($conn, $_POST["ssc_gap"]);
 
 
-    // data for student who is hsc
-    $hsc_year = mysqli_real_escape_string($conn, $_POST["hsc_year"]);
-    $hsc_th_p_pr = mysqli_real_escape_string($conn, $_POST["hsc_th_p_pr"]);
-    $hsc_th_pr = mysqli_real_escape_string($conn, $_POST["hsc_th_pr"]);
-    $hsc_th_marks  = mysqli_real_escape_string($conn, $_POST["hsc_th_marks"]);
-    $hsc_th_p_marks = mysqli_real_escape_string($conn, $_POST["hsc_th_p_marks"]);
-    $hsc_gap = mysqli_real_escape_string($conn, $_POST["hsc_gap"]);
-    $hsc_board = mysqli_real_escape_string($conn, $_POST["hsc_board"]);
-    $hsc_school = mysqli_real_escape_string($conn, $_POST["hsc_school"]);
-    $hsc_gap = mysqli_real_escape_string($conn, $_POST["hsc_gap"]);
+    if ($_SESSION["is_d2d"] == 0) {
 
-    // data for student who is d2d
-    $d2d_year = mysqli_real_escape_string($conn, $_POST["d2d_year"]);
-    $d2d_cgpa = mysqli_real_escape_string($conn, $_POST["d2d_cgpa"]);
-    $d2d_college = mysqli_real_escape_string($conn, $_POST["d2d_college"]);
-    $d2d_sem1 = mysqli_real_escape_string($conn, $_POST["d2d_sem1"]);
-    $d2d_sem2 = mysqli_real_escape_string($conn, $_POST["d2d_sem2"]);
-    $d2d_sem3 = mysqli_real_escape_string($conn, $_POST["d2d_sem3"]);
-    $d2d_sem4 = mysqli_real_escape_string($conn, $_POST["d2d_sem4"]);
-    $d2d_sem5 = mysqli_real_escape_string($conn, $_POST["d2d_sem5"]);
-    $d2d_sem6 = mysqli_real_escape_string($conn, $_POST["d2d_sem6"]);
-    $d2d_back = mysqli_real_escape_string($conn, $_POST["d2d_back"]);
-    $d2d_gap = mysqli_real_escape_string($conn, $_POST["d2d_gap"]);
 
+        // data for student who is hsc
+        $hsc_year = mysqli_real_escape_string($conn, $_POST["hsc_year"]);
+        $hsc_th_p_pr = mysqli_real_escape_string($conn, $_POST["hsc_th_p_pr"]);
+        $hsc_th_pr = mysqli_real_escape_string($conn, $_POST["hsc_th_pr"]);
+        $hsc_th_marks  = mysqli_real_escape_string($conn, $_POST["hsc_th_marks"]);
+        $hsc_th_p_marks = mysqli_real_escape_string($conn, $_POST["hsc_th_p_marks"]);
+        $hsc_gap = mysqli_real_escape_string($conn, $_POST["hsc_gap"]);
+        $hsc_board = mysqli_real_escape_string($conn, $_POST["hsc_board"]);
+        $hsc_school = mysqli_real_escape_string($conn, $_POST["hsc_school"]);
+        $hsc_gap = mysqli_real_escape_string($conn, $_POST["hsc_gap"]);
+
+        if (file_exists($_FILES["hscMarksheet"]["name"])) {
+            $hsc_marksheet = singleFile($_FILES["hscMarksheet"]["name"], $_FILES["hscMarksheet"]["tmp_name"], $targetLoc);
+        } else {
+            $hsc_marksheet = $student["hsc_marksheet"];
+        }
+    } else {
+
+
+        // data for student who is d2d
+        $d2d_year = mysqli_real_escape_string($conn, $_POST["d2d_year"]);
+        $d2d_cgpa = mysqli_real_escape_string($conn, $_POST["d2d_cgpa"]);
+        $d2d_college = mysqli_real_escape_string($conn, $_POST["d2d_college"]);
+        $d2d_sem1 = mysqli_real_escape_string($conn, $_POST["d2d_sem1"]);
+        $d2d_sem2 = mysqli_real_escape_string($conn, $_POST["d2d_sem2"]);
+        $d2d_sem3 = mysqli_real_escape_string($conn, $_POST["d2d_sem3"]);
+        $d2d_sem4 = mysqli_real_escape_string($conn, $_POST["d2d_sem4"]);
+        $d2d_sem5 = mysqli_real_escape_string($conn, $_POST["d2d_sem5"]);
+        $d2d_sem6 = mysqli_real_escape_string($conn, $_POST["d2d_sem6"]);
+        $d2d_back = mysqli_real_escape_string($conn, $_POST["d2d_back"]);
+        $d2d_gap = mysqli_real_escape_string($conn, $_POST["d2d_gap"]);
+        if (file_exists($_FILES["d2dMarksheet"]["name"])) {
+            $d2d_marksheet = singleFile($_FILES["d2dMarksheet"]["name"], $_FILES["d2dMarksheet"]["tmp_name"], $targetLoc);
+        } else {
+            $d2d_marksheet = $student["d2d_marksheet"];
+        }
+    }
     // data for student bvm college information
     $bvm_sem1 = mysqli_real_escape_string($conn, $_POST["sem1"]);
     $bvm_sem2 = mysqli_real_escape_string($conn, $_POST["sem2"]);
@@ -96,37 +134,28 @@ if (isset($_POST["add-student"])) {
     if (file_exists($_FILES["sscMarksheet"]["name"])) {
         $ssc_marksheet = singleFile($_FILES["sscMarksheet"]["name"], $_FILES["sscMarksheet"]["tmp_name"], $targetLoc);
     } else {
-        $ssc_marksheet = "";
+        $ssc_marksheet = $student["ssc_marksheet"];
     }
 
-    if (file_exists($_FILES["hscMarksheet"]["name"])) {
-        $hsc_marksheet = singleFile($_FILES["hscMarksheet"]["name"], $_FILES["hscMarksheet"]["tmp_name"], $targetLoc);
-    } else {
-        $hsc_marksheet = "";
-    }
 
-    if (file_exists($_FILES["d2dMarksheet"]["name"])) {
-        $d2d_marksheet = singleFile($_FILES["d2dMarksheet"]["name"], $_FILES["d2dMarksheet"]["tmp_name"], $targetLoc);
-    } else {
-        $d2d_marksheet = "";
-    }
+
 
     if (file_exists($_FILES["bvmMarksheet"]["name"])) {
         $bvm_marksheet = singleFile($_FILES["bvmMarksheet"]["name"], $_FILES["bvmMarksheet"]["tmp_name"], $targetLoc);
     } else {
-        $bvm_marksheet = "";
+        $bvm_marksheet = $student["bvm_marksheet"];
     }
 
     if (file_exists($_FILES["resume"]["name"])) {
         $resume = singleFile($_FILES["resume"]["name"], $_FILES["resume"]["tmp_name"], $targetLoc);
     } else {
-        $resume = "";
+        $resume = $student["resume"];
     }
-
+    
     if (file_exists($_FILES["profile"]["name"])) {
         $photo = singleFile($_FILES["profile"]["name"], $_FILES["profile"]["tmp_name"], $targetLoc);
     } else {
-        $photo = "";
+        $photo = $student["photo"];
     }
 
 
@@ -138,7 +167,9 @@ if (isset($_POST["add-student"])) {
     $updateStudentAcademic = $conn->query("UPDATE `student_academic` SET `ssc_passing_year`='$ssc_year',`ssc_total`='$ssc_total',`ssc_percentage`='$ssc_pr',`ssc_board`='$ssc_board',`ssc_school`='$ssc_school',`ssc_educational_gap`='$ssc_gap',`hsc_passing_year`='$hsc_year',`hsc_th_percentage`='$hsc_th_pr',`hsc_th_p_percentage`='$hsc_th_p_pr',`hsc_th_marks`='$hsc_th_marks',`hsc_th_p_marks`='$hsc_th_p_marks',`hsc_board`='$hsc_board',`hsc_school`='$hsc_school',`hsc_educational_gap`='$hsc_gap',`d2d_passing_year`='$d2d_year',`d2d_cgpa`='$d2d_cgpa',`d2d_college`='$d2d_college',`d2d_sem1`='$d2d_sem1',`d2d_sem2`='$d2d_sem2',`d2d_sem3`='$d2d_sem3',`d2d_sem4`='$d2d_sem4',`d2d_sem5`='$d2d_sem5',`d2d_sem6`='$d2d_sem6',`d2d_backlogs`='$d2d_back',`d2d_educational_gap`='$d2d_gap',`bvm_sem1`='$bvm_sem1',`bvm_sem2`='$bvm_sem2',`bvm_sem3`='$bvm_sem3',`bvm_sem4`='$bvm_sem4',`bvm_sem5`='$bvm_sem5',`bvm_sem6`='$bvm_sem6',`bvm_active_backlog`='$bvm_aback',`bvm_dead_backlog`='$bvm_dback',`bvm_total_backlog`='$bvm_tback',`bvm_cpi`='$bvm_cpi' WHERE `s_id`='$id'");
 
 
-    $updateStudentDocument = $conn->query("UPDATE `student_document` SET `ssc_marksheet`='$ssc_marksheet',`hsc_marksheet`='$hsc_marksheet',`d2d_marksheet`='$d2d_marksheet',`bvm_marksheet`='$bvm_marksheet',`resume`='$resume',`photo`='$photo' WHERE 1");
+    $updateStudentDocument = $conn->query("UPDATE `student_document` SET `ssc_marksheet`='$ssc_marksheet',`hsc_marksheet`='$hsc_marksheet',`d2d_marksheet`='$d2d_marksheet',`bvm_marksheet`='$bvm_marksheet',`resume`='$resume',`photo`='$photo' WHERE `s_id`='$id'");
+
+    // echo "<script> window.location.href = './viewStudent.php'; </script>";
 }
 
 

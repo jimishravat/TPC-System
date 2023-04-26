@@ -29,7 +29,7 @@ $setData = '';
 $studentArray = json_decode($driveDetails["applied"], true);
 $srNo = 1;
 foreach ($studentArray as $student) {
-    $studentDetailsArray = $conn->query("SELECT student_academic.*, student.* FROM student_academic, student WHERE student.s_id = student_academic.s_id");
+    $studentDetailsArray = $conn->query("SELECT student_academic.*, student.* FROM student_academic, student WHERE student.s_id = student_academic.s_id AND student.s_id = '$student'");
     $studentDetail = $studentDetailsArray->fetch_assoc();
     $rowData = '"' . $srNo++ . '"' . "\t";
     $rowData .= '"' . $studentDetail["s_id"] . '"' . "\t";

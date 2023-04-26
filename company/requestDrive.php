@@ -42,7 +42,12 @@ include("../helper/authorization.php");
                             <!-- Add Drive Button -->
                             <!-- Only Access to TPO -->
 
-                            
+                            <a href="./adddrive.php" class="btn d-inline-flex btn-sm btn-primary mx-1">
+                                <span class=" pe-2">
+                                    <i class="bi bi-plus"></i>
+                                </span>
+                                <span>Request Drive</span>
+                            </a>
 
                         </div>
                     </div>
@@ -80,10 +85,10 @@ include("../helper/authorization.php");
                                     foreach ($job_role_array as $key) {
 
                                     ?>
-                                    <div class="col-2">
+                                        <div class="col-2">
 
-                                        <p class="h5">| <?php echo $key["jobRole"] ?> |</p>
-                                    </div>
+                                            <p class="h5">| <?php echo $key["jobRole"] ?> |</p>
+                                        </div>
                                     <?php
 
                                     }
@@ -98,9 +103,9 @@ include("../helper/authorization.php");
                                     </div>
 
                                     <!-- Collect Data Button -->
-                                    <div class="col-auto">
-                                        <a href="./download_excel.php?drive_id=<?php echo $drive["id"] ?>" target="_blank" rel="noopener noreferrer" class="btn btn-warning btn-sm">Approve & Add</a>
-                                    </div>
+                                    <!-- <div class="col-auto">
+                                        <a href="./download_excel.php?drive_id=<?php echo $drive["id"] ?>" target="_blank" rel="noopener noreferrer" class="btn btn-warning btn-sm">Collect Data</a>
+                                    </div> -->
 
                                     <!-- Add Result Button -->
                                     <!-- Only Access to TPO -->
@@ -111,9 +116,9 @@ include("../helper/authorization.php");
 
                                     </div>
                                 <?php endif ?> -->
-                                    <div class="col-auto">
-                                        <a title="Applied Students" href="./viewAppliedStudents.php?drive_id=<?php echo $drive["id"] ?>" class="btn btn-danger btn-sm ">Reject</a>
-                                    </div>
+                                    <!-- <div class="col-auto">
+                                        <a title="Applied Students" href="./viewAppliedStudents.php?drive_id=<?php echo $drive["id"] ?>" class="btn btn-danger btn-sm ">Applied Students</a>
+                                    </div> -->
 
 
 
@@ -139,9 +144,13 @@ include("../helper/authorization.php");
                                         <span class="badge  badge-lg badge-dot">
                                             <i class="bg-success"></i>Approved
                                         </span>
+                                    <?php elseif ($drive["approved"] == 2) : ?>
+                                        <span class="badge badge-lg badge-dot">
+                                            <i class="bg-danger"></i>Rejected
+                                        </span>
                                     <?php else : ?>
                                         <span class="badge badge-lg badge-dot">
-                                            <i class="bg-danger"></i>Pending
+                                            <i class="bg-warning"></i>Pending
                                         </span>
                                     <?php endif ?>
                                 </div>

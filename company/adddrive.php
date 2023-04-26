@@ -52,8 +52,8 @@ if (isset($_POST["add-drive"])) {
     }
     $deptEligible = json_encode($deptEligible);
 
-    $jobRole = mysqli_real_escape_string($conn, $_POST["jobRole"]);
-    $salary = mysqli_real_escape_string($conn, $_POST["salary"]);
+    // $jobRole = mysqli_real_escape_string($conn, $_POST["jobRole"]);
+    // $salary = mysqli_real_escape_string($conn, $_POST["salary"]);
 
     $jobRoleArray = array();
     foreach ($_POST["jobRole"] as $jobRole) {
@@ -66,24 +66,37 @@ if (isset($_POST["add-drive"])) {
     }
 
     $row = sizeof($jobRoleArray);
+    $final = array();
 
-    $cId = "";
-    $checkForCompany = $conn->query("SELECT * FROM company WHERE company_name='$companyName'");
-    if ($checkForCompany->num_rows) {
-        $row = $checkForCompany->fetch_assoc();
-        $cId = $row["company_id"];
-    } else {
-        $logo = singleFile($_FILES["file"]["name"], $_FILES["file"]["tmp_name"], $targetLoc);
+    for ($i = 0; $i < $row; $i++) {
+        $temp = array(
+            "jobRole" => $jobRoleArray[$i],
+            "salary" => $salaryArray[$i]
 
-        $insertCompany = $conn->query("INSERT INTO `company`( `company_name`, `password`, `HR_name`, `HR_email`, `HR_mobile`, `company_url`, `company_location`, `company_logo`) VALUES ('$companyName','$password','$HRName','$HREmail','$HRMobile','$companyUrl','$location','$logo')");
-        if ($conn->affected_rows) {
-            $cId = $conn->insert_id;
-        }
+        );
+
+
+        array_push($final, $temp);
     }
+    $final = json_encode($final);
+
+    // $cId = "";
+    // $checkForCompany = $conn->query("SELECT * FROM company WHERE company_name='$companyName'");
+    // if ($checkForCompany->num_rows) {
+    //     $row = $checkForCompany->fetch_assoc();
+    //     $cId = $row["company_id"];
+    // } else {
+    //     $logo = singleFile($_FILES["file"]["name"], $_FILES["file"]["tmp_name"], $targetLoc);
+
+    //     $insertCompany = $conn->query("INSERT INTO `company`( `company_name`, `password`, `HR_name`, `HR_email`, `HR_mobile`, `company_url`, `company_location`, `company_logo`) VALUES ('$companyName','$password','$HRName','$HREmail','$HRMobile','$companyUrl','$location','$logo')");
+    //     if ($conn->affected_rows) {
+    //         $cId = $conn->insert_id;
+    //     }
+    // }
     $pdf = singleFile($_FILES["PDF"]["name"], $_FILES["PDF"]["tmp_name"], $targetLoc);
     $help = array();
     $help = json_encode($help);
-    $insertDrive = $conn->query("INSERT INTO `drive`( `company_id`, `drive_deadline`, `skills`, `additional_info`, `job_location`, `job_description`, `job_role`, `salary`, `internship`, `stipend`, `internship_duration`, `bond_period`, `bonus_amount`, `included_ctc`, `hsc_criteria`, `ssc_criteria`, `cpi_criteria`, `spi_criteria`, `total_backlog`, `active_backlog`, `dept_eligible`, `applied`, `selected`, `pdf`) VALUES ('$cId','$deadline','$skills','$addInfo','$location','$jobDesc','$jobRole','$salary','$intern','$stipend','$internPeriod','$bond','$bonus','$bonusIncluded','$hsc','$ssc','$cpi','$spi','$totalBacklog','$activeBacklog','$deptEligible','$help','$help','$pdf')");
+    $insertDrive = $conn->query("INSERT INTO  `requests`( `c_id`, `skills`, `additional_info`, `job_location`, `job_description`, `job_role`,`internship`, `stipend`, `internship_duration`, `bond_period`, `bonus_amount`, `included_ctc`, `hsc_criteria`, `ssc_criteria`, `cpi_criteria`, `spi_criteria`, `total_backlog`, `active_backlog`, `dept_eligible`, `pdf`) VALUES ('$id','$skills','$addInfo','$location','$jobDesc','$final','$intern','$stipend','$internPeriod','$bond','$bonus','$bonusIncluded','$hsc','$ssc','$cpi','$spi','$totalBacklog','$activeBacklog','$deptEligible','$pdf')");
     if ($conn->affected_rows) {
         $driveId = $conn->insert_id;
         $driveInsert = 1;
@@ -105,7 +118,7 @@ if (isset($_POST["add-drive"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./helper/sidebar.css">
     <?php if ($driveInsert) : ?>
-        <meta http-equiv="refresh" content="2;url=http://localhost/tpc/admin/drives.php" />
+        <meta http-equiv="refresh" content="2;url=http://localhost/tpc/company/requestDrive.php" />
     <?php endif ?>
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>

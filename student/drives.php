@@ -2,6 +2,7 @@
 include("../database.php");
 include("./applyDrive.php");
 include("../helper/authorization.php");
+include("../helper/sendMail.php");
 
 if (!isset($_SESSION["studentUserId"])) {
     echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
@@ -56,6 +57,77 @@ function print_msg($s_id, $drive)
     return is_null($msg_type) ? "0" : $msg_type;
 }
 
+
+$target = isset($_GET["target"]) ? $_GET["target"] : "";
+
+if (isset($_GET["target"])) {
+    $d_id = $_GET["drive_id"];
+
+    $driveAllDataFetch = $conn->query("SELECT * FROM drive,company WHERE drive.company_id = company.company_id AND drive.drive_id = '$d_id'");
+    $driveAllData = $driveAllDataFetch->fetch_assoc();
+
+    $studentAllDataFetch = $conn->query("SELECT * FROM student WHERE s_id = '$id'");
+    $studentAllData = $studentAllDataFetch->fetch_assoc();
+
+    if ($target == "accept") {
+        $updateSelectedColumn = $conn->query("UPDATE student_placed SET drive_selected = '$d_id' WHERE s_id = '$id'");
+    } else if ($target == "reject") {
+
+        // update student placed table
+        $searchRejectColumn = $conn->query("SELECT reject_drive from student_placed WHERE s_id = '$id'");
+        $rejectColumnData = $searchRejectColumn->fetch_assoc();
+        $array = json_decode($rejectColumnData["reject_drive"], true);
+        array_push($array, $d_id);
+        $array = json_encode($array);
+        $updateRejectColumn = $conn->query("UPDATE student_placed SET reject_drive = '$array' WHERE s_id = '$id' ");
+
+        // update the drive table
+        $fetchDriveDetails = $conn->query("SELECT selected FROM drive WHERE drive_id = '$d_id'");
+        $driveData = $fetchDriveDetails->fetch_assoc();
+        $selectedArrayDrive = json_decode($driveData["selected"], true);
+        $index = array_search($id, $selectedArrayDrive);
+        unset($selectedArrayDrive[$index]);
+        $selectedArrayDrive = json_encode($selectedArrayDrive);
+        $updateSelectedColumn = $conn->query("UPDATE drive SET selected = '$selectedArrayDrive', result_out = '0' WHERE drive_id = '$d_id'");
+
+
+        // update the result table
+        $fetchResultDetails = $conn->query("SELECT student_placed FROM result WHERE drive_id = '$d_id'");
+        $resultData = $fetchResultDetails->fetch_assoc();
+        $updateResultArray = json_decode($resultData["student_placed"], true);
+        $index = array_search($id, $updateResultArray);
+        unset($updateResultArray[$index]);
+        $updateResultArray = json_encode($updateResultArray);
+        $updateResultColumn = $conn->query("UPDATE result SET student_placed = '$updateResultArray' WHERE drive_id = '$d_id'");
+
+        // send Mail to TPO to update the result column
+        $subject = "Student Has Rejected on Selected in Drive";
+        $body = '
+            <html>
+            <head>
+                <title>Reject By Student</title>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
+            </head>
+            <body>
+                <h1>Student Has Rejected for a Drive</h1>
+                <p> Dear TPO, </p>
+                <p> ' . $studentAllData["s_fname"] . " " . $studentAllData["s_lname"] . ' - ' . strtoupper($studentAllData["s_id"]) . ' has rejected the selection of placement for the <b> Company Name :  </b> ' . $driveAllData["company_name"] . ' , <b> Job Role :  </b> ' . $driveAllData["job_role"] . ' </p>
+                <p> Please Update the result </p>
+                <br>
+                <br>
+                <p> Thank You </p>
+                
+             </body>
+            </html>
+    ';
+
+        $email = 'placement@yopmail.com';
+
+        sendMail($email,$subject,$body);
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -108,21 +180,21 @@ function print_msg($s_id, $drive)
                                 <p class="text-primary">
                                     <?php if ($msg_type == 0) {
                                         echo "Application Submitted to Admin";
-                                    } elseif ($msg_type == 1 ) {
+                                    } elseif ($msg_type == 1) {
 
                                         echo "Congratulations! You have been selected";
-                                    } elseif ($msg_type == 3 ) {
+                                    } elseif ($msg_type == 3) {
 
                                         echo "Congratulations! You have been selected. Please Accept/Reject the offer as soon as possible";
-                                    }else {
+                                    } else {
                                         echo "You have been selected but you rejected the offer";
                                     }
                                     ?>
                                 </p>
                             </div>
                             <?php if ($msg_type == 3) : ?>
-                                <a href="" class="btn btn-sm btn-success text-white">Accept</a>
-                                <a href="" class="btn btn-sm btn-danger text-white">Reject</a>
+                                <a href="./drives.php?target=accept&drive_id=<?php echo $drive_id ?>" class="btn btn-sm btn-success text-white">Accept</a>
+                                <a href="./drives.php?target=reject&drive_id=<?php echo $drive_id ?>" class="btn btn-sm btn-danger text-white">Reject</a>
                             <?php endif ?>
 
 

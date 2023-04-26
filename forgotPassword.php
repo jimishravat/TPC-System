@@ -36,7 +36,7 @@ if (isset($_POST["send-password-link"])) {
         }
     }
     if ($typeOfUser == 4) {
-        $checkQuery = $conn->query("SELECT s_email FROM tpo WHERE tpo_email = '$email'   ");
+        $checkQuery = $conn->query("SELECT tpo_email FROM tpo WHERE tpo_email = '$email'   ");
         if ($checkQuery->num_rows == 1) {
             $sendMail = 1;
         }

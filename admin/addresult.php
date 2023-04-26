@@ -29,17 +29,29 @@ if (isset($_POST["add-result"])) {
     }
     $date_annouce = mysqli_real_escape_string($conn, $_POST["annouce-date"]);
     $no_of_stu = count($_POST["add_ids"]);
-    // var_dump($ids);
-    $student_query = $conn->query("SELECT * FROM student WHERE s_id IN ('" . implode(',', $ids) . "') ");
-    // var_dump($student_query);
+
+
     $drive_query = $conn->query("SELECT * FROM drive,company WHERE drive.company_id = company.company_id AND drive_id = '$drive_id'");
     $drive = $drive_query->fetch_assoc();
-
     $subject = "Congratulations On Selection";
+
+
+
+    $student_query = $conn->query("SELECT * FROM student WHERE s_id IN ('" . implode(',', $ids) . "') ");
     while ($student = $student_query->fetch_assoc()) {
+        $s_id = $student["s_id"];
+        $fetch_student_data = $conn->query("SELECT selected_in_drive FROM student_placed WHERE s_id = '$s_id'");
+        $selected_in_drive = $fetch_student_data->fetch_assoc();
+        $array = json_decode($selected_in_drive["selected_in_drive"], true);
+        array_push($array, $drive_id);
+        $array = json_encode($array);
+        $updateStudent = $conn->query("UPDATE `student_placed` SET `selected_in_drive` = '$array' WHERE s_id = '$s_id'");
+
+
         $body = "Congratulations, " . $student["s_fname"] . " " . $student["s_lname"] . ". You are selected for " . $drive["company_name"] . "-" . $drive["job_role"] . ". Please confirm your selection by replying to this mail ACCEPT or REJECT";
         sendMail($student["s_email"], $subject, $body);
     }
+
 
     $arr_json = json_encode($ids);
 
@@ -48,7 +60,7 @@ if (isset($_POST["add-result"])) {
     $update = $conn->query("INSERT INTO `result` (`heading`, `description`, `no_of_stu`, `post_on`, `student_placed`, `drive_id`, `company_id`) VALUES
     ('$title', '$desc', '$no_of_stu', '$date_annouce', '$arr_json', '$drive_id', '$comp_id');");
 
-    $updateDrive = $conn->query("UPDATE `drive` SET `result_out`='1' WHERE `drive_id`='$drive_id'");
+    $updateDrive = $conn->query("UPDATE `drive` SET `result_out`='1', `selected` = '$arr_json' WHERE `drive_id`='$drive_id'");
 
     if ($conn->affected_rows) {
         $addSuccess = 1;

@@ -23,6 +23,4 @@ function singleFile($fileName, $fileLocation, $fileTargetLocation)
     }
 }
 
-function multipleFiles($file, $fileLocation)
-{
-}
+

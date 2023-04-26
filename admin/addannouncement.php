@@ -44,6 +44,24 @@ if (isset($_POST["add-annouce"])) {
 
         // Subject of the mail
         $subject = "New Annoucement Arrived";
+
+        $body = '
+        <html>
+        <head>
+        </head>
+        <body>
+        <h1>New Annoucement Arrived</h1>
+        <p> ' . $date_annouce . '</p>
+        <p>Dear Student,</p>
+        <h4>' . $title . '</h4>
+        <p>' . $desc . '</p>
+
+        </body>
+        </html>
+        
+        
+        ';
+
         $body = "Date : " . $date_annouce . "\n \n";
         $body .= "Title : " . $title . "\n ";
         $body .= "\t" . $desc . "\n ";

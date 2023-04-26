@@ -3,9 +3,6 @@
 include("../database.php");
 include("../helper/authorization.php");
 
-if ($access == 2 || $access == 3) {
-    $dept = $_SESSION["adminDept"];
-}
 
 $driveId = isset($_GET["drive_id"]) ? mysqli_real_escape_string($conn,$_GET["drive_id"]) : 0;
 
@@ -58,9 +55,7 @@ $driveDetail = $driveDetailQuery->fetch_assoc();
 
                                                 <!-- Edit Button -->
                                                 <!-- Only Access to TPO -->
-                                                <?php if ($access == 1) : ?>
-                                                    <a href="./updateDrive.php?drive_id=<?php echo $driveDetail["drive_id"] ?>" class="d-block btn btn-primary"> <span> <i class="bi bi-pencil"></i></span> Edit Drive </a>
-                                                <?php endif ?>
+                                                
                                                 <!-- <button class="text-center btn my-2 btn-success">Upload Logo</button> -->
                                             </div>
                                         </div>

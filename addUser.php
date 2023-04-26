@@ -36,7 +36,7 @@ if (isset($_POST["registerStudent"])) {
     $insertQuery = $conn->query("INSERT INTO `student`(`s_id`, `s_fname`,`s_lname`,  `s_email`, `s_mobile`, `s_dept`, `s_gender`, `s_password`,   `s_academic_year`, `is_d2d`) VALUES ('$id_number','$fname','$lname','$email','$mobile','$dept','$gender','$password','$academic_year','$is_d2d')");
     $insertQuery = $conn->query("INSERT INTO `student_academic`(`s_id`) VALUES ('$id_number')");
     $insertQuery = $conn->query("INSERT INTO `student_document`(`s_id`) VALUES ('$id_number')");
-    $insertQuery = $conn->query("INSERT INTO `student_placed`(`s_id`, `drive_applied`, `drive_selected`) VALUES ('$id_number','$help','0')");
+    $insertQuery = $conn->query("INSERT INTO `student_placed`(`s_id`, `drive_applied`, `selected_in_drive`, `reject_drive`, `drive_selected`) VALUES ('$id_number','$help','$help','$help','0')");
 
     // if successfully inserted the value in the database then show the user details page with User ID
     if ($insertQuery) {

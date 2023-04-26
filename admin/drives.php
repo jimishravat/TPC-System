@@ -10,7 +10,7 @@ if ($access == 2 || $access == 3) {
 }
 
 // if action button is clicked
-$action = isset($_GET["action"]) ? mysqli_real_escape_string($conn,$_GET["action"]) : 0;
+$action = isset($_GET["action"]) ? mysqli_real_escape_string($conn, $_GET["action"]) : 0;
 
 // var_dump($action);
 if ($action == "active") {
@@ -81,7 +81,11 @@ function checkDeadline($drive_id)
                 <div class="row align-items-center">
                     <div class="col-sm-6 col-12 mb-4 mb-sm-0">
                         <!-- Title -->
-                        <h1 class="h2 mb-0 ls-tight">Welcome, TPO</h1>
+                        <h1 class="h2 mb-0 ls-tight">
+                            <?php if ($access == 1) echo "Welcome, TPO";
+                            elseif ($access == 2) echo "Welcome, TPF";
+                            else echo "Welcome, TPC"; ?>
+                        </h1>
                     </div>
                     <!-- Actions -->
                     <div class="col-sm-6 col-12 text-sm-end">
@@ -184,8 +188,8 @@ function checkDeadline($drive_id)
                                             </div>
                                         <?php endif ?>
 
-                                        
-                                       
+
+
 
                                         <!-- Delete Button -->
                                         <!-- Only Access to TPO -->

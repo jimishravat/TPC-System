@@ -1,12 +1,10 @@
 <?php
 
 include("../database.php");
-include("../helper/authorization.php");
+// include("../helper/authorization.php");
 include("../helper/fileUpload.php");
 
-if ($access != 1) {
-    echo "<script> window.location.href = 'http://localhost/tpc/helper/noAccess.php'; </script>";
-}
+
 
 $drive_id = isset($_GET["drive_id"]) ? $_GET["drive_id"] : 0;
 // var_dump($drive_id);
