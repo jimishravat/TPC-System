@@ -169,7 +169,7 @@ if (isset($_POST["add-student"])) {
 
     $updateStudentDocument = $conn->query("UPDATE `student_document` SET `ssc_marksheet`='$ssc_marksheet',`hsc_marksheet`='$hsc_marksheet',`d2d_marksheet`='$d2d_marksheet',`bvm_marksheet`='$bvm_marksheet',`resume`='$resume',`photo`='$photo' WHERE `s_id`='$id'");
 
-    // echo "<script> window.location.href = './viewStudent.php'; </script>";
+    echo "<script> window.location.href = './viewStudent.php'; </script>";
 }
 
 

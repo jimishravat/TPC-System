@@ -63,8 +63,14 @@ if (isset($_POST['submit'])) {
 
     // medicine user side
     // medicine admin side
-
+    
 }
+include("./vendor/autoload.php");
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->safeLoad();
+var_dump($_ENV["DATABASE_USERNAME"]);
+
 
 
 ?>
