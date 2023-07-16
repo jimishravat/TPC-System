@@ -1,6 +1,6 @@
 <?php
 
-include("./vendor/autoload.php");
+include("C:/xampp/htdocs/tpc/vendor/autoload.php");
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
 // Defining the credentials for the database

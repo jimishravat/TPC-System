@@ -104,8 +104,8 @@ if ($action == "approve") {
 
                 <!-- Loop starts -->
 
-                <?php
-                $student_fetch = $conn->query("SELECT * FROM student WHERE is_approved = '0'");
+                <?php 
+                $student_fetch = $conn->query("SELECT * FROM student WHERE is_approved = '0' AND s_dept = '$dept'");
                 while ($student = $student_fetch->fetch_assoc()) {
 
                 ?>

@@ -94,7 +94,7 @@ include("../helper/authorization.php");
 
                                     <!-- View Button  -->
                                     <div class="col-auto">
-                                        <a href="./viewDrive.php?drive_id=<?php echo $drive["id"] ?>" class="btn btn-primary btn-sm">View</a>
+                                        <a href="./viewDriveRequest.php?drive_id=<?php echo $drive["id"] ?>" class="btn btn-primary btn-sm">View</a>
                                     </div>
 
                                     <!-- Collect Data Button -->

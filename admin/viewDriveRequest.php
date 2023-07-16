@@ -11,7 +11,7 @@ if ($access == 2 || $access == 3) {
 
 $driveId = isset($_GET["drive_id"]) ? mysqli_real_escape_string($conn, $_GET["drive_id"]) : 0;
 
-$driveDetailQuery = $conn->query("SELECT * FROM drive,company WHERE drive.company_id = company.company_id AND drive_id='$driveId'");
+$driveDetailQuery = $conn->query("SELECT * FROM requests,company WHERE requests.c_id = company.company_id AND id='$driveId'");
 // var_dump($driveId);
 $driveDetail = $driveDetailQuery->fetch_assoc();
 
@@ -61,7 +61,7 @@ $driveDetail = $driveDetailQuery->fetch_assoc();
                                                 <!-- Edit Button -->
                                                 <!-- Only Access to TPO -->
                                                 <?php if ($access == 1) : ?>
-                                                    <a href="./updateDrive.php?drive_id=<?php echo $driveDetail["drive_id"] ?>" class="d-block btn btn-primary"> <span> <i class="bi bi-pencil"></i></span> Edit Drive </a>
+                                                    <a href="./updateDrive.php?drive_id=<?php echo $driveDetail["id"] ?>" class="d-block btn btn-success">  Approve Drive </a>
                                                 <?php endif ?>
                                                 <!-- <button class="text-center btn my-2 btn-success">Upload Logo</button> -->
                                             </div>
@@ -99,11 +99,11 @@ $driveDetail = $driveDetailQuery->fetch_assoc();
                                                     <h5 class="mb-5 f-w-400"><?php echo $driveDetail["HR_email"] ?></h5>
 
                                                 </div>
-                                                <div class="col-sm-6">
+                                                <!-- <div class="col-sm-6">
                                                     <p class="m-b-5 text-muted f-w-600">Deadline</p>
                                                     <h5 class="mb-5 f-w-400"><?php echo $driveDetail["drive_deadline"] ?></h5>
 
-                                                </div>
+                                                </div> -->
                                                 <!-- <div class="col-sm-6">
                                                         <p class="m-b-5 f-w-600">Salary</p>
                                                         <input type="number" class="m-b-5 form-control" name="" id="" value="700000">
@@ -218,20 +218,26 @@ $driveDetail = $driveDetailQuery->fetch_assoc();
                                                                 <td class="text-muted h4">Salary (CTC in LPA)</td>
                                                             </tr>
                                                         </thead>
+                                                        <?php
+                                                        $jobRoleJSON = json_decode($driveDetail["job_role"], true);
+                                                        foreach ($jobRoleJSON as $job) {
+                                                        ?>
 
 
-                                                        <tr>
-                                                            <td id="col0">
-                                                                <h5 class="  f-w-400"><?php echo $driveDetail["job_role"] ?></h5>
+                                                            <tr>
+                                                                <td id="col0">
+                                                                    <h5 class="  f-w-400"><?php echo $job["jobRole"] ?></h5>
 
-                                                            </td>
-                                                            <td id="col1">
-                                                                <h5 class="  f-w-400"><?php echo $driveDetail["salary"] ?></h5>
+                                                                </td>
+                                                                <td id="col1">
+                                                                    <h5 class="  f-w-400"><?php echo $job["salary"] ?></h5>
 
-                                                            </td>
+                                                                </td>
 
-                                                        </tr>
-
+                                                            </tr>
+                                                        <?php
+                                                        }
+                                                        ?>
 
                                                     </table>
 
