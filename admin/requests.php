@@ -42,7 +42,7 @@ include("../helper/authorization.php");
                             <!-- Add Drive Button -->
                             <!-- Only Access to TPO -->
 
-                            
+
 
                         </div>
                     </div>
@@ -80,10 +80,10 @@ include("../helper/authorization.php");
                                     foreach ($job_role_array as $key) {
 
                                     ?>
-                                    <div class="col-2">
+                                        <div class="col-2">
 
-                                        <p class="h5">| <?php echo $key["jobRole"] ?> |</p>
-                                    </div>
+                                            <p class="h5">| <?php echo $key["jobRole"] ?> |</p>
+                                        </div>
                                     <?php
 
                                     }

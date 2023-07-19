@@ -49,7 +49,7 @@ else {
                     <p> Your account is in <strong>IN-ACTIVE</strong> state. It will be active only after the TPC approves you. You can check the status in the profile section after you <a href="./login.php"> LOGIN </a> </p>
                     <p> Once you fill your details and all supporting documents then only you will be allowed to apply in any Placement Drive </p>
                 <?php else : ?>
-                    <p> Your account is succesfullt created. Please <a href="./login.php"> LOGIN </a> to your account to go further with the placement drive. THANK YOU</p>
+                    <p> Your account is succesfully created. Please <a href="./login.php"> LOGIN </a> to your account to go further with the placement drive. THANK YOU</p>
                 <?php endif ?>
             </div>
         </div>

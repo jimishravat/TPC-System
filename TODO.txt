@@ -1,6 +1,0 @@
-make the request panel visible and set the drive by the TPO 
-
-make the students approval only to respective dept tpc
-
-make the students database for the test use
-

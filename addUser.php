@@ -37,14 +37,17 @@ if (isset($_POST["registerStudent"])) {
     $insertQuery = $conn->query("INSERT INTO `student_academic`(`s_id`) VALUES ('$id_number')");
     $insertQuery = $conn->query("INSERT INTO `student_document`(`s_id`) VALUES ('$id_number')");
     $insertQuery = $conn->query("INSERT INTO `student_placed`(`s_id`, `drive_applied`, `selected_in_drive`, `reject_drive`, `drive_selected`) VALUES ('$id_number','$help','$help','$help','0')");
+    $updateQuery = $conn->query("UPDATE `department` SET `total_student` = `total_student`+1 WHERE `dept_id` = '$dept'");
 
     // if successfully inserted the value in the database then show the user details page with User ID
-    if ($insertQuery) {
+    if ($updateQuery) {
         if (isset($_SESSION["alreadyRegisteredId"])) {
             unset($_SESSION["alreadyRegisteredId"]);
         }
+        // var_dump($updateQuery);
         $_SESSION["showUser"] = true;
-        echo "<script> window.location.href = './showUserDetails.php?user_id=$id_number'&user_type=0; </script>";
+        // var_dump($_SESSION);
+        echo "<script> window.location.href = './showUserDetails.php?user_id=$id_number&user_type=0' </script>";
     }
 }
 
@@ -65,7 +68,7 @@ if (isset($_POST["registerCompany"])) {
 
     $insertQuery = $conn->query("INSERT INTO `company`(`company_name`, `password`, `HR_name`, `HR_email`, `HR_mobile`, `company_url`, `company_location`, `company_logo`) VALUES ('$cName','$cPassword','$hrName','$hrEmail','$hrMobile','$cURL','$cLocation','$cLogo')");
     if ($insertQuery) {
-        
+
         $_SESSION["showUser"] = true;
         echo "<script> window.location.href = './showUserDetails.php?user_id=$hrEmail&user_type=1'; </script>";
     }

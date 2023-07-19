@@ -3,21 +3,24 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-include("C:/xampp/htdocs/tpc/phpmailer/src/Exception.php");
-include('C:/xampp/htdocs/tpc/phpmailer/src/PHPMailer.php');
-include('C:/xampp/htdocs/tpc/phpmailer/src/SMTP.php');
+require '../PHPMailer/src/Exception.php';
+require '../PHPMailer/src/PHPMailer.php';
+require '../PHPMailer/src/SMTP.php';
+
 include("C:/xampp/htdocs/tpc/vendor/autoload.php");
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->safeLoad();
+Dotenv\Dotenv::createUnsafeImmutable(__DIR__ . '/../')->load();
+
+
+
 $mail = new PHPMailer(true);
 $mail->isSMTP();
 $mail->Host = 'smtp.gmail.com';
 $mail->SMTPAuth = true;
-$mail->Username = $_ENV["GMAIL_USERNAME"];
-$mail->Password = $_ENV["GMAIL_APP_KEY"];
+$mail->Username = base64_decode($_ENV["GMAIL_USERNAME"]);
+$mail->Password = base64_decode($_ENV["GMAIL_APP_KEY"]);
 $mail->SMTPSecure = 'ssl';
 $mail->Port = 465;
-$mail->setFrom($_ENV["GMAIL_USERNAME"]);
+$mail->setFrom('admin@tpc.com', 'Admin');
 $mail->isHTML(true);
 
 function sendMail($email, $subject, $body)
@@ -33,3 +36,4 @@ function sendMail($email, $subject, $body)
     $mail->clearAllRecipients();
     $mail->clearAddresses();
 }
+

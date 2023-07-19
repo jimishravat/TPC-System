@@ -25,7 +25,7 @@ if (isset($_POST["update-pass"])) {
 
     if ($access == 1) {
 
-        $updatePassword = $conn->query("UPDATE `tp0` SET `tpo_password`='$password' WHERE tpo_id = '$id'");
+        $updatePassword = $conn->query("UPDATE `tpo` SET `tpo_password`='$password' WHERE tpo_id = '$id'");
         if ($conn->affected_rows) {
             $updateSuccess = 1;
         } else {
